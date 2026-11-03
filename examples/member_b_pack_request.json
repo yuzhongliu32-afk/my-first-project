@@ -1,0 +1,19 @@
+{
+  "schema_version": "harbourline.v1",
+  "message_id": "A-PACK-SIM-REQUEST-001",
+  "run_id": "PACK-SIM-2027-Q1-001",
+  "project_id": "HARBOURLINE-HUB",
+  "producer": "A",
+  "recipient": "B",
+  "operation": "PLAN_RISK",
+  "status": "SUCCESS",
+  "source_snapshot_id": "PACK-JAN-MAR-2027-V1",
+  "request": {
+    "question": "Reconcile simulation pack and propose the planning and risk modules; distinguish approved and unapproved facts.",
+    "requested_report_type": null,
+    "reporting_period": {"start_date": "2027-01-04", "end_date": "2027-03-31"},
+    "target_ids": [],
+    "instructions": "Use only course brief and simulated official Data Pack. Do not infer sponsor approvals or invent unknown costs.",
+    "max_review_rounds": 2
+  }
+}

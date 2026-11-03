@@ -1,1 +1,1 @@
-"""Member B uploads planning/risk implementation here."""
+"""Harbourline Member B planning and risk module."""
