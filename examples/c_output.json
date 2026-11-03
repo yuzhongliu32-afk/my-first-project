@@ -1,0 +1,102 @@
+{
+  "schema_version": "harbourline.v1",
+  "message_id": "FIXTURE-C-001",
+  "run_id": "FIXTURE-RUN-001",
+  "project_id": "HARBOURLINE",
+  "producer": "C",
+  "recipient": "A",
+  "operation": "GENERATE_REPORTS",
+  "status": "SUCCESS",
+  "source_snapshot_id": "FIXTURE-SNAPSHOT-NO-PROJECT-DATA",
+  "request": {
+    "question": null,
+    "requested_report_type": null,
+    "reporting_period": {
+      "start_date": null,
+      "end_date": null
+    },
+    "target_ids": [],
+    "instructions": "Integration fixture only. Not a project plan or assessed business result.",
+    "max_review_rounds": 2
+  },
+  "source_evidence": [],
+  "memory": {
+    "query": null,
+    "answer": null,
+    "answer_status": "NOT_RUN",
+    "fact_records": [],
+    "conflicts": [],
+    "decisions": [],
+    "citations": [],
+    "open_questions": [
+      "Official sources and real module outputs have not been loaded."
+    ]
+  },
+  "reporting": {
+    "reports": [
+      {
+        "report_id": "FIXTURE-WEEKLY_COMMITTEE",
+        "report_type": "WEEKLY_COMMITTEE",
+        "audience": "Fixture audience",
+        "reporting_period": {
+          "start_date": null,
+          "end_date": null
+        },
+        "source_snapshot_id": "FIXTURE-SNAPSHOT-NO-PROJECT-DATA",
+        "revision": 1,
+        "sections": [
+          {
+            "section_id": "FIXTURE-SECTION-1",
+            "heading": "Integration fixture",
+            "text": "No real report or project progress is established by this fixture.",
+            "supporting_fact_ids": [],
+            "citations": []
+          }
+        ],
+        "included_fact_ids": [],
+        "open_issues": [
+          "Requires actual C implementation and authoritative evidence."
+        ],
+        "assumptions": [],
+        "is_stale": false,
+        "status": "DRAFT"
+      },
+      {
+        "report_id": "FIXTURE-MONTHLY_GRANT",
+        "report_type": "MONTHLY_GRANT",
+        "audience": "Fixture audience",
+        "reporting_period": {
+          "start_date": null,
+          "end_date": null
+        },
+        "source_snapshot_id": "FIXTURE-SNAPSHOT-NO-PROJECT-DATA",
+        "revision": 1,
+        "sections": [
+          {
+            "section_id": "FIXTURE-SECTION-1",
+            "heading": "Integration fixture",
+            "text": "No real report or project progress is established by this fixture.",
+            "supporting_fact_ids": [],
+            "citations": []
+          }
+        ],
+        "included_fact_ids": [],
+        "open_issues": [
+          "Requires actual C implementation and authoritative evidence."
+        ],
+        "assumptions": [],
+        "is_stale": false,
+        "status": "DRAFT"
+      }
+    ],
+    "critic_reviews": []
+  },
+  "metrics": {
+    "api_calls": 0,
+    "input_tokens": null,
+    "output_tokens": null,
+    "estimated_cost_usd": null,
+    "elapsed_seconds": null
+  },
+  "errors": []
+}

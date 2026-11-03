@@ -1,0 +1,127 @@
+{
+  "schema_version": "harbourline.v1",
+  "message_id": "FIXTURE-B-001",
+  "run_id": "FIXTURE-RUN-001",
+  "project_id": "HARBOURLINE",
+  "producer": "B",
+  "recipient": "A",
+  "operation": "PLAN_RISK",
+  "status": "SUCCESS",
+  "source_snapshot_id": "FIXTURE-SNAPSHOT-NO-PROJECT-DATA",
+  "request": {
+    "question": null,
+    "requested_report_type": null,
+    "reporting_period": {
+      "start_date": null,
+      "end_date": null
+    },
+    "target_ids": [],
+    "instructions": "Integration fixture only. Not a project plan or assessed business result.",
+    "max_review_rounds": 2
+  },
+  "source_evidence": [],
+  "planning": {
+    "scope_statement": null,
+    "sponsor_questions": [],
+    "scope_items": [],
+    "wbs_items": [
+      {
+        "wbs_id": "FIXTURE-W1",
+        "parent_wbs_id": null,
+        "title": "Proposed integration fixture level 1",
+        "level": 1,
+        "dictionary": {
+          "work_description": "Contract demonstration only, not an approved Harbourline package.",
+          "deliverables": [
+            "Fixture output"
+          ],
+          "acceptance_criteria": [],
+          "exclusions": [],
+          "assumptions": [
+            "Not a real project decomposition."
+          ],
+          "owner": null
+        },
+        "scope_ids": [],
+        "predecessor_wbs_ids": [],
+        "source_refs": [],
+        "status": "PROPOSED"
+      },
+      {
+        "wbs_id": "FIXTURE-W2",
+        "parent_wbs_id": "FIXTURE-W1",
+        "title": "Proposed integration fixture level 2",
+        "level": 2,
+        "dictionary": {
+          "work_description": "Contract demonstration only, not an approved Harbourline package.",
+          "deliverables": [
+            "Fixture output"
+          ],
+          "acceptance_criteria": [],
+          "exclusions": [],
+          "assumptions": [
+            "Not a real project decomposition."
+          ],
+          "owner": null
+        },
+        "scope_ids": [],
+        "predecessor_wbs_ids": [],
+        "source_refs": [],
+        "status": "PROPOSED"
+      },
+      {
+        "wbs_id": "FIXTURE-W3",
+        "parent_wbs_id": "FIXTURE-W2",
+        "title": "Proposed integration fixture level 3",
+        "level": 3,
+        "dictionary": {
+          "work_description": "Contract demonstration only, not an approved Harbourline package.",
+          "deliverables": [
+            "Fixture output"
+          ],
+          "acceptance_criteria": [],
+          "exclusions": [],
+          "assumptions": [
+            "Not a real project decomposition."
+          ],
+          "owner": null
+        },
+        "scope_ids": [],
+        "predecessor_wbs_ids": [],
+        "source_refs": [],
+        "status": "PROPOSED"
+      }
+    ],
+    "milestones": []
+  },
+  "risk": {
+    "risks": [
+      {
+        "risk_id": "FIXTURE-R1",
+        "title": "Unresolved integration-fixture risk",
+        "description": "For schema tests only, not a project risk.",
+        "probability": null,
+        "impact": null,
+        "score": null,
+        "owner": null,
+        "trigger": null,
+        "response_plan": null,
+        "related_wbs_ids": [
+          "FIXTURE-W3"
+        ],
+        "related_milestone_ids": [],
+        "source_refs": [],
+        "status": "UNRESOLVED"
+      }
+    ],
+    "scenarios": []
+  },
+  "metrics": {
+    "api_calls": 0,
+    "input_tokens": null,
+    "output_tokens": null,
+    "estimated_cost_usd": null,
+    "elapsed_seconds": null
+  },
+  "errors": []
+}

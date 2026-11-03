@@ -1,0 +1,219 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "harbourline.v1 — shared message metadata",
+  "description": "Internal validated JSON data contract; not a model-generated whole-system output.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "enum": [
+        "harbourline.v1"
+      ]
+    },
+    "message_id": {
+      "type": "string"
+    },
+    "run_id": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "producer": {
+      "type": "string",
+      "enum": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    "recipient": {
+      "type": "string",
+      "enum": [
+        "A",
+        "B",
+        "C",
+        "HUMAN"
+      ]
+    },
+    "operation": {
+      "type": "string",
+      "enum": [
+        "PLAN_RISK",
+        "MEMORY_QUERY",
+        "GENERATE_REPORTS",
+        "CRITIC_REVIEW",
+        "JIRA_SYNC",
+        "CHANGE_REVIEW",
+        "FULL_RUN"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "SUCCESS",
+        "PARTIAL",
+        "BLOCKED",
+        "FAILED"
+      ]
+    },
+    "source_snapshot_id": {
+      "type": "string"
+    },
+    "request": {
+      "$ref": "#/$defs/Request"
+    },
+    "source_evidence": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/SourceRef"
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "message_id",
+    "run_id",
+    "project_id",
+    "producer",
+    "recipient",
+    "operation",
+    "status",
+    "source_snapshot_id",
+    "request",
+    "source_evidence"
+  ],
+  "$defs": {
+    "Period": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "start_date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "end_date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "start_date",
+        "end_date"
+      ],
+      "description": "Use ISO dates YYYY-MM-DD when confirmed; null if unknown. Verify dates in backend."
+    },
+    "SourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "document_id": {
+          "type": "string"
+        },
+        "document_version": {
+          "type": "string"
+        },
+        "source_type": {
+          "type": "string",
+          "enum": [
+            "BRIEF",
+            "DATA_PACK",
+            "SPONSOR_ANSWER"
+          ]
+        },
+        "page": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "line_start": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "line_end": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "chunk_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "quote": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "document_id",
+        "document_version",
+        "source_type",
+        "page",
+        "line_start",
+        "line_end",
+        "chunk_id",
+        "quote"
+      ],
+      "description": "Physical page/line reference into versioned authoritative material; back-end verifies its validity and quote. Null page allowed for nonpaged sources; line required for evidence claims."
+    },
+    "Request": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "question": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "requested_report_type": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "WEEKLY_COMMITTEE",
+            "MONTHLY_GRANT",
+            null
+          ]
+        },
+        "reporting_period": {
+          "$ref": "#/$defs/Period"
+        },
+        "target_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "instructions": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "max_review_rounds": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "question",
+        "requested_report_type",
+        "reporting_period",
+        "target_ids",
+        "instructions",
+        "max_review_rounds"
+      ]
+    }
+  }
+}

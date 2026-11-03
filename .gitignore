@@ -1,0 +1,19 @@
+# Credentials and local environment
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*.json
+secrets*.json
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.DS_Store
+# Runtime outputs and real project materials
+.local/
+.coverage
+.pytest_cache/
+data/*
+!data/README.md

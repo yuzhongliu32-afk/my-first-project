@@ -1,0 +1,22 @@
+[
+  {
+    "file": "Harbourline_A_Schema.json",
+    "sha256": "bdb354265e5fc1e2f623636a2f52c57958dbbf12c430a1f134aec2b29390dc7f",
+    "draft_2020_12": "PASS"
+  },
+  {
+    "file": "Harbourline_B_Schema.json",
+    "sha256": "cb4164784772108801e25da6c0cfb2fedea0c907bd4384b77691959aeb741251",
+    "draft_2020_12": "PASS"
+  },
+  {
+    "file": "Harbourline_Common_Schema.json",
+    "sha256": "619221927d0de29b2203debb1a1659c4e76e51ca146690b32fc4de15da537a1e",
+    "draft_2020_12": "PASS"
+  },
+  {
+    "file": "Harbourline_Full_Schema.json",
+    "sha256": "3fe5e984aed5a42a6b0ee82384bdf25dc793f0b72dcf1feaeaf2b0270d089df9",
+    "draft_2020_12": "PASS"
+  }
+]

@@ -1,0 +1,829 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "harbourline.v1 — A module exchange",
+  "description": "Internal validated JSON data contract; not a model-generated whole-system output.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "enum": [
+        "harbourline.v1"
+      ]
+    },
+    "message_id": {
+      "type": "string"
+    },
+    "run_id": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "producer": {
+      "type": "string",
+      "enum": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    "recipient": {
+      "type": "string",
+      "enum": [
+        "A",
+        "B",
+        "C",
+        "HUMAN"
+      ]
+    },
+    "operation": {
+      "type": "string",
+      "enum": [
+        "PLAN_RISK",
+        "MEMORY_QUERY",
+        "GENERATE_REPORTS",
+        "CRITIC_REVIEW",
+        "JIRA_SYNC",
+        "CHANGE_REVIEW",
+        "FULL_RUN"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "SUCCESS",
+        "PARTIAL",
+        "BLOCKED",
+        "FAILED"
+      ]
+    },
+    "source_snapshot_id": {
+      "type": "string"
+    },
+    "request": {
+      "$ref": "#/$defs/Request"
+    },
+    "source_evidence": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/SourceRef"
+      }
+    },
+    "integration": {
+      "$ref": "#/$defs/IntegrationBundle"
+    },
+    "change": {
+      "$ref": "#/$defs/ChangeBundle"
+    },
+    "governance": {
+      "$ref": "#/$defs/GovernanceBundle"
+    },
+    "metrics": {
+      "$ref": "#/$defs/RunMetrics"
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ProcessError"
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "message_id",
+    "run_id",
+    "project_id",
+    "producer",
+    "recipient",
+    "operation",
+    "status",
+    "source_snapshot_id",
+    "request",
+    "source_evidence",
+    "integration",
+    "change",
+    "governance",
+    "metrics",
+    "errors"
+  ],
+  "$defs": {
+    "Period": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "start_date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "end_date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "start_date",
+        "end_date"
+      ],
+      "description": "Use ISO dates YYYY-MM-DD when confirmed; null if unknown. Verify dates in backend."
+    },
+    "SourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "document_id": {
+          "type": "string"
+        },
+        "document_version": {
+          "type": "string"
+        },
+        "source_type": {
+          "type": "string",
+          "enum": [
+            "BRIEF",
+            "DATA_PACK",
+            "SPONSOR_ANSWER"
+          ]
+        },
+        "page": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "line_start": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "line_end": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "chunk_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "quote": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "document_id",
+        "document_version",
+        "source_type",
+        "page",
+        "line_start",
+        "line_end",
+        "chunk_id",
+        "quote"
+      ],
+      "description": "Physical page/line reference into versioned authoritative material; back-end verifies its validity and quote. Null page allowed for nonpaged sources; line required for evidence claims."
+    },
+    "JiraAction": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "action_id": {
+          "type": "string"
+        },
+        "external_key": {
+          "type": "string"
+        },
+        "wbs_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "milestone_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "issue_key": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "issue_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "summary": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "parent_issue_key": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "parent_external_key": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "action": {
+          "type": "string",
+          "enum": [
+            "READ",
+            "CREATE",
+            "UPDATE",
+            "COMMENT"
+          ]
+        },
+        "execution_status": {
+          "type": "string",
+          "enum": [
+            "PLANNED",
+            "PENDING_APPROVAL",
+            "EXECUTED",
+            "FAILED",
+            "SKIPPED"
+          ]
+        },
+        "approval_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "readback_verified": {
+          "type": "boolean"
+        },
+        "readback_hash": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "error_message": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "action_id",
+        "external_key",
+        "wbs_id",
+        "milestone_id",
+        "issue_key",
+        "issue_type",
+        "summary",
+        "parent_issue_key",
+        "parent_external_key",
+        "action",
+        "execution_status",
+        "approval_id",
+        "readback_verified",
+        "readback_hash",
+        "labels",
+        "error_message"
+      ],
+      "description": "Jira write and read-back are backend-recorded facts, never invented by a model."
+    },
+    "IntegrationBundle": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "jira_project_key": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "jira_actions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/JiraAction"
+          }
+        },
+        "handoff_completed": {
+          "type": "boolean"
+        },
+        "handoff_trace_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "jira_project_key",
+        "jira_actions",
+        "handoff_completed",
+        "handoff_trace_ids"
+      ],
+      "description": "A verifies automatic handoffs rather than relying on manual copy/paste."
+    },
+    "ChangeEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "change_id": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "PROPOSED",
+            "APPROVED",
+            "REJECTED"
+          ]
+        },
+        "approval_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "affected_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "change_id",
+        "description",
+        "source_refs",
+        "status",
+        "approval_id",
+        "affected_ids"
+      ]
+    },
+    "StaleArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "artifact_id": {
+          "type": "string"
+        },
+        "artifact_type": {
+          "type": "string",
+          "enum": [
+            "PLAN",
+            "RISK_REGISTER",
+            "WEEKLY_REPORT",
+            "MONTHLY_REPORT"
+          ]
+        },
+        "previous_snapshot_id": {
+          "type": "string"
+        },
+        "current_snapshot_id": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "suggested_action": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "artifact_id",
+        "artifact_type",
+        "previous_snapshot_id",
+        "current_snapshot_id",
+        "reason",
+        "suggested_action"
+      ]
+    },
+    "ChangeBundle": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "events": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ChangeEvent"
+          }
+        },
+        "stale_artifacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/StaleArtifact"
+          }
+        },
+        "human_actions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "events",
+        "stale_artifacts",
+        "human_actions"
+      ]
+    },
+    "Approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "approval_id": {
+          "type": "string"
+        },
+        "approval_type": {
+          "type": "string",
+          "enum": [
+            "JIRA_WRITE",
+            "REPORT_RELEASE",
+            "BASELINE_CHANGE"
+          ]
+        },
+        "subject_id": {
+          "type": "string"
+        },
+        "subject_version": {
+          "type": "string"
+        },
+        "requested_by": {
+          "type": "string"
+        },
+        "approver_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "decision": {
+          "type": "string",
+          "enum": [
+            "PENDING",
+            "APPROVED",
+            "REJECTED"
+          ]
+        },
+        "decided_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source_snapshot_id": {
+          "type": "string"
+        },
+        "notes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "approval_id",
+        "approval_type",
+        "subject_id",
+        "subject_version",
+        "requested_by",
+        "approver_id",
+        "decision",
+        "decided_at",
+        "source_snapshot_id",
+        "notes"
+      ],
+      "description": "Only A backend/authorized human can write approval records; model cannot approve."
+    },
+    "AuditEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "audit_id": {
+          "type": "string"
+        },
+        "action_id": {
+          "type": "string"
+        },
+        "action_type": {
+          "type": "string",
+          "enum": [
+            "JIRA_CREATE",
+            "JIRA_UPDATE",
+            "JIRA_COMMENT",
+            "REPORT_RELEASE",
+            "BASELINE_CHANGE"
+          ]
+        },
+        "approval_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "actor_id": {
+          "type": "string"
+        },
+        "occurred_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "SUCCESS",
+            "FAILED",
+            "BLOCKED"
+          ]
+        },
+        "before_hash": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "after_hash": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "details": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "audit_id",
+        "action_id",
+        "action_type",
+        "approval_id",
+        "actor_id",
+        "occurred_at",
+        "outcome",
+        "before_hash",
+        "after_hash",
+        "details"
+      ],
+      "description": "Backend generated audit log; log every write including failure and rejected attempts where applicable."
+    },
+    "FairnessCheck": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "check_id": {
+          "type": "string"
+        },
+        "method": {
+          "type": "string"
+        },
+        "source_snapshot_id": {
+          "type": "string"
+        },
+        "groups_considered": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "mitigation_actions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          }
+        }
+      },
+      "required": [
+        "check_id",
+        "method",
+        "source_snapshot_id",
+        "groups_considered",
+        "findings",
+        "mitigation_actions",
+        "source_refs"
+      ]
+    },
+    "Incident": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "incident_id": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "OPEN",
+            "RESOLVED"
+          ]
+        },
+        "corrective_action": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "related_run_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "incident_id",
+        "description",
+        "status",
+        "corrective_action",
+        "related_run_id"
+      ]
+    },
+    "GovernanceBundle": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "approvals": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Approval"
+          }
+        },
+        "audit_entries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AuditEntry"
+          }
+        },
+        "fairness_checks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FairnessCheck"
+          }
+        },
+        "incidents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Incident"
+          }
+        }
+      },
+      "required": [
+        "approvals",
+        "audit_entries",
+        "fairness_checks",
+        "incidents"
+      ]
+    },
+    "RunMetrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "api_calls": {
+          "type": "integer"
+        },
+        "input_tokens": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "output_tokens": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "estimated_cost_usd": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "elapsed_seconds": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "api_calls",
+        "input_tokens",
+        "output_tokens",
+        "estimated_cost_usd",
+        "elapsed_seconds"
+      ],
+      "description": "Runtime-generated metrics for required cost/time evaluation. Null means unmeasured; do not fabricate."
+    },
+    "ProcessError": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "recoverable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "recoverable"
+      ]
+    },
+    "Request": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "question": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "requested_report_type": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "WEEKLY_COMMITTEE",
+            "MONTHLY_GRANT",
+            null
+          ]
+        },
+        "reporting_period": {
+          "$ref": "#/$defs/Period"
+        },
+        "target_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "instructions": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "max_review_rounds": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "question",
+        "requested_report_type",
+        "reporting_period",
+        "target_ids",
+        "instructions",
+        "max_review_rounds"
+      ]
+    }
+  }
+}

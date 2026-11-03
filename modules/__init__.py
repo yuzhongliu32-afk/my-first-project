@@ -1,0 +1,1 @@
+"""Team module adapter namespace."""

@@ -1,0 +1,23 @@
+{
+  "schema_version": "harbourline.v1",
+  "message_id": "FIXTURE-REQUEST-001",
+  "run_id": "FIXTURE-RUN-001",
+  "project_id": "HARBOURLINE",
+  "producer": "A",
+  "recipient": "B",
+  "operation": "PLAN_RISK",
+  "status": "SUCCESS",
+  "source_snapshot_id": "FIXTURE-SNAPSHOT-NO-PROJECT-DATA",
+  "request": {
+    "question": null,
+    "requested_report_type": null,
+    "reporting_period": {
+      "start_date": null,
+      "end_date": null
+    },
+    "target_ids": [],
+    "instructions": "Integration fixture only. Not a project plan or assessed business result.",
+    "max_review_rounds": 2
+  },
+  "source_evidence": []
+}

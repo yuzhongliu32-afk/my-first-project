@@ -1,0 +1,784 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "harbourline.v1 — B module exchange",
+  "description": "Internal validated JSON data contract; not a model-generated whole-system output.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "enum": [
+        "harbourline.v1"
+      ]
+    },
+    "message_id": {
+      "type": "string"
+    },
+    "run_id": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "producer": {
+      "type": "string",
+      "enum": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    "recipient": {
+      "type": "string",
+      "enum": [
+        "A",
+        "B",
+        "C",
+        "HUMAN"
+      ]
+    },
+    "operation": {
+      "type": "string",
+      "enum": [
+        "PLAN_RISK",
+        "MEMORY_QUERY",
+        "GENERATE_REPORTS",
+        "CRITIC_REVIEW",
+        "JIRA_SYNC",
+        "CHANGE_REVIEW",
+        "FULL_RUN"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "SUCCESS",
+        "PARTIAL",
+        "BLOCKED",
+        "FAILED"
+      ]
+    },
+    "source_snapshot_id": {
+      "type": "string"
+    },
+    "request": {
+      "$ref": "#/$defs/Request"
+    },
+    "source_evidence": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/SourceRef"
+      }
+    },
+    "planning": {
+      "$ref": "#/$defs/PlanningBundle"
+    },
+    "risk": {
+      "$ref": "#/$defs/RiskBundle"
+    },
+    "metrics": {
+      "$ref": "#/$defs/RunMetrics"
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ProcessError"
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "message_id",
+    "run_id",
+    "project_id",
+    "producer",
+    "recipient",
+    "operation",
+    "status",
+    "source_snapshot_id",
+    "request",
+    "source_evidence",
+    "planning",
+    "risk",
+    "metrics",
+    "errors"
+  ],
+  "$defs": {
+    "Period": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "start_date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "end_date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "start_date",
+        "end_date"
+      ],
+      "description": "Use ISO dates YYYY-MM-DD when confirmed; null if unknown. Verify dates in backend."
+    },
+    "SourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "document_id": {
+          "type": "string"
+        },
+        "document_version": {
+          "type": "string"
+        },
+        "source_type": {
+          "type": "string",
+          "enum": [
+            "BRIEF",
+            "DATA_PACK",
+            "SPONSOR_ANSWER"
+          ]
+        },
+        "page": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "line_start": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "line_end": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "chunk_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "quote": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "document_id",
+        "document_version",
+        "source_type",
+        "page",
+        "line_start",
+        "line_end",
+        "chunk_id",
+        "quote"
+      ],
+      "description": "Physical page/line reference into versioned authoritative material; back-end verifies its validity and quote. Null page allowed for nonpaged sources; line required for evidence claims."
+    },
+    "SponsorQuestion": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "question_id": {
+          "type": "string"
+        },
+        "question": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "OPEN",
+            "ANSWERED",
+            "DECLINED"
+          ]
+        },
+        "answer": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "answer_sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          }
+        }
+      },
+      "required": [
+        "question_id",
+        "question",
+        "reason",
+        "status",
+        "answer",
+        "answer_sources"
+      ]
+    },
+    "ScopeItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "scope_id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "IN_SCOPE",
+            "OUT_OF_SCOPE",
+            "UNRESOLVED"
+          ]
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          }
+        }
+      },
+      "required": [
+        "scope_id",
+        "title",
+        "description",
+        "status",
+        "source_refs"
+      ]
+    },
+    "WBSDictionary": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "work_description": {
+          "type": "string"
+        },
+        "deliverables": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "acceptance_criteria": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "exclusions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "assumptions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "owner": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "work_description",
+        "deliverables",
+        "acceptance_criteria",
+        "exclusions",
+        "assumptions",
+        "owner"
+      ]
+    },
+    "WBSItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "wbs_id": {
+          "type": "string"
+        },
+        "parent_wbs_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "title": {
+          "type": "string"
+        },
+        "level": {
+          "type": "integer"
+        },
+        "dictionary": {
+          "$ref": "#/$defs/WBSDictionary"
+        },
+        "scope_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "predecessor_wbs_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "PROPOSED",
+            "CONFIRMED",
+            "UNRESOLVED"
+          ]
+        }
+      },
+      "required": [
+        "wbs_id",
+        "parent_wbs_id",
+        "title",
+        "level",
+        "dictionary",
+        "scope_ids",
+        "predecessor_wbs_ids",
+        "source_refs",
+        "status"
+      ]
+    },
+    "Milestone": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "milestone_id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "relative_timing": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "calendar_date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "predecessor_milestone_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "related_wbs_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "PROPOSED",
+            "CONFIRMED",
+            "UNRESOLVED"
+          ]
+        }
+      },
+      "required": [
+        "milestone_id",
+        "title",
+        "relative_timing",
+        "calendar_date",
+        "predecessor_milestone_ids",
+        "related_wbs_ids",
+        "source_refs",
+        "status"
+      ]
+    },
+    "PlanningBundle": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "scope_statement": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sponsor_questions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SponsorQuestion"
+          }
+        },
+        "scope_items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ScopeItem"
+          }
+        },
+        "wbs_items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WBSItem"
+          }
+        },
+        "milestones": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Milestone"
+          }
+        }
+      },
+      "required": [
+        "scope_statement",
+        "sponsor_questions",
+        "scope_items",
+        "wbs_items",
+        "milestones"
+      ]
+    },
+    "RiskRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "risk_id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "probability": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "impact": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "score": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "owner": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "trigger": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "response_plan": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "related_wbs_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "related_milestone_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "OPEN",
+            "MONITORING",
+            "UNRESOLVED"
+          ]
+        }
+      },
+      "required": [
+        "risk_id",
+        "title",
+        "description",
+        "probability",
+        "impact",
+        "score",
+        "owner",
+        "trigger",
+        "response_plan",
+        "related_wbs_ids",
+        "related_milestone_ids",
+        "source_refs",
+        "status"
+      ],
+      "description": "Risk scoring scale and arithmetic validated by B/A; source evidence and assumptions retained."
+    },
+    "WhatIf": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "scenario_id": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "assumptions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "baseline_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "schedule_impact_days": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "cost_impact_sgd": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "calculation_basis": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "affected_wbs_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "affected_risk_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          }
+        },
+        "estimate_status": {
+          "type": "string",
+          "enum": [
+            "QUANTIFIED_ASSUMPTION",
+            "UNRESOLVED"
+          ]
+        }
+      },
+      "required": [
+        "scenario_id",
+        "description",
+        "assumptions",
+        "baseline_id",
+        "schedule_impact_days",
+        "cost_impact_sgd",
+        "calculation_basis",
+        "affected_wbs_ids",
+        "affected_risk_ids",
+        "source_refs",
+        "estimate_status"
+      ]
+    },
+    "RiskBundle": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "risks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RiskRecord"
+          }
+        },
+        "scenarios": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WhatIf"
+          }
+        }
+      },
+      "required": [
+        "risks",
+        "scenarios"
+      ]
+    },
+    "RunMetrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "api_calls": {
+          "type": "integer"
+        },
+        "input_tokens": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "output_tokens": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "estimated_cost_usd": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "elapsed_seconds": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "api_calls",
+        "input_tokens",
+        "output_tokens",
+        "estimated_cost_usd",
+        "elapsed_seconds"
+      ],
+      "description": "Runtime-generated metrics for required cost/time evaluation. Null means unmeasured; do not fabricate."
+    },
+    "ProcessError": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "recoverable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "recoverable"
+      ]
+    },
+    "Request": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "question": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "requested_report_type": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "WEEKLY_COMMITTEE",
+            "MONTHLY_GRANT",
+            null
+          ]
+        },
+        "reporting_period": {
+          "$ref": "#/$defs/Period"
+        },
+        "target_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "instructions": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "max_review_rounds": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "question",
+        "requested_report_type",
+        "reporting_period",
+        "target_ids",
+        "instructions",
+        "max_review_rounds"
+      ]
+    }
+  }
+}
