@@ -1,0 +1,9 @@
+{
+  "output_type": "LIVE_API_TEST",
+  "model_id": "gpt-5.4-mini",
+  "run_id": "run-test-001",
+  "source_snapshot_id": "ffc2af0d44ce",
+  "operation": "MEMORY_QUERY",
+  "status": "SUCCESS",
+  "notes": "Token usage and actual cost not yet measured."
+}

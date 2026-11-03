@@ -1,0 +1,150 @@
+{
+  "schema_version": "harbourline.v1",
+  "message_id": "911939c3-0d6a-4580-a3fa-12da578782d5",
+  "run_id": "run-test-001",
+  "project_id": "HARBOURLINE",
+  "producer": "C",
+  "recipient": "A",
+  "operation": "MEMORY_QUERY",
+  "status": "SUCCESS",
+  "source_snapshot_id": "ffc2af0d44ce",
+  "request": {
+    "question": "What is the approved refurbishment budget?",
+    "requested_report_type": null,
+    "reporting_period": {
+      "start_date": null,
+      "end_date": null
+    },
+    "target_ids": [],
+    "instructions": null,
+    "max_review_rounds": 2
+  },
+  "source_evidence": [
+    {
+      "document_id": "data_pack/01_EDC_minutes_Jan-Mar2027.txt",
+      "document_version": "43d89b0a15b2",
+      "source_type": "DATA_PACK",
+      "page": null,
+      "line_start": 15,
+      "line_end": 20,
+      "chunk_id": "data_pack/01_EDC_minutes_Jan-Mar2027.txt:PNone:L15-20",
+      "quote": "Site possession given Monday 4 January 2027. Consultancy and authority fees are\nestimated at S$0.90 million, held outside the contract.\n1.2 Ms Ong noted the approved budget of S$18.5 million leaves about S$1.18 million\nonce fees are deducted, and asked whether this is to be treated as contingency.\nNo decision recorded.\n1.3 The Chair reaffirmed the Council's commitment that the Hub REMAINS OPEN to"
+    },
+    {
+      "document_id": "brief.pdf",
+      "document_version": "8084dcf9cf72",
+      "source_type": "BRIEF",
+      "page": 3,
+      "line_start": 24,
+      "line_end": 30,
+      "chunk_id": "brief.pdf:P3:L24-30",
+      "quote": "a community kitchen and food court refresh\na rooftop community garden\nfull barrier-free access, new lifts and replacement of M&E systems\nBudget and time. Approved budget is S$18.5 million. Sixty per cent is funded by a\ncentral grant released in tranches against milestones; grant conditions will follow.\nWorks are to complete within 22 months, with the Hub fully open by the fourth"
+    }
+  ],
+  "memory": {
+    "query": "What is the approved refurbishment budget?",
+    "answer": "The approved refurbishment budget is S$18.5 million.",
+    "answer_status": "SUPPORTED",
+    "fact_records": [
+      {
+        "fact_id": "C-FACT-001",
+        "statement": "The approved refurbishment budget for Harbourline Community Hub is S$18.5 million.",
+        "status": "SUPPORTED",
+        "source_refs": [
+          {
+            "document_id": "data_pack/01_EDC_minutes_Jan-Mar2027.txt",
+            "document_version": "43d89b0a15b2",
+            "source_type": "DATA_PACK",
+            "page": null,
+            "line_start": 15,
+            "line_end": 20,
+            "chunk_id": "data_pack/01_EDC_minutes_Jan-Mar2027.txt:PNone:L15-20",
+            "quote": "Site possession given Monday 4 January 2027. Consultancy and authority fees are\nestimated at S$0.90 million, held outside the contract.\n1.2 Ms Ong noted the approved budget of S$18.5 million leaves about S$1.18 million\nonce fees are deducted, and asked whether this is to be treated as contingency.\nNo decision recorded.\n1.3 The Chair reaffirmed the Council's commitment that the Hub REMAINS OPEN to"
+          },
+          {
+            "document_id": "brief.pdf",
+            "document_version": "8084dcf9cf72",
+            "source_type": "BRIEF",
+            "page": 3,
+            "line_start": 24,
+            "line_end": 30,
+            "chunk_id": "brief.pdf:P3:L24-30",
+            "quote": "a community kitchen and food court refresh\na rooftop community garden\nfull barrier-free access, new lifts and replacement of M&E systems\nBudget and time. Approved budget is S$18.5 million. Sixty per cent is funded by a\ncentral grant released in tranches against milestones; grant conditions will follow.\nWorks are to complete within 22 months, with the Hub fully open by the fourth"
+          }
+        ],
+        "related_wbs_ids": [],
+        "related_milestone_ids": [],
+        "related_risk_ids": [],
+        "related_scope_ids": []
+      },
+      {
+        "fact_id": "C-FACT-002",
+        "statement": "A grant will fund 60% of the approved budget.",
+        "status": "SUPPORTED",
+        "source_refs": [
+          {
+            "document_id": "brief.pdf",
+            "document_version": "8084dcf9cf72",
+            "source_type": "BRIEF",
+            "page": 3,
+            "line_start": 24,
+            "line_end": 30,
+            "chunk_id": "brief.pdf:P3:L24-30",
+            "quote": "a community kitchen and food court refresh\na rooftop community garden\nfull barrier-free access, new lifts and replacement of M&E systems\nBudget and time. Approved budget is S$18.5 million. Sixty per cent is funded by a\ncentral grant released in tranches against milestones; grant conditions will follow.\nWorks are to complete within 22 months, with the Hub fully open by the fourth"
+          },
+          {
+            "document_id": "data_pack/07_Grant_milestone_tranche_schedule.txt",
+            "document_version": "3b5a1ce45544",
+            "source_type": "DATA_PACK",
+            "page": null,
+            "line_start": 1,
+            "line_end": 7,
+            "chunk_id": "data_pack/07_Grant_milestone_tranche_schedule.txt:PNone:L1-7",
+            "quote": "NEIGHBOURHOOD RENEWAL FUND (NRF) — LETTER OF GRANT CONDITIONS (EXTRACT)\nRecipient: Harbourline Town Council\nProject: Harbourline Community Hub Refurbishment\nReference: NRF/2026/HCH-017 · Issued 19 January 2027\n1. GRANT AMOUNT\n1.1 The grant is 60% of eligible project cost."
+          }
+        ],
+        "related_wbs_ids": [],
+        "related_milestone_ids": [],
+        "related_risk_ids": [],
+        "related_scope_ids": []
+      }
+    ],
+    "conflicts": [],
+    "decisions": [],
+    "citations": [
+      {
+        "document_id": "data_pack/01_EDC_minutes_Jan-Mar2027.txt",
+        "document_version": "43d89b0a15b2",
+        "source_type": "DATA_PACK",
+        "page": null,
+        "line_start": 15,
+        "line_end": 20,
+        "chunk_id": "data_pack/01_EDC_minutes_Jan-Mar2027.txt:PNone:L15-20",
+        "quote": "Site possession given Monday 4 January 2027. Consultancy and authority fees are\nestimated at S$0.90 million, held outside the contract.\n1.2 Ms Ong noted the approved budget of S$18.5 million leaves about S$1.18 million\nonce fees are deducted, and asked whether this is to be treated as contingency.\nNo decision recorded.\n1.3 The Chair reaffirmed the Council's commitment that the Hub REMAINS OPEN to"
+      },
+      {
+        "document_id": "brief.pdf",
+        "document_version": "8084dcf9cf72",
+        "source_type": "BRIEF",
+        "page": 3,
+        "line_start": 24,
+        "line_end": 30,
+        "chunk_id": "brief.pdf:P3:L24-30",
+        "quote": "a community kitchen and food court refresh\na rooftop community garden\nfull barrier-free access, new lifts and replacement of M&E systems\nBudget and time. Approved budget is S$18.5 million. Sixty per cent is funded by a\ncentral grant released in tranches against milestones; grant conditions will follow.\nWorks are to complete within 22 months, with the Hub fully open by the fourth"
+      }
+    ],
+    "open_questions": []
+  },
+  "reporting": {
+    "reports": [],
+    "critic_reviews": []
+  },
+  "metrics": {
+    "api_calls": 2,
+    "input_tokens": null,
+    "output_tokens": null,
+    "estimated_cost_usd": null,
+    "elapsed_seconds": 3.876
+  },
+  "errors": []
+}
