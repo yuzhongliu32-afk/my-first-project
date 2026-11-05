@@ -1,3 +1,5 @@
+> Historical starter document. For the integrated branch, use [INTEGRATION_RUNBOOK.md](INTEGRATION_RUNBOOK.md) and [INTEGRATION_VERIFICATION.md](INTEGRATION_VERIFICATION.md).
+
 # Shared repository workflow
 
 The repository should be private. Members need their own GitHub account and an

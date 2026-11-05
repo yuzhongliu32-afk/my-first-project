@@ -1,3 +1,5 @@
+> Historical starter document. For the integrated branch, use [INTEGRATION_RUNBOOK.md](INTEGRATION_RUNBOOK.md) and [INTEGRATION_VERIFICATION.md](INTEGRATION_VERIFICATION.md).
+
 # Team handoff agreement — proposed for confirmation
 
 Platform: Python 3.11+ functions in one backend. OpenAI API is the team's selected

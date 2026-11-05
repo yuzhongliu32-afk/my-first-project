@@ -1,0 +1,23 @@
+{
+  "schema_version": "harbourline.v1",
+  "message_id": "B-LIVE-REQUEST-001",
+  "run_id": "B-REAL-RUN-001",
+  "project_id": "HARBOURLINE",
+  "producer": "A",
+  "recipient": "B",
+  "operation": "PLAN_RISK",
+  "status": "SUCCESS",
+  "source_snapshot_id": "BRIEF-2026-10-10-ONLY",
+  "request": {
+    "question": null,
+    "requested_report_type": null,
+    "reporting_period": {
+      "start_date": null,
+      "end_date": null
+    },
+    "target_ids": [],
+    "instructions": "Brief-only planning and risk DRAFT. No Sponsor baseline, no Data Pack, no Jira writes.",
+    "max_review_rounds": 2
+  },
+  "source_evidence": []
+}
