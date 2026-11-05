@@ -1,57 +1,79 @@
-# MA6094 Harbourline — Team Integration Starter
+# MA6094 Harbourline — Integrated A/B/C Backend
 
-Member A's shared contract validation and Python integration scaffold for the team.
-Original A/B/Common/Full schemas are preserved byte-for-byte. C's exchange schema
-is derived from Full and explicitly pending C's confirmation.
+Member B's planning/risk implementation and Member C's memory/writer/critic
+contracts are integrated into A's Python orchestrator. Jira approvals, readback,
+audit export and change invalidation are implemented for local trusted operators.
+The public Sites preview is separate; this backend is not deployed behind it.
 
-## Quick start
+## Start locally
+
+Python 3.11+ (tested with Python 3.12):
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-# Windows PowerShell: .venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
-python -m harbourline check-schemas
+python scripts/audit_schemas.py
 python -m unittest discover -s tests -v
-python -m harbourline demo
 ```
 
-Outputs are written to ignored `.local/demo/`: full_output.json and handoff_trace.json.
-The demo really invokes B -> A validation -> C -> A aggregation automatically,
-but uses **labelled fixtures**. It makes **zero AI/Jira calls** and is not evidence
-that the assessed business workflows have been completed.
-
-Validate a real module output with:
+To reproduce a **scripted integration test**, first prepare the exact supplied brief:
 
 ```bash
-python -m harbourline validate B path/to/b_output.json
-python -m harbourline validate C path/to/c_output.json
+python scripts/prepare_evidence.py --brief "/path/to/MA6094 Capstone Brief.pdf"
+python -m harbourline.operations run \
+  --start 2027-03-01 --end 2027-03-31 --cutoff 2027-04-06 \
+  --scripted-test
 ```
 
-See [team handoff](docs/TEAM_HANDOFF.md) for function signatures and deliverables,
-[schema review](docs/SCHEMA_REVIEW.md) for findings and scope,
-and [collaboration](docs/COLLABORATION.md) for uploading code.
+The 2027 dates above select a **fictional course simulation**, not current real
+project progress. The test really runs B's rules engine and the new C orchestration,
+but model responses are scripted and Jira is not contacted. Test reports cannot be
+released or sent to real Jira through the CLI. `.local/` holds output and logs.
 
-## Layout
+## Live model and Jira setup
 
-- schemas/: four original contracts plus derived C projection.
-- harbourline/: validation, aggregation, automatic fixture handoff, CLI.
-- modules/member_b/ and modules/member_c/: replace fixture adapters with team code.
-- examples/: integration fixtures only; not actual project evidence or model results.
-- tests/: boundary, cross-field and automatic handoff checks.
-- .env.example: empty placeholders only; no credentials or auto-loaded secrets.
+See [RUNBOOK](docs/INTEGRATION_RUNBOOK.md) for environment configuration, source
+availability dates, live model mode, exact human approvals and Jira configuration.
+No API key is included. `.env.example` is a field guide, not an automatically loaded
+credential file. The live dependencies are in requirements-live.txt.
 
-## Current scope
+## Data flow
 
-Implemented: schema review tooling, additional boundary checks, immutable input
-handoff, aggregation, fixtures and tests. Not implemented: real OpenAI agents,
-C retrieval, Jira calls/readback, human authentication/approval storage, production
-shared persistence or the full capstone system. The existing public preview is a
-separate demo, not this Python backend. Do not describe them as fully integrated.
+```mermaid
+flowchart LR
+  S[Versioned local evidence] --> B[B planning and risk]
+  B --> A[A schema and source checks]
+  A --> C[C retrieval and report writer]
+  C --> K[Independent critic and bounded revision]
+  K --> H[Named local operator review]
+  H --> J[Jira create/update and dependencies]
+  J --> R[Readback and audit]
+  X[Change event] --> T[Mark outputs stale and invalidate approvals]
+  T --> B
+```
 
-Do not put API keys or private source documents in the repository. Dependencies
-are installed locally; the starter does not perform billable operations. Model
-and free-path availability must be verified before final coursework claims.
+Both audiences use the same verified snapshot and B context; their reporting
+periods are configurable separately. Original four team schemas remain unchanged.
+C's projection is still derived from Full and retains the team's data contract.
 
-AI assistance was used to prepare this scaffold; members must review and test
-it with their actual implementations and disclose assistance as required.
+## Scope and evidence
+
+- Original B branch: member-b-planning-risk, commit 826336f8bc1bb80f7a3de527a00c91f2a1b5e69f.
+- Original C branch: feature/member-c, commit 98df55dc9f58aa35c4758b2da78404fec75e021c.
+- New C service reuses C's structured draft schemas and connects the full
+  writer/critic/revision workflow without shared mutable report files.
+- Lexical retrieval is available without embeddings; an optional portable semantic
+  index preserves the semantic retrieval route (see runbook).
+- B's deterministic proposal engine is the zero-model-call baseline. Optional
+  `--plan-mode live` asks a model to refine its plan/risk output and validates it.
+- [Verification](docs/INTEGRATION_VERIFICATION.md) records exactly what was tested.
+- OpenAI/Jira credentials, the full Data Pack and sponsor responses were unavailable
+  during integration. No successful live OpenAI/Jira run or free-path verification
+  is claimed. Team API samples remain historical evidence from the original C PR.
+- The local approval CLI trusts the OS account. It is not a public multi-user auth
+  service. Keep it private; do not expose arbitrary `aggregate(a,b,c)` or governance
+  methods as network endpoints. Audit hashes detect changes, not a hostile OS owner.
+
+AI assistance was used for the integration. Team review and the assessed business
+case evaluation, fairness work, documents and presentation remain separate tasks.

@@ -1,3 +1,5 @@
+> Historical starter document. For the integrated branch, use [INTEGRATION_RUNBOOK.md](INTEGRATION_RUNBOOK.md) and [INTEGRATION_VERIFICATION.md](INTEGRATION_VERIFICATION.md).
+
 # Preparation verification
 
 Date: 2026-11-03 (Asia/Singapore).
