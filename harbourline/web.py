@@ -172,7 +172,14 @@ def create_app(config=None):
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{escape(title)} | Harbourline</title>
 <style>
-body{{max-width:760px;margin:2rem auto;padding:0 1.1rem;font:17px/1.6 system-ui;color:#14263a}}
+body{{max-width:980px;margin:2rem auto;padding:0 1.1rem;font:16px/1.6 system-ui;color:#14263a;background:#f2f6f5}}
+header,.module{{background:white;padding:1.25rem;border-radius:12px;border:1px solid #d6e2df}}
+header h1{{margin:.1rem 0}} header p{{margin:.2rem 0 .7rem}}
+.actions,.stats{{display:flex;gap:.7rem;flex-wrap:wrap}} .stats{{margin:1rem 0}}
+.stats div{{background:white;border:1px solid #d6e2df;border-radius:8px;padding:.55rem .9rem;min-width:115px}}
+.stats strong,.stats span{{display:block}} .stats strong{{font-size:1.5rem;color:#175d52}}
+.result{{padding:.6rem 1rem;background:#e5f4ed;border-left:4px solid #247365}}
+dt{{font-weight:650}} dd{{margin:0 0 .4rem}} button{{background:#175d52;color:white;border:0;border-radius:6px;cursor:pointer}}
 input,button{{font:inherit;padding:.45rem .7rem}} label{{display:block;margin:.65rem 0}}
 a{{color:#184978}} header{{border-bottom:1px solid #c8d3dd;margin-bottom:1rem}}
 nav{{display:flex;gap:.45rem;flex-wrap:wrap}} .tab{{padding:.45rem .75rem;border:1px solid #c8d3dd;border-radius:6px;text-decoration:none}}
@@ -203,7 +210,7 @@ pre{{white-space:pre-wrap;overflow-wrap:anywhere;background:#edf1f5;padding:1rem
     public_lock = Lock()
     public_baseline = None
 
-    def public_results():
+    def public_results(*, regenerate=False):
         nonlocal public_baseline
         from modules.member_b.adapter import run as plan
         from modules.member_b.data_pack import PACK_SNAPSHOT, load_pack_sources
@@ -212,13 +219,16 @@ pre{{white-space:pre-wrap;overflow-wrap:anywhere;background:#edf1f5;padding:1rem
         from .contracts import validate, verify_evidence
 
         with public_lock:
-            if public_baseline is not None:
+            if public_baseline is not None and not regenerate:
                 return public_baseline
             inputs = root / 'inputs'
             brief, pack = inputs / 'Harbourline_Brief.pdf', inputs / 'Harbourline_Data_Pack.zip'
             if not brief.is_file() or not pack.is_file():
                 return None
-            registry, _ = prepare_sources(brief, pack, root=root / 'public-baseline')
+            baseline_root = root / 'public-baseline'
+            registry = baseline_root / 'data/brief_source_registry.json'
+            if public_baseline is None:
+                registry, _ = prepare_sources(brief, pack, root=baseline_root)
             pack_dir = registry.parent / 'Harbourline_Data_Pack'
             payload = json.loads((ROOT / 'examples/request.json').read_text())
             payload.update(recipient='B', operation='PLAN_RISK', source_snapshot_id=PACK_SNAPSHOT)
@@ -236,7 +246,8 @@ pre{{white-space:pre-wrap;overflow-wrap:anywhere;background:#edf1f5;padding:1rem
 
     @app.get('/')
     def index():
-        result = public_results()
+        regenerate = request.args.get('run') == '1'
+        result = public_results(regenerate=regenerate)
         modules = {'planning': 'Planning', 'risks': 'Risk register', 'what-if': 'What-if',
                    'reporting': 'Reports', 'jira': 'Jira & approvals'}
         tab = request.args.get('view', 'planning')
@@ -277,7 +288,26 @@ pre{{white-space:pre-wrap;overflow-wrap:anywhere;background:#edf1f5;padding:1rem
                     lambda row: 'Score: ' + str(row['score'] if row['score'] is not None else 'pending review')
                     + ' · ' + row['description'])
         elif result and tab == 'what-if':
-            content = '<p>Compare proposed impacts. These are conditional estimates from the planning model.</p>'
+            from modules.member_b.change import analyse_change
+            choices = {'LIFT_DELAY': 'Lift supplier delay', 'CHILDCARE_CHANGE': 'Childcare handover change',
+                       'GRANT_CHANGE': 'Grant conditions change', 'ACCESS_CHANGE': 'Accessibility requirements change'}
+            selected = request.args.get('event', '')
+            options = ''.join(f'<option value="{key}"' + (' selected' if selected == key else '')
+                              + f'>{title}</option>' for key, title in choices.items())
+            content = f'''<p>Choose a hypothetical change to calculate which work, milestones and risks need review.</p>
+<form method="get"><input type="hidden" name="view" value="what-if">
+<label>Change scenario <select name="event">{options}</select></label>
+<button>Calculate impact</button></form>'''
+            if selected in choices:
+                impact = analyse_change({'event_id': 'PUBLIC-WHATIF', 'change_type': selected, 'hypothetical': True},
+                                        result['planning'], result['risk'])
+                groups = (('Work items', 'stale_wbs_ids'), ('Milestones', 'stale_milestone_ids'),
+                          ('Risks', 'stale_risk_ids'), ('Reports to review', 'stale_reports'))
+                content += '<div class="result"><h3>Impact · ' + choices[selected] + '</h3><dl>'
+                content += ''.join(f'<dt>{label}</dt><dd>{escape(", ".join(impact[key]) or "None identified")}</dd>'
+                                   for label, key in groups)
+                content += '</dl><p>Hypothetical analysis. The project baseline remains a proposal.</p></div>'
+            content += '<h3>Existing schedule and cost estimates</h3>'
             for case in result['risk']['scenarios']:
                 timing, cost = case['schedule_impact_days'], case['cost_impact_sgd']
                 impact = f'{timing} days · S${cost:,.0f}' if timing is not None and cost is not None else 'Not quantified'
@@ -290,10 +320,22 @@ pre{{white-space:pre-wrap;overflow-wrap:anywhere;background:#edf1f5;padding:1rem
         elif tab == 'reporting':
             content = '<p>Weekly committee update and monthly grant report.</p><p>Live reports are pending. The current OpenAI project is rate-limited.</p>'
         elif tab == 'jira':
-            content = '<p>Planning items are previewed before any Jira write. An authorised team member reviews the batch, then the system verifies Jira read-back.</p><p><a href="/workspace">Open team operations</a></p>'
+            content = '<p>Planning items are previewed before any Jira write. An authorised team member reviews the batch, then the system verifies Jira read-back.</p>'
 
+        counts = ''
+        if result:
+            plan, risks = result['planning'], result['risk']['risks']
+            counts = '<div class="stats">' + ''.join(
+                f'<div><strong>{count}</strong><span>{name}</span></div>'
+                for count, name in ((len(plan['wbs_items']), 'Work items'),
+                                    (len(plan['milestones']), 'Milestones'), (len(risks), 'Risks'))
+            ) + '</div>'
+        banner = '<p class="result" role="status">Planning run completed using the official Data Pack.</p>' if regenerate and result else ''
         return document('Public project workspace', f'''<header><p>MA6094 · Group A</p>
-<h1>Harbourline Community Hub</h1><p>Project planning and risk workspace</p></header>
+<h1>Harbourline Community Hub</h1><p>Run the planning model, inspect project risks, or assess a change.</p>
+<form method="get" class="actions"><button name="run" value="1">Run planning &amp; risk</button>
+<a class="tab" href="/?view=what-if">Analyse a change</a></form></header>
+{banner}{counts}
 <nav aria-label="Project modules">{nav}</nav>
 <section class="module"><h2>{modules[tab]}</h2>{search}{content}</section>''')
 
