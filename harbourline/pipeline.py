@@ -9,7 +9,7 @@ from uuid import uuid4
 from datetime import datetime,timezone
 
 
-def run_project(common,library_path,*,cutoff,plan_mode='rules',b_context=None,c_gateway=None,b_gateway=None,semantic_index=None,reporting_periods=None):
+def run_project(common,library_path,*,cutoff,plan_mode='rules',b_context=None,c_gateway=None,b_gateway=None,semantic_index=None,reporting_periods=None,include_reports=True):
     from modules.member_b.adapter import run as b_run
     from modules.member_c.adapter import run as c_run
     started=monotonic();lib=EvidenceLibrary(library_path);request=deepcopy(common)
@@ -40,18 +40,28 @@ def run_project(common,library_path,*,cutoff,plan_mode='rules',b_context=None,c_
         b=refine(b,lib,b_gateway or ModelGateway())
     record('B_OUTPUT_VALIDATED',b)
     req_c={**deepcopy(request),'recipient':'C','operation':'GENERATE_REPORTS'}
-    context={'source_snapshot_id':lib.snapshot,'evidence_library':str(lib.path),'as_of_date':cutoff,
-             'planning':deepcopy(b['planning']),'risk':deepcopy(b['risk']),'b_source_evidence':deepcopy(b['source_evidence'])}
-    if reporting_periods:context['reporting_periods']=deepcopy(reporting_periods)
-    if semantic_index:context['semantic_index']=str(semantic_index)
-    if c_gateway:context['model_gateway']=c_gateway
-    record('AUTOMATIC_B_TO_C_HANDOFF',{'planning':b['planning'],'risk':b['risk']})
-    c=c_run(req_c,context)
-    validate(c,'C',expected_producer='C');verify_evidence(c,lib.line_registry())
-    for ref in _walk(c):
-        if 'document_id'in ref and 'source_type'in ref:lib.verify(ref,cutoff)
-    record('C_WRITER_CRITIC_OUTPUT_VALIDATED',c)
-    a=empty_backend(request);a['integration']['handoff_completed']=True
+    if include_reports:
+        context={'source_snapshot_id':lib.snapshot,'evidence_library':str(lib.path),'as_of_date':cutoff,
+                 'planning':deepcopy(b['planning']),'risk':deepcopy(b['risk']),'b_source_evidence':deepcopy(b['source_evidence'])}
+        if reporting_periods:context['reporting_periods']=deepcopy(reporting_periods)
+        if semantic_index:context['semantic_index']=str(semantic_index)
+        if c_gateway:context['model_gateway']=c_gateway
+        record('AUTOMATIC_B_TO_C_HANDOFF',{'planning':b['planning'],'risk':b['risk']})
+        c=c_run(req_c,context)
+        validate(c,'C',expected_producer='C');verify_evidence(c,lib.line_registry())
+        for ref in _walk(c):
+            if 'document_id'in ref and 'source_type'in ref:lib.verify(ref,cutoff)
+        record('C_WRITER_CRITIC_OUTPUT_VALIDATED',c)
+    else:
+        from modules.member_c.service import empty_memory
+
+        c={**req_c, 'message_id':'C-'+str(uuid4()), 'producer':'C', 'recipient':'A',
+           'status':'PARTIAL', 'source_evidence':[], 'memory':empty_memory(),
+           'reporting':{'reports':[], 'critic_reviews':[]},
+           'metrics':empty_backend(request)['metrics'],
+           'errors':[{'code':'REPORTS_DEFERRED', 'message':'Planning-only run. Reports were not requested.',
+                      'recoverable':True}]}
+    a=empty_backend(request);a['integration']['handoff_completed']=include_reports
     a['integration']['handoff_trace_ids']=[r['trace_id'] for r in trace]
     full=aggregate(a,b,c);full['metrics']['elapsed_seconds']=monotonic()-started
     validate(full,'Full',expected_producer='A')
