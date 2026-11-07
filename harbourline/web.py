@@ -244,13 +244,30 @@ pre{{white-space:pre-wrap;overflow-wrap:anywhere;background:#edf1f5;padding:1rem
             public_baseline = result
             return result
 
+    public_statuses = ('Not started', 'In progress', 'Needs review', 'Done')
+
+    @app.post('/public/work-item')
+    def update_public_work_item():
+        verify_csrf()
+        result = public_results()
+        item_id = request.form.get('item_id', '')
+        status = request.form.get('status', '')
+        note = request.form.get('note', '').strip()
+        if (not result or status not in public_statuses or len(note.encode()) > 100
+                or not any(row['wbs_id'] == item_id for row in result['planning']['wbs_items'])):
+            abort(400)
+        updates = dict(session.get('public_updates', {}))
+        updates[item_id] = {'status': status, 'note': note}
+        session['public_updates'] = updates
+        return redirect('/?view=board', code=303)
+
     @app.get('/')
     def index():
         regenerate = request.args.get('run') == '1'
         result = public_results(regenerate=regenerate)
-        modules = {'planning': 'Planning', 'risks': 'Risk register', 'what-if': 'What-if',
+        modules = {'board': 'Manage work', 'planning': 'Planning', 'risks': 'Risk register', 'what-if': 'What-if',
                    'reporting': 'Reports', 'jira': 'Jira & approvals'}
-        tab = request.args.get('view', 'planning')
+        tab = request.args.get('view', 'board')
         if tab not in modules:
             abort(404)
         query = request.args.get('q', '').strip()[:100]
@@ -273,7 +290,25 @@ pre{{white-space:pre-wrap;overflow-wrap:anywhere;background:#edf1f5;padding:1rem
 
         content = '<p>Planning results are temporarily unavailable.</p>'
         search = ''
-        if result and tab in ('planning', 'risks'):
+        if result and tab == 'board':
+            updates = session.get('public_updates', {})
+            content = '<p>Update work status and add short notes. This browser keeps your changes. The official baseline and Jira are separate.</p>'
+            csrf_token = csrf()
+            for row in result['planning']['wbs_items']:
+                item_id = row['wbs_id']
+                saved = updates.get(item_id, {})
+                status = saved.get('status', 'Not started')
+                note = escape(saved.get('note', ''), quote=True)
+                options = ''.join(f'<option' + (' selected' if status == item else '') + f'>{item}</option>'
+                                  for item in public_statuses)
+                content += f'''<details><summary>{escape(item_id)} · {escape(row['title'])} <small>{status}</small></summary>
+<form method="post" action="/public/work-item">
+<input type="hidden" name="token" value="{csrf_token}">
+<input type="hidden" name="item_id" value="{escape(item_id, quote=True)}">
+<label>Status <select name="status">{options}</select></label>
+<label>Note <input name="note" maxlength="100" value="{note}"></label>
+<button>Save update</button></form></details>'''
+        elif result and tab in ('planning', 'risks'):
             search = f'''<form method="get"><input type="hidden" name="view" value="{tab}">
 <label>Filter by ID or title <input name="q" value="{escape(query, quote=True)}" maxlength="100"></label>
 <button>Search</button> <a href="/?view={tab}">Clear</a></form>'''
@@ -298,6 +333,10 @@ pre{{white-space:pre-wrap;overflow-wrap:anywhere;background:#edf1f5;padding:1rem
 <form method="get"><input type="hidden" name="view" value="what-if">
 <label>Change scenario <select name="event">{options}</select></label>
 <button>Calculate impact</button></form>'''
+            content += '<div class="actions">' + ''.join(
+                f'<a class="tab" href="/?view=what-if&amp;event={key}">{label}</a>'
+                for key, label in choices.items()
+            ) + '</div>'
             if selected in choices:
                 impact = analyse_change({'event_id': 'PUBLIC-WHATIF', 'change_type': selected, 'hypothetical': True},
                                         result['planning'], result['risk'])
@@ -332,9 +371,9 @@ pre{{white-space:pre-wrap;overflow-wrap:anywhere;background:#edf1f5;padding:1rem
             ) + '</div>'
         banner = '<p class="result" role="status">Planning run completed using the official Data Pack.</p>' if regenerate and result else ''
         return document('Public project workspace', f'''<header><p>MA6094 · Group A</p>
-<h1>Harbourline Community Hub</h1><p>Run the planning model, inspect project risks, or assess a change.</p>
+<h1>Harbourline Community Hub</h1><p>Manage work, run the planning model, or assess a change.</p>
 <form method="get" class="actions"><button name="run" value="1">Run planning &amp; risk</button>
-<a class="tab" href="/?view=what-if">Analyse a change</a></form></header>
+<a class="tab" href="/?view=what-if&amp;event=LIFT_DELAY">Analyse a change</a></form></header>
 {banner}{counts}
 <nav aria-label="Project modules">{nav}</nav>
 <section class="module"><h2>{modules[tab]}</h2>{search}{content}</section>''')
