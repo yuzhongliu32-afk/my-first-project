@@ -60,10 +60,13 @@ class Console:
             key for key in MODEL_CONFIG if not os.getenv(key)
         ]
 
-    def run(self, fields):
+    def run(self, fields, *, include_reports=True):
         from datetime import date
 
-        if self.live and (missing := self.missing_inputs()):
+        missing = self.missing_inputs() if include_reports else [
+            path.name for path in (self.brief, self.pack) if not path.is_file()
+        ]
+        if self.live and missing:
             raise GateError('Live run requires ' + ', '.join(missing))
         dates = {key: fields.get(key, default) for key, default in self.dates.items()}
         for value in dates.values():
@@ -110,28 +113,32 @@ class Console:
         )
         full, trace = run_project(
             request, lib.path, cutoff=dates['cutoff'], b_context=context, c_gateway=gateway,
+            include_reports=include_reports,
             reporting_periods={
                 'WEEKLY_COMMITTEE': {'start_date': dates['weekly_start'], 'end_date': dates['weekly_end']},
                 'MONTHLY_GRANT': {'start_date': dates['monthly_start'], 'end_date': dates['monthly_end']},
             },
         )
-        self.store.save(full, mode='LIVE_MODEL_REQUESTED' if self.live else 'SCRIPTED_TEST')
+        mode = 'LIVE_MODEL_REQUESTED' if include_reports else 'LIVE_PLAN_ONLY'
+        self.store.save(full, mode=mode if self.live else 'SCRIPTED_TEST')
         write(self.runtime / 'runs' / full['run_id'] / 'handoff.json', trace)
         self.run_id, self.trace = full['run_id'], trace
         self.batch_id = self.change = None
+        if not include_reports:
+            return 'Planning and risk are ready for Jira preview. Reports were not requested.'
         return 'Workflow finished. Review the actual stage statuses below.'
 
     def act(self, fields):
         action = fields.get('action')
-        if action == 'run':
-            return self.run(fields)
+        if action in ('run', 'plan'):
+            return self.run(fields, include_reports=action == 'run')
         if not self.run_id:
             raise GateError('Run the workflow first')
         if action == 'preview':
             row, full = self.store.artifact(self.run_id)
             if row['stale'] or not full['planning']['wbs_items']:
                 raise GateError('A current plan with WBS items is required')
-            if self.live and row['mode'] != 'LIVE_MODEL_REQUESTED':
+            if self.live and row['mode'] not in ('LIVE_MODEL_REQUESTED', 'LIVE_PLAN_ONLY'):
                 raise GateError('A source-backed live workflow run is required before writing to Jira')
             jira = self.jira()
             payload = plan_actions(full, jira)
@@ -207,7 +214,10 @@ def page(console, token, notice='', error=False, *, allowed=None, toolbar='', bu
     coverage = '<p>Evidence input: <strong>Brief + Data Pack</strong>.</p>' if console.pack.is_file() else '<p>Evidence input: <strong>Brief only</strong>. Official Data Pack unavailable.</p>'
     content = f'<section><h2>1. Run the integrated workflow</h2>{setup}{coverage}'
     if 'run' in allowed:
-        content += form(f'<div class="dates">{dates}</div>' + button('run', 'Run planning, risk and reports'))
+        actions = button('run', 'Run planning, risk and reports')
+        if 'plan' in allowed:
+            actions += button('plan', 'Run planning and risk only')
+        content += form(f'<div class="dates">{dates}</div>' + actions)
     content += '</section>'
     if console.run_id:
         row, full = console.store.artifact(console.run_id)
