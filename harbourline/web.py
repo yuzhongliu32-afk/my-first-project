@@ -174,7 +174,12 @@ def create_app(config=None):
 <style>
 body{{max-width:760px;margin:2rem auto;padding:0 1.1rem;font:17px/1.6 system-ui;color:#14263a}}
 input,button{{font:inherit;padding:.45rem .7rem}} label{{display:block;margin:.65rem 0}}
-a{{color:#184978}} pre{{white-space:pre-wrap;overflow-wrap:anywhere;background:#edf1f5;padding:1rem}}
+a{{color:#184978}} header{{border-bottom:1px solid #c8d3dd;margin-bottom:1rem}}
+nav{{display:flex;gap:.45rem;flex-wrap:wrap}} .tab{{padding:.45rem .75rem;border:1px solid #c8d3dd;border-radius:6px;text-decoration:none}}
+.tab[aria-current=page]{{background:#184978;color:white}} .module{{margin-top:1rem}}
+details{{border:1px solid #d6e0e9;padding:.65rem .9rem;margin:.45rem 0;border-radius:5px}}
+summary{{cursor:pointer;font-weight:600}} summary small{{color:#52667b;margin-left:.6rem;font-weight:400}}
+pre{{white-space:pre-wrap;overflow-wrap:anywhere;background:#edf1f5;padding:1rem}}
 </style><main>{contents}</main></html>'''
 
     @app.after_request
@@ -231,31 +236,66 @@ a{{color:#184978}} pre{{white-space:pre-wrap;overflow-wrap:anywhere;background:#
 
     @app.get('/')
     def index():
-        query = request.args.get('q', '').strip()[:100]
-        sections = ''
         result = public_results()
-        if result:
-            for title, rows, ident in (
-                ('Work breakdown structure', result['planning']['wbs_items'], 'wbs_id'),
-                ('Milestones', result['planning']['milestones'], 'milestone_id'),
-                ('Risks', result['risk']['risks'], 'risk_id'),
-            ):
-                matching = []
-                for row in rows:
-                    label = f"{row[ident]} · {row['title']}"
-                    if query.casefold() in label.casefold():
-                        matching.append(f"<li>{escape(label)} <small>({escape(row['status'])})</small></li>")
-                listing = '<ul>' + ''.join(matching) + '</ul>' if matching else '<p>No matching items.</p>'
-                sections += f'<h2>{title} · {len(matching)} of {len(rows)}</h2>{listing}'
-        else:
-            sections = '<p>Planning results are temporarily unavailable.</p>'
-        return document('Public project workspace', f'''<h1>Harbourline Community Hub</h1>
-<p>MA6094 Group A · Public project workspace</p>
-<p>Explore the planning baseline and risks calculated from the official fictional course inputs.</p>
-<form method="get"><label>Find a work item, milestone or risk <input name="q" value="{escape(query, quote=True)}" maxlength="100"></label><button>Search</button> <a href="/">Clear</a></form>
-{sections}
-<p>Model reporting and Jira operations are managed in the team workspace.</p>
-<p><a href="/workspace">Team operations and Jira approval</a></p>''')
+        modules = {'planning': 'Planning', 'risks': 'Risk register', 'what-if': 'What-if',
+                   'reporting': 'Reports', 'jira': 'Jira & approvals'}
+        tab = request.args.get('view', 'planning')
+        if tab not in modules:
+            abort(404)
+        query = request.args.get('q', '').strip()[:100]
+        nav = ''.join(
+            f'<a class="tab" href="/?view={key}"' +
+            (' aria-current="page"' if key == tab else '') + f'>{title}</a>'
+            for key, title in modules.items()
+        )
+
+        def list_items(rows, ident, extra):
+            matches = []
+            for row in rows:
+                title = f"{row[ident]} · {row['title']}"
+                if query.casefold() in title.casefold():
+                    matches.append(
+                        f'<details><summary>{escape(title)} <small>{escape(row["status"])}</small></summary>'
+                        f'<p>{escape(extra(row))}</p></details>'
+                    )
+            return f'<p>{len(matches)} of {len(rows)} items</p>' + (''.join(matches) or '<p>No matching items.</p>')
+
+        content = '<p>Planning results are temporarily unavailable.</p>'
+        search = ''
+        if result and tab in ('planning', 'risks'):
+            search = f'''<form method="get"><input type="hidden" name="view" value="{tab}">
+<label>Filter by ID or title <input name="q" value="{escape(query, quote=True)}" maxlength="100"></label>
+<button>Search</button> <a href="/?view={tab}">Clear</a></form>'''
+            plan = result['planning']
+            if tab == 'planning':
+                content = '<h3>Work breakdown structure</h3>' + list_items(
+                    plan['wbs_items'], 'wbs_id', lambda row: row['dictionary']['work_description'])
+                content += '<h3>Milestones</h3>' + list_items(
+                    plan['milestones'], 'milestone_id', lambda row: row['relative_timing'])
+            else:
+                content = list_items(result['risk']['risks'], 'risk_id',
+                    lambda row: 'Score: ' + str(row['score'] if row['score'] is not None else 'pending review')
+                    + ' · ' + row['description'])
+        elif result and tab == 'what-if':
+            content = '<p>Compare proposed impacts. These are conditional estimates from the planning model.</p>'
+            for case in result['risk']['scenarios']:
+                timing, cost = case['schedule_impact_days'], case['cost_impact_sgd']
+                impact = f'{timing} days · S${cost:,.0f}' if timing is not None and cost is not None else 'Not quantified'
+                content += (
+                    f'<details><summary>{escape(case["scenario_id"])} · {impact}</summary>'
+                    f'<p>{escape(case["description"])}</p><ul>'
+                    + ''.join(f'<li>{escape(item)}</li>' for item in case['assumptions'])
+                    + '</ul></details>'
+                )
+        elif tab == 'reporting':
+            content = '<p>Weekly committee update and monthly grant report.</p><p>Live reports are pending. The current OpenAI project is rate-limited.</p>'
+        elif tab == 'jira':
+            content = '<p>Planning items are previewed before any Jira write. An authorised team member reviews the batch, then the system verifies Jira read-back.</p><p><a href="/workspace">Open team operations</a></p>'
+
+        return document('Public project workspace', f'''<header><p>MA6094 · Group A</p>
+<h1>Harbourline Community Hub</h1><p>Project planning and risk workspace</p></header>
+<nav aria-label="Project modules">{nav}</nav>
+<section class="module"><h2>{modules[tab]}</h2>{search}{content}</section>''')
 
     @app.route('/login', methods=['GET', 'POST'])
     def login():
