@@ -102,6 +102,32 @@ def generate_reports(request,context,library,gateway):
     if not unique:raise ValueError('No verified eligible evidence for reports')
     lookup={f'E{i+1}':r for i,r in enumerate(unique.values())}
     memory['citations']=list(unique.values())
+
+    # The evidence table is the single copy of source text sent to the model.
+    # Keep full records in the workflow output and resolve IDs to them after generation.
+    def fields(rows, *keys):
+        return [{key: row[key] for key in keys} for row in rows]
+
+    plan, risk = context['planning'], context['risk']
+    planning_summary = {
+        'scope_statement': plan['scope_statement'],
+        'wbs_items': fields(plan['wbs_items'], 'wbs_id', 'title', 'status'),
+        'milestones': fields(plan['milestones'], 'milestone_id', 'title',
+                             'relative_timing', 'calendar_date', 'status'),
+        'sponsor_questions': fields(plan['sponsor_questions'], 'question', 'status'),
+    }
+    risk_summary = {
+        'risks': fields(risk['risks'], 'risk_id', 'title', 'score', 'owner', 'status'),
+    }
+    model_evidence = {
+        eid: {key: ref[key] for key in ('document_id', 'page', 'line_start', 'line_end', 'quote')}
+        for eid, ref in lookup.items()
+    }
+    memory_summary = {
+        'facts': fields(memory['fact_records'], 'statement', 'status'),
+        'conflicts': fields(memory['conflicts'], 'topic', 'claim_a', 'claim_b'),
+        'open_questions': memory['open_questions'],
+    }
     report_types=[request['request']['requested_report_type']] if request['request']['requested_report_type'] else ['WEEKLY_COMMITTEE','MONTHLY_GRANT']
     reports=[];reviews=[]
     for report_type in report_types:
@@ -111,7 +137,7 @@ def generate_reports(request,context,library,gateway):
         if not period['start_date']<=period['end_date']<=cutoff:raise ValueError('Invalid report period/cut-off')
         audience='Estate Development Committee' if report_type=='WEEKLY_COMMITTEE' else 'Grant Body'
         payload={'report_type':report_type,'audience':audience,'period':period,'cutoff':cutoff,
-                 'verified_evidence':lookup,'memory':memory,'b_context':{'planning':context['planning'],'risk':context['risk']},
+                 'verified_evidence':model_evidence,'memory':memory_summary,'b_context':{'planning':planning_summary,'risk':risk_summary},
                  'proposal_notice':'B plans, scores and what-if estimates are proposals; do not present them as actual progress.'}
         draft=gateway.ask('harbourline_report_draft',WRITER_SCHEMA,BASE+' Write for the specified audience and period. Cite evidence IDs for facts. Explain B planning/risk implications explicitly as proposals; report historical facts as historical.',payload)
         report={'report_id':f"C-{request['run_id']}-{report_type}",'report_type':report_type,'audience':audience,
@@ -143,7 +169,7 @@ def generate_reports(request,context,library,gateway):
                'ready_for_human_review':verdict=='PASS','reviewer_notes':'Model critique plus local checks; human approval still required.'})
             if verdict=='PASS':report['status']='READY_FOR_HUMAN_REVIEW';break
             if verdict=='ESCALATE':report['status']='BLOCKED';break
-            revision=gateway.ask('harbourline_revision',REVISION_SCHEMA,BASE+' Revise only supplied section IDs, preserve citations and supported meaning. Qualify unsupported claims. Return the same section IDs exactly.',{'report':report,'findings':findings,'verified_evidence':lookup})
+            revision=gateway.ask('harbourline_revision',REVISION_SCHEMA,BASE+' Revise only supplied section IDs, preserve citations and supported meaning. Qualify unsupported claims. Return the same section IDs exactly.',{'report':report,'findings':findings,'verified_evidence':model_evidence})
             ids=[s['section_id'] for s in revision['sections']]
             if len(ids)!=len(set(ids)) or set(ids)!={s['section_id'] for s in report['sections']}:raise ValueError('Revision changed section IDs')
             replacement={s['section_id']:s['text'] for s in revision['sections']}
