@@ -195,16 +195,67 @@ a{{color:#184978}} pre{{white-space:pre-wrap;overflow-wrap:anywhere;background:#
     def health():
         return jsonify(status='ok')
 
+    public_lock = Lock()
+    public_baseline = None
+
+    def public_results():
+        nonlocal public_baseline
+        from modules.member_b.adapter import run as plan
+        from modules.member_b.data_pack import PACK_SNAPSHOT, load_pack_sources
+        from modules.member_b.prepare_sources import prepare_sources
+        from .console import ROOT
+        from .contracts import validate, verify_evidence
+
+        with public_lock:
+            if public_baseline is not None:
+                return public_baseline
+            inputs = root / 'inputs'
+            brief, pack = inputs / 'Harbourline_Brief.pdf', inputs / 'Harbourline_Data_Pack.zip'
+            if not brief.is_file() or not pack.is_file():
+                return None
+            registry, _ = prepare_sources(brief, pack, root=root / 'public-baseline')
+            pack_dir = registry.parent / 'Harbourline_Data_Pack'
+            payload = json.loads((ROOT / 'examples/request.json').read_text())
+            payload.update(recipient='B', operation='PLAN_RISK', source_snapshot_id=PACK_SNAPSHOT)
+            result = plan(payload, {
+                'source_snapshot_id': PACK_SNAPSHOT, 'source_registry_path': str(registry),
+                'data_pack_directory': str(pack_dir),
+            })
+            validate(result, 'B', expected_producer='B')
+            records = json.loads(registry.read_text()) + list(load_pack_sources(pack_dir).values())
+            verify_evidence(result, {(r['document_id'], r['version']): r['lines'] for r in records})
+            if result['status'] not in ('SUCCESS', 'PARTIAL'):
+                return None
+            public_baseline = result
+            return result
+
     @app.get('/')
     def index():
-        return document('Project overview', '''<h1>Harbourline Community Hub</h1>
-<p>MA6094 Group A · Project management workspace</p>
-<p>This system uses project evidence to build a work breakdown structure and milestones,
-assess risk, and draft reports for two audiences. The integrated workflow shows the
-automatic planning-to-reporting handoff and its Critic findings.</p>
-<p>An authorised reviewer can review exact Jira actions, approve them and verify
-the resulting sandbox records. Each action is recorded in an audit trail.</p>
-<p><a href="/workspace">Open the system workspace</a></p>''')
+        query = request.args.get('q', '').strip()[:100]
+        sections = ''
+        result = public_results()
+        if result:
+            for title, rows, ident in (
+                ('Work breakdown structure', result['planning']['wbs_items'], 'wbs_id'),
+                ('Milestones', result['planning']['milestones'], 'milestone_id'),
+                ('Risks', result['risk']['risks'], 'risk_id'),
+            ):
+                matching = []
+                for row in rows:
+                    label = f"{row[ident]} · {row['title']}"
+                    if query.casefold() in label.casefold():
+                        matching.append(f"<li>{escape(label)} <small>({escape(row['status'])})</small></li>")
+                listing = '<ul>' + ''.join(matching) + '</ul>' if matching else '<p>No matching items.</p>'
+                sections += f'<h2>{title} · {len(matching)} of {len(rows)}</h2>{listing}'
+        else:
+            sections = '<p>Planning results are temporarily unavailable.</p>'
+        return document('Public project workspace', f'''<h1>Harbourline Community Hub</h1>
+<p>MA6094 Group A · Public project workspace</p>
+<p>Explore the planning baseline and risks calculated from the official fictional course inputs.</p>
+<form method="get"><label>Find a work item, milestone or risk <input name="q" value="{escape(query, quote=True)}" maxlength="100"></label><button>Search</button> <a href="/">Clear</a></form>
+{sections}
+<p>Model reporting and Jira operations are managed in the team workspace.</p>
+<p><a href="/workspace">Team operations and Jira approval</a></p>''')
 
     @app.route('/login', methods=['GET', 'POST'])
     def login():
