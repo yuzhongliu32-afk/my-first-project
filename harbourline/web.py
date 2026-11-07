@@ -48,7 +48,7 @@ def load_host_inputs(bundle_path, inputs):
 ROLES = {
     'viewer': set(),
     'runner': {'run'},
-    'approver': {'run', 'preview', 'approve', 'reject', 'apply', 'change', 'course_change'},
+    'approver': {'run', 'preview', 'approve', 'reject', 'apply', 'change', 'course_change', 'jira_check'},
 }
 
 
@@ -121,7 +121,12 @@ def create_app(config=None):
                     state = console.store.batch(console.batch_id)['state']
                     if state in ('PENDING', 'APPROVED', 'EXECUTING', 'FAILED_REVIEW_REQUIRED'):
                         raise GateError('Resolve the current Jira batch before generating a new run or preview.')
-                if action == 'course_change':
+                if action == 'jira_check':
+                    jira = console.jira()
+                    types = jira.types()
+                    save(console, f'Jira read verified for {jira.project}. '
+                         f'{len(set(types.values()))} available work-item types. No writes performed.')
+                elif action == 'course_change':
                     path = root / 'inputs/week12_change.json'
                     if not console.run_id or not path.is_file():
                         raise GateError('Run the workflow and configure the official change record first.')
@@ -258,6 +263,9 @@ the resulting sandbox records. Each action is recorded in an audit trail.</p>
         toolbar = (f'<p>Signed in as {escape(name)} · {role} · <a href="/evidence">Search evidence</a></p>'
                    f'<form action="/logout" method="post"><input type="hidden" name="token" value="{csrf()}">'
                    '<button>Sign out</button></form>')
+        if role == 'approver' and not busy:
+            toolbar += (f'<form action="/workspace" method="post"><input type="hidden" name="token" value="{csrf()}">'
+                        '<button name="action" value="jira_check">Check Jira connection</button></form>')
         if role == 'approver' and not busy and (root / 'inputs/week12_change.json').is_file():
             toolbar += (f'<form action="/workspace" method="post"><input type="hidden" name="token" value="{csrf()}">'
                         '<button name="action" value="course_change">Review source-linked course change</button></form>')
