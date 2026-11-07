@@ -105,7 +105,7 @@ def plan_actions(full,jira):
     def add(external,title,description,type_name,parent=None,date=None,wbs_id=None,milestone_id=None):
         if type_name not in types:raise GateError(f'Jira issue type unavailable: {type_name}; configure explicit type mapping')
         fields={'project':{'key':project},'summary':title,'description':adf(description),
-                'issuetype':{'id':types[type_name]},'labels':[marker(external),'harbourline-proposed']}
+                'issuetype':{'id':types[type_name]},'labels':[marker(external),'harbourline-proposed','ai-generated']}
         if date:fields['duedate']=date
         existing=jira.find(marker(external));key=existing['key'] if existing else None
         parent_key=lookup.get(parent,{}).get('issue_key') if parent else None

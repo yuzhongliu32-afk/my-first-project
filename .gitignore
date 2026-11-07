@@ -17,3 +17,7 @@ __pycache__/
 .pytest_cache/
 data/*
 !data/README.md
+
+# Local course inputs
+inputs/*
+!inputs/README.md

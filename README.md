@@ -5,7 +5,11 @@ contracts are integrated into A's Python orchestrator. Jira approvals, readback,
 audit export and change invalidation are implemented for local trusted operators.
 The public Sites preview is separate; this backend is not deployed behind it.
 
-## Start locally
+## Browser handoff
+
+See [START-HERE](START-HERE.md) for the local operator console and launchers.
+
+## Start locally from the command line
 
 Python 3.11+ (tested with Python 3.12):
 
