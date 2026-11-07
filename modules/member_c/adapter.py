@@ -44,7 +44,19 @@ def run(request:dict,context:dict)->dict:
         for ref in out['source_evidence']:lib.verify(ref,context.get('as_of_date'))
     except Exception as exc:
         # Do not echo SDK exception bodies (which may include user data or auth).
-        out['status']='BLOCKED';out['errors'].append({'code':'C_MODULE_BLOCKED','message':f'{type(exc).__name__}: missing configuration, invalid evidence or invalid model output; inspect the local validation trace.','recoverable':True})
+        reason = f'{type(exc).__name__}: missing configuration, invalid evidence or invalid model output; inspect the local validation trace.'
+        if getattr(exc, 'code', None) == 'insufficient_quota':
+            reason = 'OpenAI quota is unavailable or exhausted. Check the project usage and plan.'
+        elif type(exc).__name__ == 'RateLimitError':
+            reason = 'OpenAI rejected the request with HTTP 429.'
+            code = getattr(exc, 'code', None)
+            if code in ('rate_limit_exceeded', 'requests', 'tokens'):
+                reason += f' Limit: {code}.'
+            response = getattr(exc, 'response', None)
+            retry_after = response.headers.get('Retry-After', '') if response is not None else ''
+            if retry_after.isdigit() and len(retry_after) < 8:
+                reason += f' Provider retry delay: {retry_after} seconds.'
+        out['status']='BLOCKED';out['errors'].append({'code':'C_MODULE_BLOCKED','message':reason,'recoverable':True})
     out['metrics']={**gateway.metrics(),'elapsed_seconds':monotonic()-started}
     validate(out,'C',expected_producer='C')
     return out
