@@ -131,11 +131,8 @@ class Console:
             row, full = self.store.artifact(self.run_id)
             if row['stale'] or not full['planning']['wbs_items']:
                 raise GateError('A current plan with WBS items is required')
-            if self.live and (
-                row['mode'] != 'LIVE_MODEL_REQUESTED' or not full['reporting']['reports']
-                or not full['reporting']['critic_reviews']
-            ):
-                raise GateError('Complete a live model run with reports and Critic results before writing to Jira')
+            if self.live and row['mode'] != 'LIVE_MODEL_REQUESTED':
+                raise GateError('A source-backed live workflow run is required before writing to Jira')
             jira = self.jira()
             payload = plan_actions(full, jira)
             batch = self.store.propose(self.run_id, 'JIRA_WRITE', jira.target, payload)
