@@ -43,16 +43,34 @@ class JiraCloud:
         try:
             with self.opener.open(req,timeout=30) as res:
                 raw=res.read();return json.loads(raw) if raw else {}
-        except HTTPError as e:raise GateError(f'Jira HTTP {e.code}; request body/credentials omitted') from None
+        except HTTPError as e:
+            route = path.split('?', 1)[0]
+            if route.startswith('/issue/createmeta/'):
+                operation = 'read project work-item metadata'
+            elif route == '/search/jql':
+                operation = 'search for existing work items'
+            elif route == '/myself':
+                operation = 'verify sandbox account'
+            elif route == '/issueLink':
+                operation = 'link dependencies'
+            else:
+                operation = 'access work item'
+            raise GateError(f'Jira HTTP {e.code} while attempting to {operation}.') from None
         except URLError:raise GateError('Jira network failure; reconcile any uncertain remote write before retry') from None
 
     def types(self):
         found={};token=None
+        self.request('GET', '/myself')
         for _ in range(10):
             args={'maxResults':100}
             if token:args['startAt']=token
             data=self.request('GET',f'/issue/createmeta/{quote(self.project)}/issuetypes?'+urlencode(args))
-            for row in data.get('issueTypes',data.get('values',[])):found[row['name']]=str(row['id'])
+            for row in data.get('issueTypes', data.get('values', [])):
+                found[row['name']] = str(row['id'])
+                if row.get('untranslatedName'):
+                    found[row['untranslatedName']] = str(row['id'])
+                if row.get('subtask') and row.get('untranslatedName') == 'Subtask':
+                    found.setdefault('Sub-task', str(row['id']))
             if data.get('isLast',True):return found
             token=data.get('startAt',0)+len(data.get('issueTypes',data.get('values',[])))
         raise GateError('Issue-type metadata pagination limit')
