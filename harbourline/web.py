@@ -1,4 +1,5 @@
 """Hosted Harbourline workspace for one team and its invited evaluators."""
+from base64 import b64decode
 from collections import deque
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import contextmanager
@@ -20,6 +21,30 @@ from .console import Console, details, json_block, page
 from .governance import GateError, GovernanceStore
 from .sources import EvidenceLibrary
 
+BUNDLE_FILES = {
+    'Harbourline_Brief.pdf', 'Harbourline_Data_Pack.zip', 'verified_source_metadata.json',
+    'sponsor_answers_registry.json', 'week12_change.json',
+}
+
+
+def load_host_inputs(bundle_path, inputs):
+    if not bundle_path.is_file():
+        return
+    bundle = json.loads(bundle_path.read_text(encoding='utf-8'))
+    if not isinstance(bundle, dict) or not set(bundle) <= BUNDLE_FILES:
+        raise RuntimeError('Unexpected names in the private input bundle')
+    files = {name: b64decode(content, validate=True) for name, content in bundle.items()}
+    if not {'Harbourline_Brief.pdf', 'Harbourline_Data_Pack.zip'} <= files.keys():
+        raise RuntimeError('The private input bundle must include the brief and official Data Pack')
+    inputs.mkdir(parents=True, exist_ok=True, mode=0o700)
+    for name, data in files.items():
+        temp = inputs / ('.' + name + '.tmp')
+        fd = os.open(temp, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+        with os.fdopen(fd, 'wb') as output:
+            output.write(data)
+        temp.replace(inputs / name)
+
+
 ROLES = {
     'viewer': set(),
     'runner': {'run'},
@@ -31,6 +56,7 @@ def create_app(config=None):
     app = Flask(__name__)
     app.config.from_mapping(
         SECRET_KEY=os.environ.get('HARBOURLINE_WEB_SESSION_KEY'),
+        INPUT_BUNDLE=Path(os.environ.get('HARBOURLINE_INPUT_BUNDLE', '/etc/secrets/harbourline-inputs.json')),
         WEB_USERS=json.loads(os.environ.get('HARBOURLINE_WEB_USERS', '{}')),
         WORKSPACE=Path(os.environ.get('HARBOURLINE_WORKSPACE', '/var/data/harbourline')),
         SESSION_COOKIE_SECURE=True,
@@ -55,6 +81,7 @@ def create_app(config=None):
     approvers = {name for name, user in users.items() if user['role'] == 'approver'}
     root = Path(app.config['WORKSPACE'])
     root.mkdir(parents=True, exist_ok=True)
+    load_host_inputs(Path(app.config['INPUT_BUNDLE']), root / 'inputs')
     state_path = root / 'web-state.json'
     lock = Lock()
     jobs = ThreadPoolExecutor(max_workers=1, thread_name_prefix='harbourline')
