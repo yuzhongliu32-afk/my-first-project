@@ -48,7 +48,7 @@ def load_host_inputs(bundle_path, inputs):
 ROLES = {
     'viewer': set(),
     'runner': {'run'},
-    'approver': {'run', 'preview', 'approve', 'reject', 'apply', 'change', 'course_change', 'jira_check'},
+    'approver': {'run', 'plan', 'preview', 'approve', 'reject', 'apply', 'change', 'course_change', 'jira_check'},
 }
 
 
@@ -117,7 +117,7 @@ def create_app(config=None):
         with workspace(actor) as console:
             try:
                 action = fields.get('action')
-                if action in ('run', 'preview') and console.batch_id:
+                if action in ('run', 'plan', 'preview') and console.batch_id:
                     state = console.store.batch(console.batch_id)['state']
                     if state in ('PENDING', 'APPROVED', 'EXECUTING', 'FAILED_REVIEW_REQUIRED'):
                         raise GateError('Resolve the current Jira batch before generating a new run or preview.')
