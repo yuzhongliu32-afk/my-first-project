@@ -2,6 +2,7 @@
 import json
 import os
 from contextvars import ContextVar
+from time import sleep
 from jsonschema import Draft202012Validator
 
 _current = ContextVar('harbourline_gateway', default=None)
@@ -28,15 +29,35 @@ class ModelGateway:
             if self._client is None:
                 from openai import OpenAI
                 self._client = OpenAI(timeout=60, max_retries=0)
-            self.api_calls += 1  # Counts attempted HTTP SDK calls; retries are disabled.
-            try:
-                response = self._client.responses.create(model=self.model, store=False,
-                    instructions=instructions, input=json.dumps(payload, ensure_ascii=False),
-                    max_output_tokens=int(os.getenv('OPENAI_MAX_OUTPUT_TOKENS','12000')),
-                    text={'format': {'type':'json_schema','name':name,'strict':True,'schema':schema}})
-            except Exception:
-                self.usage_known=False
-                raise
+            from openai import RateLimitError
+
+            for attempt in range(3):
+                self.api_calls += 1
+                try:
+                    response = self._client.responses.create(
+                        model=self.model, store=False, instructions=instructions,
+                        input=json.dumps(payload, ensure_ascii=False),
+                        max_output_tokens=int(os.getenv('OPENAI_MAX_OUTPUT_TOKENS','12000')),
+                        text={'format': {'type':'json_schema','name':name,'strict':True,'schema':schema}},
+                    )
+                except RateLimitError as exc:
+                    # Only retry a temporary throttle. A quota/billing error needs an operator.
+                    if attempt == 2 or exc.code != 'rate_limit_exceeded':
+                        self.usage_known = False
+                        raise
+                    try:
+                        delay = float(exc.response.headers.get('Retry-After', '60'))
+                    except ValueError:
+                        delay = 60
+                    if not 0 <= delay <= 120:
+                        self.usage_known = False
+                        raise
+                    sleep(max(2, delay))
+                except Exception:
+                    self.usage_known = False
+                    raise
+                else:
+                    break
             usage = getattr(response, 'usage', None)
             if usage and usage.input_tokens is not None and usage.output_tokens is not None:
                 self.input_tokens += usage.input_tokens; self.output_tokens += usage.output_tokens
