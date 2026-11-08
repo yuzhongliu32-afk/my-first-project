@@ -375,7 +375,7 @@ pre{{white-space:pre-wrap;overflow-wrap:anywhere;background:#edf1f5;padding:1rem
                     + '</ul></details>'
                 )
         elif tab == 'reporting':
-            content = '<p>Weekly committee update and monthly grant report.</p><p>Live reports are pending. The current OpenAI project is rate-limited.</p>'
+            content = '<p>Weekly committee update and monthly grant report.</p><p>Live reports are generated from the operator workspace.</p>'
         elif tab == 'jira':
             content = '<p>Planning items are previewed before any Jira write. An authorised team member reviews the batch, then the system verifies Jira read-back.</p>'
 
