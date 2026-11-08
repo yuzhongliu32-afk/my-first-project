@@ -114,6 +114,7 @@ class Console:
         full, trace = run_project(
             request, lib.path, cutoff=dates['cutoff'], b_context=context, c_gateway=gateway,
             include_reports=include_reports,
+            plan_mode='live' if include_reports else 'rules', b_gateway=gateway,
             reporting_periods={
                 'WEEKLY_COMMITTEE': {'start_date': dates['weekly_start'], 'end_date': dates['weekly_end']},
                 'MONTHLY_GRANT': {'start_date': dates['monthly_start'], 'end_date': dates['monthly_end']},
@@ -214,7 +215,7 @@ def page(console, token, notice='', error=False, *, allowed=None, toolbar='', bu
     coverage = '<p>Evidence input: <strong>Brief + Data Pack</strong>.</p>' if console.pack.is_file() else '<p>Evidence input: <strong>Brief only</strong>. Official Data Pack unavailable.</p>'
     content = f'<section><h2>1. Run the integrated workflow</h2>{setup}{coverage}'
     if 'run' in allowed:
-        actions = button('run', 'Run planning, risk and reports')
+        actions = button('run', 'Run B Planning Agent and C Reports')
         if 'plan' in allowed:
             actions += button('plan', 'Run planning and risk only')
         content += form(f'<div class="dates">{dates}</div>' + actions)
