@@ -81,8 +81,8 @@ class ModelGateway:
 
     def ask_openrouter(self, name, schema, instructions, payload):
         key = os.getenv('OPENROUTER_API_KEY')
-        if not key or not self.model or not self.model.endswith(':free'):
-            raise ValueError('OpenRouter requires a key and an explicit :free model.')
+        if not key or not self.model or not (self.model.endswith(':free') or self.model == 'openrouter/free'):
+            raise ValueError('OpenRouter requires a key and a free model.')
         data = {
             'model': self.model,
             'messages': [
@@ -95,21 +95,27 @@ class ModelGateway:
             },
             'provider': {'require_parameters': True, 'data_collection': 'deny'},
         }
-        request = Request(
-            'https://openrouter.ai/api/v1/chat/completions',
-            data=json.dumps(data).encode(),
-            headers={'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key},
-        )
-        self.api_calls += 1
-        try:
-            with urlopen(request, timeout=120) as response:
-                result = json.load(response)
-        except HTTPError as exc:
-            self.usage_known = False
-            raise RuntimeError(f'OpenRouter request failed (HTTP {exc.code})') from None
-        except (URLError, TimeoutError):
-            self.usage_known = False
-            raise RuntimeError('OpenRouter request timed out or could not connect') from None
+        while True:
+            request = Request(
+                'https://openrouter.ai/api/v1/chat/completions',
+                data=json.dumps(data).encode(),
+                headers={'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key},
+            )
+            self.api_calls += 1
+            try:
+                with urlopen(request, timeout=120) as response:
+                    result = json.load(response)
+                self.model = data['model']
+                break
+            except HTTPError as exc:
+                if exc.code == 404 and data['model'] != 'openrouter/free':
+                    data['model'] = 'openrouter/free'
+                    continue
+                self.usage_known = False
+                raise RuntimeError(f'OpenRouter request failed (HTTP {exc.code})') from None
+            except (URLError, TimeoutError):
+                self.usage_known = False
+                raise RuntimeError('OpenRouter request timed out or could not connect') from None
         usage = result.get('usage') or {}
         if usage.get('prompt_tokens') is not None and usage.get('completion_tokens') is not None:
             self.input_tokens += usage['prompt_tokens']
