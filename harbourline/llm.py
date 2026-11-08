@@ -3,6 +3,9 @@ import json
 import os
 from contextvars import ContextVar
 from time import sleep
+from urllib.error import HTTPError, URLError
+from urllib.parse import quote
+from urllib.request import Request, urlopen
 from jsonschema import Draft202012Validator
 
 _current = ContextVar('harbourline_gateway', default=None)
@@ -11,18 +14,23 @@ _current = ContextVar('harbourline_gateway', default=None)
 class ModelGateway:
     def __init__(self, *, responder=None, model=None):
         self.responder = responder
-        self.model = model or os.environ.get('OPENAI_MODEL')
+        self.provider = os.getenv('MODEL_PROVIDER', 'openai').lower()
+        if self.provider not in ('openai', 'gemini'):
+            raise ValueError('MODEL_PROVIDER must be openai or gemini')
+        self.model = model or os.environ.get(self.provider.upper() + '_MODEL')
         self.api_calls = 0; self.input_tokens = 0; self.output_tokens = 0
         self.embedding_calls=0;self.embedding_input_tokens=0
         self.usage_known = True; self._client = None
 
     @property
     def mode(self):
-        return 'SCRIPTED_TEST' if self.responder else 'LIVE_OPENAI'
+        return 'SCRIPTED_TEST' if self.responder else 'LIVE_' + self.provider.upper()
 
     def ask(self, name, schema, instructions, payload):
         if self.responder:
             value = self.responder(name, payload)
+        elif self.provider == 'gemini':
+            value = self.ask_gemini(schema, instructions, payload)
         else:
             if not self.model or not os.environ.get('OPENAI_API_KEY'):
                 raise ValueError('Set OPENAI_MODEL and OPENAI_API_KEY in the backend environment.')
@@ -69,7 +77,51 @@ class ModelGateway:
         Draft202012Validator(schema).validate(value)
         return value
 
+    def ask_gemini(self, schema, instructions, payload):
+        key = os.getenv('GEMINI_API_KEY')
+        if not self.model or not key:
+            raise ValueError('Set GEMINI_MODEL and GEMINI_API_KEY in the backend environment.')
+        model = quote(self.model.removeprefix('models/'), safe='')
+        data = {
+            'systemInstruction': {'parts': [{'text': instructions}]},
+            'contents': [{'parts': [{'text': json.dumps({
+                'task_input': payload, 'required_output_schema': schema,
+                'output_instruction': 'Return exactly one JSON object that validates against this schema.',
+            }, ensure_ascii=False)}]}],
+            'generationConfig': {
+                'responseMimeType': 'application/json',
+                'maxOutputTokens': int(os.getenv('GEMINI_MAX_OUTPUT_TOKENS', '24000')),
+            },
+        }
+        request = Request(
+            f'https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent',
+            data=json.dumps(data).encode(), headers={'Content-Type': 'application/json', 'x-goog-api-key': key},
+        )
+        self.api_calls += 1
+        try:
+            with urlopen(request, timeout=120) as response:
+                result = json.load(response)
+        except HTTPError as exc:
+            self.usage_known = False
+            raise RuntimeError(f'Gemini request failed (HTTP {exc.code})') from None
+        except (URLError, TimeoutError):
+            self.usage_known = False
+            raise RuntimeError('Gemini request timed out or could not connect') from None
+        usage = result.get('usageMetadata', {})
+        if 'promptTokenCount' in usage and 'candidatesTokenCount' in usage:
+            self.input_tokens += usage['promptTokenCount']
+            self.output_tokens += usage['candidatesTokenCount'] + usage.get('thoughtsTokenCount', 0)
+        else:
+            self.usage_known = False
+        candidates = result.get('candidates', [])
+        if not candidates or candidates[0].get('finishReason') != 'STOP':
+            raise ValueError('Gemini response incomplete or refused')
+        parts = candidates[0].get('content', {}).get('parts', [])
+        return json.loads(''.join(part.get('text', '') for part in parts if not part.get('thought')))
+
     def embeddings(self,texts,model):
+        if self.provider == 'gemini':
+            raise ValueError('Use lexical retrieval with the Gemini reporting route')
         if self.responder:
             raise ValueError('Embeddings are not available in scripted tests')
         if not os.environ.get('OPENAI_API_KEY'):raise ValueError('OPENAI_API_KEY is required')
@@ -94,8 +146,8 @@ class ModelGateway:
         if self.responder:
             return {'api_calls':0,'input_tokens':0,'output_tokens':0,'estimated_cost_usd':0.0}
         known = self.usage_known
-        input_rate = os.getenv('OPENAI_INPUT_USD_PER_MILLION')
-        output_rate = os.getenv('OPENAI_OUTPUT_USD_PER_MILLION')
+        input_rate = os.getenv(self.provider.upper() + '_INPUT_USD_PER_MILLION')
+        output_rate = os.getenv(self.provider.upper() + '_OUTPUT_USD_PER_MILLION')
         cost = 0.0 if self.api_calls==0 else None
         text_calls=self.api_calls-self.embedding_calls
         embedding_rate=os.getenv('OPENAI_EMBEDDING_USD_PER_MILLION')
