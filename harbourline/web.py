@@ -538,3 +538,19 @@ pre{{white-space:pre-wrap;overflow-wrap:anywhere;background:#edf1f5;padding:1rem
         return response
 
     return app
+
+
+_create_workspace_app = create_app
+
+
+def create_app(config=None):
+    from pathlib import Path
+    from flask import send_file
+
+    app = _create_workspace_app(config)
+
+    @app.get("/atlas")
+    def project_atlas():
+        return send_file(Path(__file__).with_name("Harbourline Project Atlas.html"), mimetype="text/html")
+
+    return app
