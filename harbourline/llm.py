@@ -15,8 +15,8 @@ class ModelGateway:
     def __init__(self, *, responder=None, model=None):
         self.responder = responder
         self.provider = os.getenv('MODEL_PROVIDER', 'openai').lower()
-        if self.provider not in ('openai', 'gemini'):
-            raise ValueError('MODEL_PROVIDER must be openai or gemini')
+        if self.provider not in ('openai', 'gemini', 'openrouter'):
+            raise ValueError('MODEL_PROVIDER must be openai, gemini or openrouter')
         self.model = model or os.environ.get(self.provider.upper() + '_MODEL')
         self.api_calls = 0; self.input_tokens = 0; self.output_tokens = 0
         self.embedding_calls=0;self.embedding_input_tokens=0
@@ -31,6 +31,8 @@ class ModelGateway:
             value = self.responder(name, payload)
         elif self.provider == 'gemini':
             value = self.ask_gemini(schema, instructions, payload)
+        elif self.provider == 'openrouter':
+            value = self.ask_openrouter(name, schema, instructions, payload)
         else:
             if not self.model or not os.environ.get('OPENAI_API_KEY'):
                 raise ValueError('Set OPENAI_MODEL and OPENAI_API_KEY in the backend environment.')
@@ -77,6 +79,48 @@ class ModelGateway:
         Draft202012Validator(schema).validate(value)
         return value
 
+    def ask_openrouter(self, name, schema, instructions, payload):
+        key = os.getenv('OPENROUTER_API_KEY')
+        if not key or not self.model or not self.model.endswith(':free'):
+            raise ValueError('OpenRouter requires a key and an explicit :free model.')
+        data = {
+            'model': self.model,
+            'messages': [
+                {'role': 'system', 'content': instructions},
+                {'role': 'user', 'content': json.dumps(payload, ensure_ascii=False)},
+            ],
+            'response_format': {
+                'type': 'json_schema',
+                'json_schema': {'name': name, 'strict': True, 'schema': schema},
+            },
+            'provider': {'require_parameters': True, 'data_collection': 'deny'},
+        }
+        request = Request(
+            'https://openrouter.ai/api/v1/chat/completions',
+            data=json.dumps(data).encode(),
+            headers={'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key},
+        )
+        self.api_calls += 1
+        try:
+            with urlopen(request, timeout=120) as response:
+                result = json.load(response)
+        except HTTPError as exc:
+            self.usage_known = False
+            raise RuntimeError(f'OpenRouter request failed (HTTP {exc.code})') from None
+        except (URLError, TimeoutError):
+            self.usage_known = False
+            raise RuntimeError('OpenRouter request timed out or could not connect') from None
+        usage = result.get('usage') or {}
+        if usage.get('prompt_tokens') is not None and usage.get('completion_tokens') is not None:
+            self.input_tokens += usage['prompt_tokens']
+            self.output_tokens += usage['completion_tokens']
+        else:
+            self.usage_known = False
+        choices = result.get('choices') or []
+        if not choices or choices[0].get('finish_reason') != 'stop':
+            raise ValueError('OpenRouter response incomplete or refused')
+        return json.loads(choices[0]['message']['content'])
+
     def ask_gemini(self, schema, instructions, payload):
         key = os.getenv('GEMINI_API_KEY')
         if not self.model or not key:
@@ -120,8 +164,8 @@ class ModelGateway:
         return json.loads(''.join(part.get('text', '') for part in parts if not part.get('thought')))
 
     def embeddings(self,texts,model):
-        if self.provider == 'gemini':
-            raise ValueError('Use lexical retrieval with the Gemini reporting route')
+        if self.provider != 'openai':
+            raise ValueError('Use lexical retrieval with this reporting route')
         if self.responder:
             raise ValueError('Embeddings are not available in scripted tests')
         if not os.environ.get('OPENAI_API_KEY'):raise ValueError('OPENAI_API_KEY is required')
