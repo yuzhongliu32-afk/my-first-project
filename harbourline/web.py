@@ -325,7 +325,10 @@ pre{{white-space:pre-wrap;overflow-wrap:anywhere;background:#edf1f5;padding:1rem
         elif result and tab == 'what-if':
             from modules.member_b.change import analyse_change
             choices = {'LIFT_DELAY': 'Lift supplier delay', 'CHILDCARE_CHANGE': 'Childcare handover change',
-                       'GRANT_CHANGE': 'Grant conditions change', 'ACCESS_CHANGE': 'Accessibility requirements change'}
+                       'GRANT_CHANGE': 'Grant conditions change', 'ACCESS_CHANGE': 'Accessibility requirements change',
+                       'ASBESTOS_CONFIRMED': 'Asbestos remediation'}
+            scenario_ids = {'ASBESTOS_CONFIRMED': 'SC01', 'LIFT_DELAY': 'SC02', 'CHILDCARE_CHANGE': 'SC03'}
+            scenarios = {case['scenario_id']: case for case in result['risk']['scenarios']}
             selected = request.args.get('event', '')
             options = ''.join(f'<option value="{key}"' + (' selected' if selected == key else '')
                               + f'>{title}</option>' for key, title in choices.items())
@@ -345,6 +348,21 @@ pre{{white-space:pre-wrap;overflow-wrap:anywhere;background:#edf1f5;padding:1rem
                 content += '<div class="result"><h3>Impact · ' + choices[selected] + '</h3><dl>'
                 content += ''.join(f'<dt>{label}</dt><dd>{escape(", ".join(impact[key]) or "None identified")}</dd>'
                                    for label, key in groups)
+                case = scenarios.get(scenario_ids.get(selected))
+                timing = case['schedule_impact_days'] if case else None
+                cost = case['cost_impact_sgd'] if case else None
+                assumptions = case['assumptions'] if case else []
+                schedule_text = f'{timing} calendar days' if timing is not None else 'Not quantified'
+                cost_text = f'S${cost:,.0f}' if cost is not None else 'Not quantified'
+                assumptions_html = ('<ul>' + ''.join(f'<li>{escape(item)}</li>' for item in assumptions)
+                                    + '</ul>') if assumptions else 'No estimate assumptions are recorded for this change.'
+                content += (
+                    f'<dt>Schedule Impact</dt><dd>{schedule_text}</dd>'
+                    f'<dt>Cost Impact</dt><dd>{cost_text}</dd>'
+                    f'<dt>Stated Assumptions</dt><dd>{assumptions_html}</dd>'
+                )
+                if case:
+                    content += f'<dt>Calculation basis</dt><dd>{escape(case["calculation_basis"])}</dd>'
                 content += '</dl><p>Hypothetical analysis. The project baseline remains a proposal.</p></div>'
             content += '<h3>Existing schedule and cost estimates</h3>'
             for case in result['risk']['scenarios']:
@@ -373,7 +391,7 @@ pre{{white-space:pre-wrap;overflow-wrap:anywhere;background:#edf1f5;padding:1rem
         return document('Public project workspace', f'''<header><p>MA6094 · Group A</p>
 <h1>Harbourline Community Hub</h1><p>Manage work, run the planning model, or assess a change.</p>
 <form method="get" class="actions"><button name="run" value="1">Run planning &amp; risk</button>
-<a class="tab" href="/?view=what-if&amp;event=LIFT_DELAY">Analyse a change</a></form></header>
+<a class="tab" href="/?view=what-if&amp;event=ASBESTOS_CONFIRMED">Analyse a change</a></form></header>
 {banner}{counts}
 <nav aria-label="Project modules">{nav}</nav>
 <section class="module"><h2>{modules[tab]}</h2>{search}{content}</section>''')
