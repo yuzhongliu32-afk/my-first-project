@@ -1,80 +1,68 @@
-"""Local HTTP gateway for Member B, optional to A's direct Python callable.
+"""Local-only B HTTP service. Explicit live mode calls OpenAI, rules uses fallback.
 
-Run: python -m modules.member_b.http_api --port 8765
-GET  /health
-POST /v1/plan-risk       {"request": <A's B request>, "context": {...}}
-POST /v1/change-impact   {"event": {...}, "planning": {...}, "risk": {...}}
-
-Security: binds loopback by default; no credentials or external writes.
+Not a public endpoint: binds loopback and does not provide authentication.
+POST /v1/plan-risk {request: ..., context: ..., mode: "live"|"rules", model?: ...}
+POST /v1/change-impact {event: ..., planning: ..., risk: ...}
 """
 import argparse
 import json
+import os
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-from .adapter import run as run_b
+from .adapter import run
 from .change import analyse_change
 
-MAX_BODY=5 * 1024 * 1024
+MAX_BODY=5*1024*1024
 
 class MemberBHTTPHandler(BaseHTTPRequestHandler):
-    server_version = "HarbourlineMemberB/1.0"
-
-    def log_message(self, fmt, *args):
-        # Avoid printing input contents, which can contain source material.
-        pass
-
-    def _send(self, code, payload):
-        data=json.dumps(payload,ensure_ascii=False).encode("utf-8")
+    server_version='HarbourlineMemberB/3.0'
+    def log_message(self,format,*args):pass
+    def send(self,code,payload):
+        content=json.dumps(payload,ensure_ascii=False).encode('utf-8')
         self.send_response(code)
-        self.send_header("Content-Type","application/json; charset=utf-8")
-        self.send_header("Cache-Control","no-store")
-        self.send_header("Content-Length",str(len(data)))
-        self.end_headers()
-        self.wfile.write(data)
-
+        self.send_header('Content-Type','application/json; charset=utf-8')
+        self.send_header('Cache-Control','no-store')
+        self.send_header('Content-Length',str(len(content)))
+        self.end_headers();self.wfile.write(content)
     def do_GET(self):
-        if self.path=="/health":
-            self._send(200,{"service":"member-b","status":"ok","endpoints":["POST /v1/plan-risk","POST /v1/change-impact"]})
-        else:
-            self._send(404,{"error":"Unknown endpoint"})
-
+        if self.path=='/health':self.send(200,{'service':'member-b','status':'ok','modes':['rules','live']})
+        else:self.send(404,{'error':'unknown path'})
     def do_POST(self):
-        if self.path not in ("/v1/plan-risk","/v1/change-impact"):
-            self._send(404,{"error":"Unknown endpoint"})
-            return
+        if self.path not in ('/v1/plan-risk','/v1/change-impact'):
+            self.send(404,{'error':'unknown path'});return
         try:
-            n=int(self.headers.get("Content-Length","-1"))
-            if n<0 or n>MAX_BODY:
-                self._send(413,{"error":"Content-Length missing or too large"})
-                return
-            payload=json.loads(self.rfile.read(n))
-            if not isinstance(payload,dict):
-                raise ValueError("JSON body must be an object")
-            if self.path=="/v1/plan-risk":
-                request=payload["request"]
-                context=payload.get("context",{})
-                if not isinstance(request,dict) or not isinstance(context,dict):
-                    raise ValueError("request/context must be objects")
-                result=run_b(request,context)
-                self._send(200 if result.get("status")!="BLOCKED" else 422,result)
+            length=int(self.headers.get('Content-Length','-1'))
+            if length<0 or length>MAX_BODY:self.send(413,{'error':'invalid body length'});return
+            body=json.loads(self.rfile.read(length))
+            if not isinstance(body,dict):raise ValueError('Body must be JSON object')
+            if self.path=='/v1/change-impact':
+                out=analyse_change(body['event'],body['planning'],body['risk'])
             else:
-                result=analyse_change(payload["event"],payload["planning"],payload["risk"])
-                self._send(200,result)
-        except (KeyError,ValueError,TypeError,json.JSONDecodeError) as exc:
-            self._send(400,{"error":type(exc).__name__,"message":str(exc)})
-
+                context=body.get('context',{}).copy()
+                context['mode']=body.get('mode','rules')
+                if context['mode']=='live' and (not os.getenv('OPENAI_API_KEY') or not (body.get('model') or os.getenv('OPENAI_MODEL'))):
+                    self.send(503,{'error':'LIVE_MODEL_NOT_CONFIGURED','message':'OPENAI_API_KEY and OPENAI_MODEL required; no fake result is returned'})
+                    return
+                if body.get('model'):context['model']=body['model']
+                if body.get('cutoff'):context['cutoff']=body['cutoff']
+                out=run(body['request'],context)
+            self.send(200 if out.get('status')!='BLOCKED' else 422,out)
+        except (KeyError,TypeError,ValueError,json.JSONDecodeError) as exc:
+            self.send(400,{'error':type(exc).__name__,'message':str(exc)[:280]})
+        except Exception as exc:
+            self.send(502,{'error':'LIVE_AGENT_FAILED','type':type(exc).__name__,
+              'message':'Generation or validation failed; no rules output was substituted.'})
 
 def main():
-    parser=argparse.ArgumentParser(description="Serve Member B Planning/Risk locally")
-    parser.add_argument("--port",type=int,default=8765)
-    parser.add_argument("--host",default="127.0.0.1",help="Only localhost is safe without authentication")
+    parser=argparse.ArgumentParser(description='Local Member B HTTP server')
+    parser.add_argument('--host',default='127.0.0.1')
+    parser.add_argument('--port',type=int,default=8765)
     args=parser.parse_args()
-    if args.host not in ("127.0.0.1","localhost","::1"):
-        parser.error("Unauthenticated demo must bind to localhost; use an authenticated proxy for deployment")
+    if args.host not in ('127.0.0.1','localhost','::1'):
+        parser.error('Do not expose an unauthenticated LLM endpoint to the internet')
     server=ThreadingHTTPServer((args.host,args.port),MemberBHTTPHandler)
-    print(f"Member B HTTP ready at http://{args.host}:{args.port}/health")
-    try: server.serve_forever()
-    except KeyboardInterrupt: pass
-    finally: server.server_close()
+    print(f'B HTTP: http://{args.host}:{args.port}/health')
+    try:server.serve_forever()
+    except KeyboardInterrupt:pass
+    finally:server.server_close()
 
-if __name__=="__main__":
-    main()
+if __name__=='__main__':main()
