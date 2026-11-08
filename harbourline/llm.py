@@ -81,8 +81,9 @@ class ModelGateway:
 
     def ask_openrouter(self, name, schema, instructions, payload):
         key = os.getenv('OPENROUTER_API_KEY')
-        if not key or not self.model or not (self.model.endswith(':free') or self.model == 'openrouter/free'):
-            raise ValueError('OpenRouter requires a key and a free model.')
+        free_model = bool(self.model and (self.model.endswith(':free') or self.model == 'openrouter/free'))
+        if not key or not (free_model or self.model == 'openai/gpt-4.1-mini'):
+            raise ValueError('OpenRouter requires a key and a supported free model or openai/gpt-4.1-mini.')
         data = {
             'model': self.model,
             'messages': [
@@ -108,7 +109,7 @@ class ModelGateway:
                 self.model = data['model']
                 break
             except HTTPError as exc:
-                if exc.code == 404 and data['model'] != 'openrouter/free':
+                if exc.code == 404 and free_model and data['model'] != 'openrouter/free':
                     data['model'] = 'openrouter/free'
                     continue
                 self.usage_known = False
