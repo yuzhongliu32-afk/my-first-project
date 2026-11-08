@@ -553,4 +553,16 @@ def create_app(config=None):
     def project_atlas():
         return send_file(Path(__file__).with_name("Harbourline Project Atlas.html"), mimetype="text/html")
 
+    def allow_atlas_scripts(response):
+        from flask import request
+
+        if request.endpoint == "project_atlas":
+            response.headers["Content-Security-Policy"] += (
+                "; script-src 'sha256-dujtd92fRHv58npWTVToXfSXmgZJrJoksoHIV9sGxUM='"
+                " 'sha256-+MragbMQ0LS1W5qs3lgLN19Bb3Gby1LLfAW0HqYmsKc='"
+            )
+        return response
+
+    # Flask runs application response hooks in reverse registration order.
+    app.after_request_funcs[None].insert(0, allow_atlas_scripts)
     return app
