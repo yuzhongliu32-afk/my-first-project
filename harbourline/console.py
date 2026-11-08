@@ -25,7 +25,6 @@ ROOT = Path(__file__).resolve().parents[1]
 INPUTS = ROOT / 'inputs'
 BRIEF = INPUTS / 'Harbourline_Brief.pdf'
 PACK = INPUTS / 'Harbourline_Data_Pack.zip'
-MODEL_CONFIG = ('OPENAI_API_KEY', 'OPENAI_MODEL')
 JIRA_CONFIG = ('JIRA_BASE_URL', 'JIRA_EMAIL', 'JIRA_API_TOKEN', 'JIRA_PROJECT_KEY')
 DATES = {
     'weekly_start': ('Weekly start', '2027-03-25'),
@@ -56,8 +55,10 @@ class Console:
         return client(self.store) if self.live else self.mock
 
     def missing_inputs(self):
+        provider = os.getenv('MODEL_PROVIDER', 'openai').upper()
+        model_config = (provider + '_API_KEY', provider + '_MODEL')
         return ([] if self.brief.is_file() else [self.brief.name]) + [
-            key for key in MODEL_CONFIG if not os.getenv(key)
+            key for key in model_config if not os.getenv(key)
         ]
 
     def run(self, fields, *, include_reports=True):
