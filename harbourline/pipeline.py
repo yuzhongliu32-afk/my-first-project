@@ -1,5 +1,6 @@
 """Actual module integration; mappings require verified evidence, not relabelled data."""
 from copy import deepcopy
+from importlib import import_module
 from time import monotonic
 from .contracts import validate,verify_evidence,common_projection,_walk
 from .integration import empty_backend,aggregate
@@ -24,6 +25,12 @@ def run_project(common,library_path,*,cutoff,plan_mode='rules',b_context=None,c_
     req_b={**deepcopy(request),'recipient':'B','operation':'PLAN_RISK','source_snapshot_id':legacy}
     ctx={'source_snapshot_id':legacy,**(b_context or {})}
     if ctx['source_snapshot_id']!=legacy:raise ValueError('B legacy source mode mismatch')
+    if legacy == 'PACK-JAN-MAR-2027-V1' and any(
+        doc['source_type'] == 'SPONSOR_ANSWER' for doc in lib.documents
+    ):
+        revision = import_module('modules.member_b.planning_risk-9号凌晨修改版')
+        b_run = revision.run
+        ctx['evidence_library'] = lib.path
     b=b_run(req_b,ctx)
     validate(b,'B',expected_producer='B')
     if b['status'] not in ('SUCCESS','PARTIAL'):raise ValueError('B cannot run: authoritative sources unavailable')
@@ -38,6 +45,7 @@ def run_project(common,library_path,*,cutoff,plan_mode='rules',b_context=None,c_
     if plan_mode=='live':
         from modules.member_b.agent import refine
         b=refine(b,lib,b_gateway or ModelGateway())
+        record('B_MODEL_REFINEMENT_VALIDATED',b)
     record('B_OUTPUT_VALIDATED',b)
     req_c={**deepcopy(request),'recipient':'C','operation':'GENERATE_REPORTS'}
     if include_reports:
