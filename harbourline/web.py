@@ -111,6 +111,15 @@ def create_app(config=None):
     def error_notice(exc):
         if isinstance(exc, GateError):
             return str(exc)
+        if isinstance(exc, RuntimeError):
+            detail = str(exc)
+            if re.fullmatch(r'(?:OpenRouter|Gemini) request failed \(HTTP [1-5][0-9]{2}\)', detail):
+                return detail + '. Check the configured model, access and quota.'
+            if detail in (
+                'OpenRouter request timed out or could not connect',
+                'Gemini request timed out or could not connect',
+            ):
+                return detail + '.'
         return f'Operation failed ({type(exc).__name__}). Review deployment configuration and audit.'
 
     def perform(actor, fields):
@@ -147,8 +156,10 @@ def create_app(config=None):
                 else:
                     save(console, console.act(fields))
             except Exception as exc:
-                app.logger.warning('Workflow action %s failed (%s)', fields.get('action'), type(exc).__name__)
-                save(console, error_notice(exc), True)
+                notice = error_notice(exc)
+                log_detail = type(exc).__name__ if isinstance(exc, GateError) else notice
+                app.logger.warning('Workflow action %s failed: %s', action, log_detail)
+                save(console, notice, True)
 
     def csrf():
         if 'csrf' not in session:
