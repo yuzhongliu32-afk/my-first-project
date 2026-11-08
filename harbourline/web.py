@@ -18,6 +18,7 @@ from flask import Flask, abort, jsonify, redirect, request, session
 from werkzeug.exceptions import HTTPException
 
 from .console import Console, details, json_block, page
+from .contracts import ContractError
 from .governance import GateError, GovernanceStore
 from .sources import EvidenceLibrary
 
@@ -111,6 +112,18 @@ def create_app(config=None):
     def error_notice(exc):
         if isinstance(exc, GateError):
             return str(exc)
+        if isinstance(exc, ContractError):
+            detail = str(exc)
+            schema_error = re.fullmatch(
+                r'(Common|B|C|Full) schema violation at /([A-Za-z0-9_/]{0,160}): ([A-Za-z]+)', detail
+            )
+            if schema_error:
+                return 'Output validation failed. ' + detail
+            # Dynamic IDs are appended after a colon. Keep them out of the UI and logs.
+            reason = detail.partition(':')[0]
+            if re.fullmatch(r'[A-Za-z0-9 _/;*().-]{1,160}', reason):
+                return 'Output validation failed. ' + reason
+            return 'Output validation failed. The generated result did not meet the project contract.'
         if isinstance(exc, RuntimeError):
             detail = str(exc)
             if re.fullmatch(r'(?:OpenRouter|Gemini) request failed \(HTTP [1-5][0-9]{2}\)', detail):
