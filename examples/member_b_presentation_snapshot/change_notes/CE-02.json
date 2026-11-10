@@ -1,0 +1,661 @@
+{
+  "status": "REVIEW_REQUIRED",
+  "approved": false,
+  "event": {
+    "event_id": "CE-02",
+    "change_type": "OPERATOR_WITHDRAWAL",
+    "description": "The sole respondent to the active ageing centre operator EOI has withdrawn, citing uncertainty over opening dates. No other submissions have been received. The grant conditions on signed operator agreements are unchanged.",
+    "hypothetical": false
+  },
+  "affected_elements": [
+    {
+      "element_ref": "1.3 Active ageing centre",
+      "element_type": "WBS",
+      "why_affected": "The sole EOI respondent has withdrawn, affecting the active ageing centre’s operator dependency; the EOI has had only one response and appointment remains unresolved.",
+      "b_wbs_ids": [
+        "1.3",
+        "1.3.1",
+        "1.3.2"
+      ],
+      "b_milestone_ids": [
+        "M05"
+      ],
+      "b_risk_ids": [
+        "R04"
+      ],
+      "source_refs": [
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 70,
+          "line_end": 70,
+          "chunk_id": "PACK-EDC:70-70",
+          "quote": "4.4 Active ageing operator EOI: one response received. Council procurement policy"
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 71,
+          "line_end": 71,
+          "chunk_id": "PACK-EDC:71-71",
+          "quote": "    requires at least three. EOI extended to 30 April 2027."
+        },
+        {
+          "document_id": "PACK-SEED-RISK",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 8,
+          "line_end": 8,
+          "chunk_id": "PACK-SEED-RISK:8-8",
+          "quote": "R06,Operator,Active ageing operator not found,Estate Development,2,4,6,Market sounding,Open"
+        }
+      ]
+    },
+    {
+      "element_ref": "1.3.1 Active ageing centre design and construction",
+      "element_type": "DELIVERABLE",
+      "why_affected": "The operator is not appointed, so operator-dependent design coordination remains exposed to delay; evidence gives no revised date or cost.",
+      "b_wbs_ids": [
+        "1.3.1"
+      ],
+      "b_milestone_ids": [
+        "M05"
+      ],
+      "b_risk_ids": [
+        "R04"
+      ],
+      "source_refs": [
+        {
+          "document_id": "PACK-CONTRACT",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 13,
+          "line_end": 13,
+          "chunk_id": "PACK-CONTRACT:13-13",
+          "quote": "D12,Active ageing operator appointment,Council PM,2027-03-31,Overdue,,EOI extended to 30 Apr"
+        },
+        {
+          "document_id": "SPONSOR-ANSWERS-R1",
+          "document_version": "4f6be8c6ddb8",
+          "source_type": "SPONSOR_ANSWER",
+          "page": 1,
+          "line_start": 18,
+          "line_end": 18,
+          "chunk_id": "SPONSOR-ANSWERS-R1:18-18",
+          "quote": "There is no confirmed appointment date. Schedule and track it as a dependency."
+        }
+      ]
+    },
+    {
+      "element_ref": "1.3.2 Operator procurement and agreement dependency",
+      "element_type": "DELIVERABLE",
+      "why_affected": "The sole EOI respondent withdrew; the existing procurement dependency and appointment milestone are directly affected. The active ageing agreement has no assigned owner in the contract tracker.",
+      "b_wbs_ids": [
+        "1.3.2"
+      ],
+      "b_milestone_ids": [
+        "M05",
+        "M06"
+      ],
+      "b_risk_ids": [
+        "R04"
+      ],
+      "source_refs": [
+        {
+          "document_id": "PACK-CONTRACT",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 15,
+          "line_end": 15,
+          "chunk_id": "PACK-CONTRACT:15-15",
+          "quote": "D14,Active ageing operator agreement signed,,2027-06-30,Not started,,Owner not assigned"
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 70,
+          "line_end": 70,
+          "chunk_id": "PACK-EDC:70-70",
+          "quote": "4.4 Active ageing operator EOI: one response received. Council procurement policy"
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 71,
+          "line_end": 71,
+          "chunk_id": "PACK-EDC:71-71",
+          "quote": "    requires at least three. EOI extended to 30 April 2027."
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 92,
+          "line_end": 92,
+          "chunk_id": "PACK-EDC:92-92",
+          "quote": "    agreements for ALL social service spaces. The active ageing operator is not yet"
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 93,
+          "line_end": 93,
+          "chunk_id": "PACK-EDC:93-93",
+          "quote": "    appointed (see 4.4)."
+        }
+      ]
+    },
+    {
+      "element_ref": "M05 Active ageing operator appointment",
+      "element_type": "MILESTONE",
+      "why_affected": "The appointment date was already unconfirmed and procurement requires at least three responses; withdrawal leaves no respondent, while the extended EOI closing date remains 30 April 2027.",
+      "b_wbs_ids": [
+        "1.3.2"
+      ],
+      "b_milestone_ids": [
+        "M05"
+      ],
+      "b_risk_ids": [
+        "R04"
+      ],
+      "source_refs": [
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 71,
+          "line_end": 71,
+          "chunk_id": "PACK-EDC:71-71",
+          "quote": "    requires at least three. EOI extended to 30 April 2027."
+        },
+        {
+          "document_id": "SPONSOR-ANSWERS-R1",
+          "document_version": "4f6be8c6ddb8",
+          "source_type": "SPONSOR_ANSWER",
+          "page": 1,
+          "line_start": 18,
+          "line_end": 18,
+          "chunk_id": "SPONSOR-ANSWERS-R1:18-18",
+          "quote": "There is no confirmed appointment date. Schedule and track it as a dependency."
+        }
+      ]
+    },
+    {
+      "element_ref": "M06 Signed operator agreements for all social service spaces (grant T2 condition)",
+      "element_type": "GRANT_CONDITION",
+      "why_affected": "Tranche 2 requires signed agreements for all social service spaces. The active ageing operator is not appointed, so this condition remains exposed; the event states the condition is unchanged.",
+      "b_wbs_ids": [
+        "1.3.2",
+        "1.8.1"
+      ],
+      "b_milestone_ids": [
+        "M06"
+      ],
+      "b_risk_ids": [
+        "R04"
+      ],
+      "source_refs": [
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 91,
+          "line_end": 91,
+          "chunk_id": "PACK-EDC:91-91",
+          "quote": "6.2 Ms Ong drew attention to the Tranche 2 condition requiring signed operator"
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 92,
+          "line_end": 92,
+          "chunk_id": "PACK-EDC:92-92",
+          "quote": "    agreements for ALL social service spaces. The active ageing operator is not yet"
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 93,
+          "line_end": 93,
+          "chunk_id": "PACK-EDC:93-93",
+          "quote": "    appointed (see 4.4)."
+        },
+        {
+          "document_id": "PACK-GRANT",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 18,
+          "line_end": 18,
+          "chunk_id": "PACK-GRANT:18-18",
+          "quote": "   | T2      | 30%            | Completion of structural and M&E rough-in, AND signed operator        |"
+        },
+        {
+          "document_id": "PACK-GRANT",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 19,
+          "line_end": 19,
+          "chunk_id": "PACK-GRANT:19-19",
+          "quote": "   |         |                | agreements for ALL social service spaces in the facility             |"
+        }
+      ]
+    },
+    {
+      "element_ref": "Active ageing operator appointment delays grant condition or design coordination",
+      "element_type": "RISK",
+      "why_affected": "The withdrawal is a realized procurement issue, not a future probability event. Update R04 to record the respondent withdrawal and zero remaining submissions; retain the unresolved appointment and grant-condition exposure without inventing a new rating.",
+      "b_wbs_ids": [
+        "1.3.1",
+        "1.3.2",
+        "1.8.1"
+      ],
+      "b_milestone_ids": [
+        "M05",
+        "M06"
+      ],
+      "b_risk_ids": [
+        "R04"
+      ],
+      "source_refs": [
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 70,
+          "line_end": 70,
+          "chunk_id": "PACK-EDC:70-70",
+          "quote": "4.4 Active ageing operator EOI: one response received. Council procurement policy"
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 71,
+          "line_end": 71,
+          "chunk_id": "PACK-EDC:71-71",
+          "quote": "    requires at least three. EOI extended to 30 April 2027."
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 91,
+          "line_end": 91,
+          "chunk_id": "PACK-EDC:91-91",
+          "quote": "6.2 Ms Ong drew attention to the Tranche 2 condition requiring signed operator"
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 92,
+          "line_end": 92,
+          "chunk_id": "PACK-EDC:92-92",
+          "quote": "    agreements for ALL social service spaces. The active ageing operator is not yet"
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 93,
+          "line_end": 93,
+          "chunk_id": "PACK-EDC:93-93",
+          "quote": "    appointed (see 4.4)."
+        }
+      ]
+    },
+    {
+      "element_ref": "Active ageing operator appointment to signed agreement to Tranche 2 release",
+      "element_type": "DATE_CHAIN",
+      "why_affected": "The respondent withdrawal affects the unresolved appointment-to-agreement chain feeding the signed-agreement prerequisite for T2. No revised appointment, agreement, rough-in, or tranche date is evidenced.",
+      "b_wbs_ids": [
+        "1.3.2",
+        "1.8.1"
+      ],
+      "b_milestone_ids": [
+        "M05",
+        "M06"
+      ],
+      "b_risk_ids": [
+        "R04"
+      ],
+      "source_refs": [
+        {
+          "document_id": "PACK-GRANT",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 18,
+          "line_end": 18,
+          "chunk_id": "PACK-GRANT:18-18",
+          "quote": "   | T2      | 30%            | Completion of structural and M&E rough-in, AND signed operator        |"
+        },
+        {
+          "document_id": "PACK-GRANT",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 19,
+          "line_end": 19,
+          "chunk_id": "PACK-GRANT:19-19",
+          "quote": "   |         |                | agreements for ALL social service spaces in the facility             |"
+        },
+        {
+          "document_id": "SPONSOR-ANSWERS-R1",
+          "document_version": "4f6be8c6ddb8",
+          "source_type": "SPONSOR_ANSWER",
+          "page": 1,
+          "line_start": 18,
+          "line_end": 18,
+          "chunk_id": "SPONSOR-ANSWERS-R1:18-18",
+          "quote": "There is no confirmed appointment date. Schedule and track it as a dependency."
+        }
+      ]
+    },
+    {
+      "element_ref": "1.8.1 Grant condition and tranche tracking",
+      "element_type": "WBS",
+      "why_affected": "The T2 signed-operator-agreement condition remains unchanged but the active ageing agreement dependency is unresolved after withdrawal; the condition must remain tracked.",
+      "b_wbs_ids": [
+        "1.8.1"
+      ],
+      "b_milestone_ids": [
+        "M06"
+      ],
+      "b_risk_ids": [
+        "R04"
+      ],
+      "source_refs": [
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 91,
+          "line_end": 91,
+          "chunk_id": "PACK-EDC:91-91",
+          "quote": "6.2 Ms Ong drew attention to the Tranche 2 condition requiring signed operator"
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 92,
+          "line_end": 92,
+          "chunk_id": "PACK-EDC:92-92",
+          "quote": "    agreements for ALL social service spaces. The active ageing operator is not yet"
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 93,
+          "line_end": 93,
+          "chunk_id": "PACK-EDC:93-93",
+          "quote": "    appointed (see 4.4)."
+        },
+        {
+          "document_id": "PACK-GRANT",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 18,
+          "line_end": 18,
+          "chunk_id": "PACK-GRANT:18-18",
+          "quote": "   | T2      | 30%            | Completion of structural and M&E rough-in, AND signed operator        |"
+        },
+        {
+          "document_id": "PACK-GRANT",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 19,
+          "line_end": 19,
+          "chunk_id": "PACK-GRANT:19-19",
+          "quote": "   |         |                | agreements for ALL social service spaces in the facility             |"
+        }
+      ]
+    }
+  ],
+  "estimates": [],
+  "result": {
+    "cost_sgd_k": null,
+    "schedule_weeks": null,
+    "computed_in_code": true
+  },
+  "contingency": {
+    "before_sgd": 1.18,
+    "basis": "About S$1.18 million remains after the S$16.42 million contract sum and S$0.90 million consultancy/authority fees are deducted from the S$18.5 million approved budget; the minutes record no decision that this balance is contingency.",
+    "source_refs": [
+      {
+        "document_id": "PACK-EDC",
+        "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+        "source_type": "DATA_PACK",
+        "page": null,
+        "line_start": 14,
+        "line_end": 14,
+        "chunk_id": "PACK-EDC:14-14",
+        "quote": "    Builders Pte Ltd on 18 December 2026 at a contract sum of S$16.42 million."
+      },
+      {
+        "document_id": "PACK-EDC",
+        "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+        "source_type": "DATA_PACK",
+        "page": null,
+        "line_start": 16,
+        "line_end": 16,
+        "chunk_id": "PACK-EDC:16-16",
+        "quote": "    estimated at S$0.90 million, held outside the contract."
+      },
+      {
+        "document_id": "PACK-EDC",
+        "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+        "source_type": "DATA_PACK",
+        "page": null,
+        "line_start": 17,
+        "line_end": 17,
+        "chunk_id": "PACK-EDC:17-17",
+        "quote": "1.2 Ms Ong noted the approved budget of S$18.5 million leaves about S$1.18 million"
+      },
+      {
+        "document_id": "PACK-EDC",
+        "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+        "source_type": "DATA_PACK",
+        "page": null,
+        "line_start": 18,
+        "line_end": 18,
+        "chunk_id": "PACK-EDC:18-18",
+        "quote": "    once fees are deducted, and asked whether this is to be treated as contingency."
+      },
+      {
+        "document_id": "PACK-EDC",
+        "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+        "source_type": "DATA_PACK",
+        "page": null,
+        "line_start": 19,
+        "line_end": 19,
+        "chunk_id": "PACK-EDC:19-19",
+        "quote": "    No decision recorded."
+      }
+    ],
+    "after_p50_sgd": null,
+    "after_p80_sgd": null,
+    "gap_at_p80_sgd": null
+  },
+  "funding_status": "NAMED_IN_SOURCES",
+  "funding": [
+    {
+      "source_name": "Harbourline Town Council capital reserves",
+      "what_it_covers": "Council’s own funding of the remaining 40% of project costs; evidence does not specifically allocate additional money to this operator-withdrawal event or any resulting gap.",
+      "source_refs": [
+        {
+          "document_id": "SPONSOR-ANSWERS-R1",
+          "document_version": "4f6be8c6ddb8",
+          "source_type": "SPONSOR_ANSWER",
+          "page": 2,
+          "line_start": 44,
+          "line_end": 44,
+          "chunk_id": "SPONSOR-ANSWERS-R1:44-44",
+          "quote": "The Town Council funds the balance from its own capital reserves."
+        },
+        {
+          "document_id": "SPONSOR-ANSWERS-R1",
+          "document_version": "4f6be8c6ddb8",
+          "source_type": "SPONSOR_ANSWER",
+          "page": 2,
+          "line_start": 45,
+          "line_end": 45,
+          "chunk_id": "SPONSOR-ANSWERS-R1:45-45",
+          "quote": "No other grant is being sought, so no fundraising work package is needed."
+        }
+      ]
+    }
+  ],
+  "decision": {
+    "who": "Harbourline Town Council; the evidence does not identify a specific decision-maker for the procurement response.",
+    "what": "Decide the procurement action following withdrawal of the sole active ageing EOI respondent, including whether and how to proceed given the three-response requirement.",
+    "amount_or_date": "Before the extended EOI closing date of 30 April 2027.",
+    "deadline": "30 April 2027",
+    "sentence": "Harbourline Town Council must decide the procurement action for the active ageing operator following the sole respondent’s withdrawal, before the extended EOI closes on 30 April 2027."
+  },
+  "unresolved": [
+    {
+      "item": "Whether the EOI will receive any further eligible submissions and whether the procurement policy’s three-response minimum can be met.",
+      "would_be_settled_by": "The procurement response and outcome at the extended 30 April 2027 closing date."
+    },
+    {
+      "item": "Revised active ageing operator appointment date and accountable owner for the active ageing operator agreement deliverable.",
+      "would_be_settled_by": "A Council procurement decision, appointment record, and assigned agreement owner."
+    },
+    {
+      "item": "Whether the T2 signed-agreement condition can be met on the construction programme’s timing, and the resulting effect on tranche release.",
+      "would_be_settled_by": "A dated, integrated schedule for appointment, signed agreements, structural/M&E rough-in, and T2 condition assessment."
+    },
+    {
+      "item": "Any incremental cost or schedule effect caused by the withdrawal; the historical S$85,000 room-reconfiguration example is not a project estimate for this event.",
+      "would_be_settled_by": "A scoped and priced proposal plus a revised programme from the responsible procurement and design parties."
+    },
+    {
+      "item": "Whether contingency is formally designated and whether the Council’s capital reserves are authorized to cover any event-related incremental cost.",
+      "would_be_settled_by": "A Council budget decision allocating contingency and confirming the funding source for any approved additional cost."
+    }
+  ],
+  "conflicts": [],
+  "stale_wbs_ids": [
+    "1.3",
+    "1.3.1",
+    "1.3.2",
+    "1.8.1"
+  ],
+  "stale_milestone_ids": [
+    "M05",
+    "M06"
+  ],
+  "stale_risk_ids": [
+    "R04"
+  ],
+  "stale_reports": [
+    "WEEKLY_COMMITTEE",
+    "MONTHLY_GRANT"
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "findings": []
+    }
+  ],
+  "note": "Proposal for human review: the agent recommends, a human decides. No baseline change approved and nothing written to Jira.",
+  "based_on": {
+    "source": "live",
+    "run_id": "B-LIVE-af3b24c3-9688-4f33-b47a-49c3b518a2c9"
+  },
+  "labels": {
+    "wbs": {
+      "1": "Harbourline Community Hub Refurbishment",
+      "1.1": "Sports hall refurbishment",
+      "1.1.1": "Sports hall design and works planning",
+      "1.1.2": "Sports hall refurbishment and reopening",
+      "1.2": "Early childhood centre",
+      "1.2.1": "Early childhood centre design and coordination",
+      "1.2.2": "Centre construction and operator handover",
+      "1.3": "Active ageing centre",
+      "1.3.1": "Active ageing centre design and construction",
+      "1.3.2": "Operator procurement and agreement dependency",
+      "1.4": "Community kitchen and food-court refresh",
+      "1.4.1": "Kitchen and food-court design and permits",
+      "1.4.2": "Kitchen and food-court works",
+      "1.5": "Rooftop community garden",
+      "1.5.1": "Roof structural assessment and instruction",
+      "1.5.2": "Rooftop garden delivery or deferral decision",
+      "1.6": "Accessibility, lifts and M&E systems",
+      "1.6.1": "M&E replacement and integration",
+      "1.6.2": "Lift replacement and barrier-free access arrangements",
+      "1.7": "Live-site phasing and resident consultation",
+      "1.7.1": "Live-site phasing, access and user notices",
+      "1.7.2": "Resident consultation and design input",
+      "1.8": "Grant and project reporting",
+      "1.8.1": "Grant condition and tranche tracking",
+      "1.8.2": "Monthly grant progress reporting"
+    },
+    "milestones": {
+      "M01": "Design-and-build contract award",
+      "M02": "Site possession / construction start",
+      "M03": "Resident consultation period",
+      "M04": "Resident consultation summary/design input",
+      "M05": "Active ageing operator appointment",
+      "M06": "Signed operator agreements for all social service spaces (grant T2 condition)",
+      "M07": "Council decision on facility closures and access/phasing",
+      "M08": "Childcare floor handover",
+      "M09": "Childcare enrolment begins",
+      "M10": "Practical completion / fully open",
+      "M11": "Temporary Occupation Permit for whole facility (grant T3 condition)",
+      "M12": "Six months of operation and utilisation report (grant T4 condition)"
+    },
+    "risks": {
+      "R01": "Asbestos removal disrupts works and critical path",
+      "R02": "Lift closure/access plan conflicts with public access requirements",
+      "R03": "Unresolved facility closures delay lift and sports hall packages",
+      "R04": "Active ageing operator appointment delays grant condition or design coordination",
+      "R05": "Childcare handover timing may not allow operator fit-out and licensing",
+      "R06": "Grant eligibility and unresolved budget allocation create funding exposure",
+      "R07": "Rooftop garden instruction and strengthening decision may affect scope and cost",
+      "R08": "Programme completion and childcare dates remain unreconciled",
+      "R09": "Monthly grant reporting lateness could threaten tranche release"
+    }
+  },
+  "metrics": {
+    "api_calls": 1,
+    "input_tokens": 39467,
+    "output_tokens": 1646,
+    "estimated_cost_usd": null
+  }
+}

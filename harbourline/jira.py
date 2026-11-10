@@ -90,12 +90,31 @@ class JiraCloud:
         if not re.fullmatch(r'[A-Z][A-Z0-9_]*-\d+',key):raise GateError('Invalid Jira key')
         return self.request('GET','/issue/'+key+'?fields=summary,description,labels,parent,issuetype,duedate,issuelinks')
 
+    def search_label(self,label):
+        """Read-only: every work item in the project carrying a label (paginated JQL search)."""
+        if not re.fullmatch(r'[a-z0-9-]{3,40}',label):raise GateError('Invalid label')
+        rows=[];token=None
+        for _ in range(20):
+            body={'jql':f'project = "{self.project}" AND labels = "{label}" ORDER BY key',
+                  'fields':['summary','labels','issuetype'],'maxResults':100}
+            if token:body['nextPageToken']=token
+            data=self.request('POST','/search/jql',body)
+            rows.extend(data.get('issues',[]))
+            token=data.get('nextPageToken')
+            if data.get('isLast',True) or not token:return rows
+        raise GateError('Board readback pagination limit')
+
     def create(self,fields):return self.request('POST','/issue',{'fields':fields})['key']
     def update(self,key,fields):self.request('PUT','/issue/'+key,{'fields':fields})
-    def link(self,predecessor,successor):self.request('POST','/issueLink',{'type':{'name':'Blocks'},'inwardIssue':{'key':predecessor},'outwardIssue':{'key':successor}})
-    def linked(self,predecessor,successor):
+    def link(self,predecessor,successor,link_type='Blocks'):
+        self.request('POST','/issueLink',{'type':{'name':link_type},'inwardIssue':{'key':predecessor},'outwardIssue':{'key':successor}})
+    def linked(self,predecessor,successor,link_type='Blocks'):
         for link in self.get(predecessor)['fields'].get('issuelinks',[]):
-            if link.get('type',{}).get('outward','').lower()=='blocks' and link.get('outwardIssue',{}).get('key')==successor:return True
+            kind=link.get('type',{})
+            if link_type=='Blocks':
+                if kind.get('outward','').lower()=='blocks' and link.get('outwardIssue',{}).get('key')==successor:return True
+            elif kind.get('name','').lower()==link_type.lower() and successor in (
+                    link.get('outwardIssue',{}).get('key'),link.get('inwardIssue',{}).get('key')):return True
         return False
 
 
@@ -116,14 +135,34 @@ def normal(fields):
 def matches(actual,expected):return all(normal(actual).get(k)==v for k,v in normal(expected).items())
 
 
+def risk_description(r,external):
+    score=('Unrated (the sources do not establish probability and impact)' if r.get('score') is None
+           else f"{r['probability']} x {r['impact']} = {r['score']}")
+    sources='; '.join(f"{x['document_id']} L{x['line_start']}" for x in r.get('source_refs',[])[:8]) or 'none'
+    return '\n'.join([
+        f'PROPOSED risk for human review - external ID {external}',
+        f"Status: {r.get('status')}",
+        f'Score (probability x impact): {score}',
+        f"Owner: {r.get('owner') or 'not named in the sources'}",
+        f"Trigger: {r.get('trigger') or 'not stated'}",
+        f"Response plan: {r.get('response_plan') or 'not stated'}",
+        f"Description: {r.get('description','')}",
+        f"Related WBS: {', '.join(r.get('related_wbs_ids',[])) or 'none'}",
+        f"Related milestones: {', '.join(r.get('related_milestone_ids',[])) or 'none'}",
+        f'Sources: {sources}',
+        'Agent-created; ratings and owners are proposals. Closing or resolving is a human act.'])
+
+
 def plan_actions(full,jira):
     if full.get('change',{}).get('stale_artifacts') or any(r['is_stale'] for r in full['reporting']['reports']):raise GateError('Stale project outputs block Jira preview')
     types=jira.types();actions=[];lookup={};project=jira.project
     level_names={1:os.getenv('JIRA_TYPE_LEVEL1','Epic'),2:os.getenv('JIRA_TYPE_LEVEL2','Task'),3:os.getenv('JIRA_TYPE_LEVEL3','Sub-task')}
-    def add(external,title,description,type_name,parent=None,date=None,wbs_id=None,milestone_id=None):
+    def add(external,title,description,type_name,parent=None,date=None,wbs_id=None,milestone_id=None,
+            extra_labels=(),risk_id=None):
         if type_name not in types:raise GateError(f'Jira issue type unavailable: {type_name}; configure explicit type mapping')
         fields={'project':{'key':project},'summary':title,'description':adf(description),
-                'issuetype':{'id':types[type_name]},'labels':[marker(external),'harbourline-proposed','ai-generated']}
+                'issuetype':{'id':types[type_name]},
+                'labels':[marker(external),'harbourline-proposed','ai-generated',*extra_labels]}
         if date:fields['duedate']=date
         existing=jira.find(marker(external));key=existing['key'] if existing else None
         parent_key=lookup.get(parent,{}).get('issue_key') if parent else None
@@ -132,6 +171,7 @@ def plan_actions(full,jira):
         action={'external_key':external,'label':marker(external),'action':'UPDATE' if key else 'CREATE',
                 'issue_key':key,'fields':fields,'parent_external_key':parent,'before':before,
                 'wbs_id':wbs_id,'milestone_id':milestone_id}
+        if risk_id:action['risk_id']=risk_id
         actions.append(action);lookup[external]=action
     work=sorted(full['planning']['wbs_items'],key=lambda w:(w['level'],w['wbs_id']))
     for w in work:
@@ -140,13 +180,70 @@ def plan_actions(full,jira):
     for m in full['planning']['milestones']:
         external=f"{project}:MILESTONE:{m['milestone_id']}"
         add(external,m['title'],f"PROPOSED milestone — external ID {external}\nRelative timing: {m['relative_timing']}; linked WBS: {m['related_wbs_ids']}",os.getenv('JIRA_TYPE_MILESTONE','Task'),date=m['calendar_date'],milestone_id=m['milestone_id'])
+    # Risk register (Member B): one work item per risk, stable external key RISK:<id>, so a re-run
+    # (e.g. after re-scoring) updates the same item. Linked with "Relates" to the work it threatens.
+    risk_type=os.getenv('JIRA_TYPE_RISK','Task');relates=os.getenv('JIRA_RISK_LINK_TYPE','Relates')
+    risk_links=[]
+    for r in full.get('risk',{}).get('risks',[]):
+        external=f"{project}:RISK:{r['risk_id']}"
+        add(external,f"[Risk {r['risk_id']}] {r['title']}",risk_description(r,external),risk_type,
+            extra_labels=('harbourline-risk',),risk_id=r['risk_id'])
+        for wbs in r.get('related_wbs_ids',[]):
+            if f'{project}:WBS:{wbs}' in lookup:
+                risk_links.append({'action':'LINK','link_type':relates,'predecessor':external,'successor':f'{project}:WBS:{wbs}'})
+        for mid in r.get('related_milestone_ids',[]):
+            if f'{project}:MILESTONE:{mid}' in lookup:
+                risk_links.append({'action':'LINK','link_type':relates,'predecessor':external,'successor':f'{project}:MILESTONE:{mid}'})
     for w in work:
         for pred in w['predecessor_wbs_ids']:
             actions.append({'action':'LINK','predecessor':f'{project}:WBS:{pred}','successor':f"{project}:WBS:{w['wbs_id']}"})
     for m in full['planning']['milestones']:
         for pred in m['predecessor_milestone_ids']:
             actions.append({'action':'LINK','predecessor':f'{project}:MILESTONE:{pred}','successor':f"{project}:MILESTONE:{m['milestone_id']}"})
+    actions.extend(risk_links)
     return {'target':jira.target,'transport':jira.mode,'actions':actions}
+
+
+def read_board(full,jira):
+    """Read-only board readback: compare every planned item and link with Jira. Never writes.
+
+    IN_SYNC / DIFFERS / MISSING for planned items, LINKED / NOT_LINKED / PENDING for links, and
+    NOT_IN_PLAN for agent-created items the current plan no longer contains (reported for a
+    human to decide; the agent never deletes or closes them).
+    """
+    payload=plan_actions(full,jira)  # reads only: issue types, label search, current fields
+    items=[];keys={}
+    for a in payload['actions']:
+        if a['action']=='LINK':continue
+        keys[a['external_key']]=a['issue_key']
+        row={'external_key':a['external_key'],'issue_key':a['issue_key'],'wbs_id':a.get('wbs_id'),
+             'milestone_id':a.get('milestone_id'),'risk_id':a.get('risk_id'),'summary':a['fields']['summary']}
+        if not a['issue_key']:
+            row['status']='MISSING'
+        else:
+            before=a['before'] or {};desired=normal({k:v for k,v in a['fields'].items() if k!='project'})
+            diffs=[k for k in ('summary','description','issuetype','duedate') if k in desired and before.get(k)!=desired[k]]
+            if not set(desired.get('labels',[]))<=set(before.get('labels',[])):diffs.append('labels')
+            row['status']='DIFFERS' if diffs else 'IN_SYNC'
+            row['differs']=diffs
+        items.append(row)
+    links=[]
+    for a in payload['actions']:
+        if a['action']!='LINK':continue
+        pred,succ=keys.get(a['predecessor']),keys.get(a['successor']);kind=a.get('link_type','Blocks')
+        status='PENDING' if not (pred and succ) else ('LINKED' if jira.linked(pred,succ,kind) else 'NOT_LINKED')
+        links.append({'type':kind,'from':a['predecessor'],'to':a['successor'],'status':status})
+    planned={a['label'] for a in payload['actions'] if a['action']!='LINK'}
+    extra=[{'issue_key':i['key'],'summary':i['fields'].get('summary')}
+           for i in jira.search_label('ai-generated')
+           if not planned & set(i['fields'].get('labels',[])) and 'harbourline-proposed' in i['fields'].get('labels',[])]
+    count=lambda rows,s:sum(1 for r in rows if r['status']==s)
+    summary={'planned_items':len(items),'in_sync':count(items,'IN_SYNC'),'differs':count(items,'DIFFERS'),
+             'missing':count(items,'MISSING'),'links_linked':count(links,'LINKED'),
+             'links_not_linked':count(links,'NOT_LINKED'),'links_pending':count(links,'PENDING'),
+             'not_in_plan':len(extra),'risks':sum(1 for r in items if r['risk_id'])}
+    return {'target':jira.target,'transport':jira.mode,'read_only':True,'summary':summary,
+            'items':items,'links':links,'not_in_plan':extra}
 
 
 def execute_actions(payload,jira,audit):
@@ -164,11 +261,12 @@ def execute_actions(payload,jira,audit):
         action_id='JIRA-'+str(index+1)
         if a['action']=='LINK':
             pred,succ=keys[a['predecessor']],keys[a['successor']]
-            if not jira.linked(pred,succ):
-                audit('JIRA_WRITE_ATTEMPT',{'action_id':action_id,'action':'LINK','predecessor':pred,'successor':succ})
-                jira.link(pred,succ)
-                audit('JIRA_WRITE_RETURNED',{'action_id':action_id,'action':'LINK'})
-            if not jira.linked(pred,succ):raise GateError('Jira dependency readback differs')
+            kind=a.get('link_type','Blocks')
+            if not jira.linked(pred,succ,kind):
+                audit('JIRA_WRITE_ATTEMPT',{'action_id':action_id,'action':'LINK','link_type':kind,'predecessor':pred,'successor':succ})
+                jira.link(pred,succ,kind)
+                audit('JIRA_WRITE_RETURNED',{'action_id':action_id,'action':'LINK','link_type':kind})
+            if not jira.linked(pred,succ,kind):raise GateError('Jira link readback differs')
             audit('JIRA_READBACK_VERIFIED',{'action_id':action_id,'action':'LINK','hash':digest(a)})
             verified.append({'action_id':action_id,'issue_key':succ,'readback_hash':digest(a)});continue
         fields=deepcopy(a['fields']);parent=a['parent_external_key']
@@ -212,5 +310,7 @@ class MockJira:
     def create(self,fields):
         self.writes+=1;key=f'DEMO-{len(self.issues)+1}';self.issues[key]={'key':key,'fields':deepcopy(fields)};return key
     def update(self,key,fields):self.writes+=1;self.issues[key]['fields'].update(deepcopy(fields))
-    def linked(self,pred,succ):return (pred,succ) in self.links
-    def link(self,pred,succ):self.writes+=1;self.links.add((pred,succ))
+    def search_label(self,label):
+        return [deepcopy(i) for i in self.issues.values() if label in i['fields'].get('labels',[])]
+    def linked(self,pred,succ,link_type='Blocks'):return (pred,succ,link_type) in self.links
+    def link(self,pred,succ,link_type='Blocks'):self.writes+=1;self.links.add((pred,succ,link_type))

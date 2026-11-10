@@ -111,6 +111,11 @@ class GovernanceStore:
             self._audit('PROPOSAL_CREATED',{'batch_id':bid,'kind':kind,'hash':sha,'target':target})
         return self.batch(bid)
 
+    def record_read(self,run_id,target,summary):
+        """Log a verified read-only Jira readback (Brief: start read-only; the read path is logged)."""
+        with self.transaction():
+            self._audit('JIRA_READ_VERIFIED',{'run_id':run_id,'target':target,'summary':summary})
+
     def batch(self,bid):
         row=self.db.execute('SELECT * FROM batches WHERE id=?',(bid,)).fetchone()
         if not row:raise GateError('Batch not found')

@@ -1,0 +1,8 @@
+{
+  "event_id": "CE-02",
+  "change_type": "OPERATOR_WITHDRAWAL",
+  "issued": "2027-04-06",
+  "source_note": "MA6094 Week 12 change-event memo (fictional course scenario). Record the withdrawal as a source document before treating it as a project fact.",
+  "description": "The sole respondent to the active ageing centre operator EOI has withdrawn, citing uncertainty over opening dates. No other submissions have been received. The grant conditions on signed operator agreements are unchanged.",
+  "hypothetical": false
+}

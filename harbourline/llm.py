@@ -11,6 +11,14 @@ from jsonschema import Draft202012Validator
 _current = ContextVar('harbourline_gateway', default=None)
 
 
+def _timeout():
+    """Seconds to wait for one model call; long structured outputs can exceed a minute."""
+    try:
+        return max(30.0, float(os.getenv('OPENAI_TIMEOUT_SECONDS', '180')))
+    except ValueError:
+        return 180.0
+
+
 class ModelGateway:
     def __init__(self, *, responder=None, model=None):
         self.responder = responder
@@ -38,8 +46,13 @@ class ModelGateway:
                 raise ValueError('Set OPENAI_MODEL and OPENAI_API_KEY in the backend environment.')
             if self._client is None:
                 from openai import OpenAI
-                self._client = OpenAI(timeout=60, max_retries=0)
+                self._client = OpenAI(timeout=_timeout(), max_retries=0)
             from openai import RateLimitError
+            # Reasoning models (e.g. gpt-6-luna) accept an effort level; others reject the field,
+            # so it is sent only when OPENAI_REASONING_EFFORT is set (none/low/medium/high/xhigh).
+            extra = {}
+            if os.getenv('OPENAI_REASONING_EFFORT'):
+                extra['reasoning'] = {'effort': os.getenv('OPENAI_REASONING_EFFORT')}
 
             for attempt in range(3):
                 self.api_calls += 1
@@ -47,8 +60,9 @@ class ModelGateway:
                     response = self._client.responses.create(
                         model=self.model, store=False, instructions=instructions,
                         input=json.dumps(payload, ensure_ascii=False),
-                        max_output_tokens=int(os.getenv('OPENAI_MAX_OUTPUT_TOKENS','12000')),
+                        max_output_tokens=int(os.getenv('OPENAI_MAX_OUTPUT_TOKENS','32000')),
                         text={'format': {'type':'json_schema','name':name,'strict':True,'schema':schema}},
+                        **extra,
                     )
                 except RateLimitError as exc:
                     # Only retry a temporary throttle. A quota/billing error needs an operator.
@@ -74,7 +88,11 @@ class ModelGateway:
             else:
                 self.usage_known = False
             if response.status != 'completed' or not response.output_text:
-                raise ValueError('Model response incomplete or refused')
+                reason = getattr(getattr(response, 'incomplete_details', None), 'reason', None)
+                hint = (' (raise OPENAI_MAX_OUTPUT_TOKENS: reasoning models count their thinking '
+                        'against this limit)' if reason == 'max_output_tokens' else '')
+                raise ValueError(f'Model response incomplete or refused in {name}: '
+                                 f'{reason or response.status}{hint}')
             value = json.loads(response.output_text)
         Draft202012Validator(schema).validate(value)
         return value
@@ -178,7 +196,7 @@ class ModelGateway:
         if not os.environ.get('OPENAI_API_KEY'):raise ValueError('OPENAI_API_KEY is required')
         if self._client is None:
             from openai import OpenAI
-            self._client=OpenAI(timeout=60,max_retries=0)
+            self._client=OpenAI(timeout=_timeout(),max_retries=0)
         self.api_calls+=1;self.embedding_calls+=1
         try:response=self._client.embeddings.create(model=model,input=texts)
         except Exception:
