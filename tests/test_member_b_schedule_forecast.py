@@ -79,7 +79,7 @@ class ScheduleForecastTests(unittest.TestCase):
 
     def test_b_adapter_uses_existing_model_gateway(self):
         gw=GatewayDouble(model_proposal())
-        out=forecast(request(),{"cutoff":None},gateway=gw)
+        out=forecast(request(),{"cutoff":None,"evidence_library":FakeLibrary()},gateway=gw)
         self.assertEqual(out["status"],"PROPOSED")
         self.assertEqual(out["forecast"]["completion_offset_days"],20)
         self.assertEqual(gw.calls[0][0],"harbourline_b_schedule")
