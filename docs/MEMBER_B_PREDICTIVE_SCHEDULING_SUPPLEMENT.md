@@ -1,6 +1,6 @@
 # Member B — Predictive Scheduling Supplement (Optional Proposal)
 
-**Status: proposal only. This file does not add a working feature or change the deployed demo.**
+**Status: optional backend implementation on this branch; not merged into Member B main branch and not deployed to the final website. Real OpenAI API response has not yet been verified.**
 
 ## Existing What-if capabilities — preserve as-is
 
@@ -67,3 +67,25 @@ Demo (only **after** working feature verified): “Our current What-if cards sho
 ## Course framing
 
 MA6094 Week 12 slides and Student Hands-on Guide discuss schedule forecasting, float to external triggers, evidence-linked date chains, three-point cost estimates, P50/P80 and the **REASON → COMPUTE → CHECK** method. Both explicitly note that the Week 12 hands-ons **are not an additional Capstone requirement**. This document is therefore an **optional enhancement**, not a new mandatory deliverable.
+
+## Connection to existing Member B — implemented on this branch
+
+The supplement now reuses Member B's `EvidenceLibrary` and `ModelGateway`, and therefore the **same already configured** `OPENAI_API_KEY` and `OPENAI_MODEL`. No second API key is needed.
+
+- **AI reasoning:** `modules/member_b/schedule_forecast.py` asks B's model gateway for evidence-cited activities, durations, dependencies and external triggers. Any missing facts are reported as `UNRESOLVED`.
+- **Deterministic computation:** the same module's `compute_network()` computes CPM float, forecast completion, and how an explicitly chosen activity-delay scenario would affect that finish date.
+- **B adapter entrypoint:** `modules.member_b.adapter.forecast(request, context, scenario=...)`. It does **not** alter the original `adapter.run()` or strict A/B/C exchange schema.
+- **B local API entrypoint:** `POST /v1/schedule-forecast`, alongside existing `/v1/plan-risk`. The server is **loopback-only and unauthenticated**, never expose it to the public internet without deploying behind suitable authentication and authorization.
+- **From a prior B output:** `python -m modules.member_b.forecast_demo --cutoff 2027-04-06`. This loads `.local/member_b_live_output.json` and `data/evidence_library.json`. If your data uses other paths, pass `--b-output` and `--library`.
+- **Scenario sensitivity:** after you have an *actual sourced* activity ID from the forecast, rerun with `--activity-id ID --additional-days 42 --scenario-id SC01`. The 42 days are an illustrative user assumption, not an automatically approved baseline.
+
+The CLI writes `.local/member_b_schedule_output.json` and prints the `status`, forecast finish if computable, and API call count.
+
+**Essential distinction:** A backend function/API route is now connected to B. It is **NOT yet connected to the team's A/C orchestrator, public Render website or chatgpt.site frontend**. That requires Member A to review/merge PR #5, deploy backend changes and explicitly connect frontend UI calls. Until then, your existing demo What-if cards are unchanged.
+
+### Running offline tests (not proof of real model invocation)
+```bash
+python -m pip install -r requirements-live.txt
+python -m unittest discover -s tests -v
+```
+The test double makes no OpenAI requests. A real API call needs an existing valid backend key and source library, and its success must be verified separately.
