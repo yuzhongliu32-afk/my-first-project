@@ -72,6 +72,17 @@ def draft_risk():
                      'source_ids':['E002'],'estimate_status':'QUANTIFIED_ASSUMPTION'}]}
 
 
+def whatif_proposal():
+    el=lambda eid,kind,o,m,p,crit:{'element_id':eid,'label':eid,'kind':kind,
+        'unit':'SGD_THOUSANDS' if kind=='COST' else 'WEEKS','optimistic':o,'most_likely':m,
+        'pessimistic':p,'reason_optimistic':'low bound in E002','reason_most_likely':'E002',
+        'reason_pessimistic':'high bound in E002','on_critical_path':crit,'source_ids':['E002']}
+    return {'scenarios':[{'scenario_id':'SC01','title':'Lift delay','description':'Lift works slip',
+        'assumptions':['Ranges from E002'],'affected_wbs_ids':['1.1.2'],'affected_risk_ids':['R01'],
+        'elements':[el('C1','COST',350,450,600,False),el('W1','SCHEDULE',4,5,6,True)],
+        'unresolved':['Roof strengthening cost'],'source_ids':['E002']}]}
+
+
 class MockGateway:
     mode='TEST_DOUBLE_NOT_OPENAI'
     def __init__(self,wrong_citation=False,wrong_score=False,critic='PASS'):
@@ -85,7 +96,11 @@ class MockGateway:
             if self.wrong_citation:r['risks'][0]['source_ids']=['E999']
             if self.wrong_score:r['risks'][0]['score']=11
             return {'risk':r}
-        if name=='harbourline_b_critic':return {'verdict':self.critic,'findings':[] if self.critic=='PASS' else ['Review required']}
+        if name=='harbourline_b_whatif':return whatif_proposal()
+        if name=='harbourline_b_critic':
+            return {'verdict':self.critic,'notes':['Observation for the reviewer'],
+                    'blocking_findings':[] if self.critic=='PASS' else
+                        [{'item_id':'R01','problem':'Review required','evidence_ids':['E002']}]}
         raise ValueError(name)
     def metrics(self):return {'api_calls':len(self.calls),'input_tokens':30,'output_tokens':12,'estimated_cost_usd':None}
 
@@ -93,10 +108,10 @@ class DynamicAgentTests(unittest.TestCase):
     def test_generates_without_rules_seed_and_validates(self):
         g=MockGateway()
         out=generate(request(),FakeLibrary(),g)
-        self.assertEqual([x[0] for x in g.calls],['harbourline_b_planning','harbourline_b_risk','harbourline_b_critic'])
+        self.assertEqual([x[0] for x in g.calls],['harbourline_b_planning','harbourline_b_risk','harbourline_b_whatif','harbourline_b_critic'])
         self.assertEqual(len(out['planning']['wbs_items']),4)
         self.assertEqual(out['risk']['risks'][0]['score'],12)
-        self.assertEqual(out['metrics']['api_calls'],3)
+        self.assertEqual(out['metrics']['api_calls'],4)
         self.assertEqual(out['status'],'PARTIAL')
         self.assertNotIn('preliminary_plan',str(g.calls))
         validate(out,'B',expected_producer='B')
@@ -106,6 +121,35 @@ class DynamicAgentTests(unittest.TestCase):
     def test_inconsistent_risk_score_blocked(self):
         with self.assertRaisesRegex(ValueError,'score must equal'):
             generate(request(),FakeLibrary(),MockGateway(wrong_score=True))
+    def test_critic_notes_do_not_block_but_are_kept(self):
+        class NotesOnly(MockGateway):
+            def ask(self,name,shape,instructions,payload):
+                if name=='harbourline_b_critic':
+                    self.calls.append((name,payload))
+                    return {'verdict':'REVISE','blocking_findings':[],
+                            'notes':['M05 is overdue; flag for the reviewer']}
+                return super().ask(name,shape,instructions,payload)
+        trace={}
+        out=generate(request(),FakeLibrary(),NotesOnly(),trace=trace)
+        self.assertEqual(out['status'],'PARTIAL')
+        self.assertEqual(trace['critic_notes'],['M05 is overdue; flag for the reviewer'])
+    def test_critic_blocking_finding_starts_new_round(self):
+        g=MockGateway(critic='REVISE')
+        with self.assertRaisesRegex(ValueError,'R01: Review required'):
+            generate(request(),FakeLibrary(),g,max_rounds=2)
+        self.assertEqual(sum(1 for n,_ in g.calls if n=='harbourline_b_critic'),2)
+    def test_critic_complaint_about_open_question_is_a_note(self):
+        from modules.member_b.agent import _triage_critique
+        plan={'wbs_items':[{'wbs_id':'1.2','status':'PROPOSED'}],'milestones':[],'scope_items':[],
+              'sponsor_questions':[{'question_id':'Q01','status':'OPEN'},{'question_id':'Q02','status':'ANSWERED'}]}
+        c={'verdict':'REVISE','notes':[],'blocking_findings':[
+            {'item_id':'Q01','problem':'still open with no answer','evidence_ids':[]},
+            {'item_id':'Q02','problem':'answer cites the brief, not the Sponsor','evidence_ids':['E1']},
+            {'item_id':'WBS 1.2','problem':'budget not in evidence','evidence_ids':['E2']},
+            {'item_id':'X99','problem':'unknown item','evidence_ids':[]}]}
+        t=_triage_critique(c,plan,{'risks':[],'scenarios':[]})
+        self.assertEqual([b['item_id'] for b in t['blocking_findings']],['Q02','WBS 1.2'])
+        self.assertEqual(len(t['notes']),2)
     def test_critic_escalation_blocked(self):
         with self.assertRaisesRegex(ValueError,'did not PASS'):
             generate(request(),FakeLibrary(),MockGateway(critic='ESCALATE'))
@@ -118,12 +162,25 @@ class DynamicAgentTests(unittest.TestCase):
         g=FixesOnSecondTry()
         out=generate(request(),FakeLibrary(),g,max_rounds=2)
         names=[x[0] for x in g.calls]
-        # Attempt 1 fails the code checks, so its Critic call is skipped.
-        self.assertEqual(names,['harbourline_b_planning','harbourline_b_risk',
-                                'harbourline_b_planning','harbourline_b_risk','harbourline_b_critic'])
-        second_planning_payload=g.calls[2][1]
-        self.assertIn('MECHANICAL_CHECK_FAILED',' '.join(second_planning_payload['prior_findings']))
+        # Only the Risk role failed its code check, so only Risk is asked again, with the finding;
+        # the accepted Planning output is not regenerated.
+        self.assertEqual(names,['harbourline_b_planning','harbourline_b_risk','harbourline_b_risk',
+                                'harbourline_b_whatif','harbourline_b_critic'])
+        second_risk_payload=g.calls[2][1]
+        self.assertIn('MECHANICAL_CHECK_FAILED',' '.join(second_risk_payload['prior_findings']))
+        self.assertIsNotNone(second_risk_payload['previous_attempt'])
         self.assertEqual(out['status'],'PARTIAL')
+    def test_untraceable_wbs_is_flagged_not_rejected(self):
+        class NoScope(MockGateway):
+            def ask(self,name,shape,instructions,payload):
+                out=super().ask(name,shape,instructions,payload)
+                if name=='harbourline_b_planning':out['planning']['wbs_items'][3]['scope_ids']=[]
+                return out
+        trace={}
+        out=generate(request(),FakeLibrary(),NoScope(),trace=trace)
+        w=[x for x in out['planning']['wbs_items'] if x['wbs_id']=='1.1.2'][0]
+        self.assertEqual(w['status'],'UNRESOLVED')
+        self.assertEqual(trace['auto_flags'][0]['wbs_ids'],['1.1.2'])
     def test_missing_evidence_blocks(self):
         lib=FakeLibrary();lib.documents=[]
         with self.assertRaisesRegex(ValueError,'library is empty'):

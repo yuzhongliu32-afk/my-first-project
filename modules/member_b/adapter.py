@@ -29,7 +29,7 @@ def run(request: dict, context: dict) -> dict:
                         max_rounds=request['request'].get('max_review_rounds',2))
     if request['source_snapshot_id'].startswith('FIXTURE-'):
         root=Path(__file__).resolve().parents[2]
-        output=json.loads((root / 'examples/b_output.json').read_text())
+        output=json.loads((root / 'examples/b_output.json').read_text(encoding='utf-8'))
         for field in ('run_id','project_id','source_snapshot_id','request'):
             output[field]=deepcopy(request[field])
         return output

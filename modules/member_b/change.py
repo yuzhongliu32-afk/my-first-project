@@ -49,49 +49,22 @@ DATA_PACK_LINKS = {
 # Convenience aliases so the Week 12 memo IDs can be passed as the change type.
 ALIASES = {"CE-01": "GRANT_ELIGIBILITY_RULING", "CE-02": "OPERATOR_WITHDRAWAL"}
 
-# Facts the reviewer needs next to the IDs. Each line names its data-pack file;
-# derived arithmetic is labelled as derived. These are review notes, not approvals.
-IMPACT_NOTES = {
-    "GRANT_ELIGIBILITY_RULING": [
-        "Grant = 60% of eligible cost, eligible cost capped at S$17.0m, maximum grant S$10.2m; "
-        "food court and rooftop amenity were already ineligible (07 grant conditions s.1). "
-        "Under the memo, asbestos removal and associated works join the ineligible items.",
-        "Contractor estimate for licensed removal: S$0.35-0.60m and 4-6 weeks "
-        "(02 March contractor report; 01 EDC minutes 5.1).",
-        "Derived: budget S$18.5m - contract S$16.42m - fees S$0.90m = about S$1.18m headroom, "
-        "never confirmed as contingency (01 EDC 1.1-1.2). Removal at S$0.35-0.60m would leave "
-        "about S$0.58-0.83m before roof strengthening, which is unpriced and must stay UNKNOWN, "
-        "not zero (01 EDC 5.2).",
-        "Seed register R08 (hazardous materials) is still marked Closed although chrysotile was "
-        "confirmed (04 seed risk register; 01 EDC 6.5).",
-        "The memo agrees no programme change, so no new schedule delay is asserted here.",
-    ],
-    "OPERATOR_WITHDRAWAL": [
-        "Tranche 2 (30% of the grant) requires signed operator agreements for ALL social service "
-        "spaces (07 grant conditions s.2).",
-        "The EOI had one response against a policy minimum of three and was extended to "
-        "30 April 2027 (01 EDC 4.4); after the withdrawal there are no respondents.",
-        "D14, the active ageing operator agreement due 2027-06-30, has no owner assigned "
-        "(03 contract deliverables D14).",
-        "The respondent cited uncertainty over opening dates, which links to the unreconciled "
-        "completion dates: contract D22 31 Oct 2028 vs contractor baseline 31 Dec 2028 (R16, M08).",
-        "Two consecutive late or incomplete grant reports may suspend the next tranche "
-        "(07 s.3.3); the February report was late (03 D09).",
-    ],
-}
+# The offline rules path only flags which existing IDs are now stale. It deliberately
+# holds no pre-written findings about an event: the cost, funding, contingency and
+# schedule effects are derived from the evidence, with cited rows, by the AI change
+# impact note (change_note.py), so gap recall measures what the system finds itself.
+RULES_NOTE = ("Offline rules mapping: the IDs below are a fixed starting list of what may be "
+              "stale, not an impact analysis. Run the change impact note to derive the effects "
+              "from the brief and data pack with cited rows.")
 
 SPECIFIC_ACTIONS = {
     "GRANT_ELIGIBILITY_RULING": [
         "Record the grant body's written ruling as a source document before any baseline change",
-        "Re-score R08 and R01 with an accountable owner; R08's Closed status is out of date",
-        "Recompute the Council-funded share and remaining headroom; keep roof strengthening UNKNOWN",
-        "Sponsor to decide how the asbestos variation is funded and what approval limit applies",
+        "Run the change impact note to derive cost, funding and contingency effects with cited rows",
     ],
     "OPERATOR_WITHDRAWAL": [
-        "Record the withdrawal notice and current EOI status as source documents",
-        "Assign an owner to D14 and agree a dated route to appoint an operator",
-        "Re-score R06 and R17 and tell the grant body that the Tranche 2 condition is at risk",
-        "Report the status of each tranche condition in the next monthly grant report",
+        "Record the withdrawal notice as a source document before any baseline change",
+        "Run the change impact note to derive operator, grant-condition and schedule effects with cited rows",
     ],
 }
 
@@ -134,7 +107,7 @@ def analyse_change(event: dict, planning: dict, risk: dict) -> dict:
     known_w = {x["wbs_id"] for x in planning["wbs_items"]}
     known_m = {x["milestone_id"] for x in planning["milestones"]}
     known_r = {x["risk_id"] for x in risk["risks"]}
-    notes = IMPACT_NOTES.get(classified, []) if scheme == "DATA_PACK" else []
+    notes = [RULES_NOTE]
     return {"event_id": event_id, "change_type": kind, "classified_as": classified,
             "id_scheme": scheme, "status": "REVIEW_REQUIRED",
             "stale_wbs_ids": [x for x in w if x in known_w],

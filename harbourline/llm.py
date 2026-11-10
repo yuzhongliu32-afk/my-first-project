@@ -7,6 +7,14 @@ from jsonschema import Draft202012Validator
 _current = ContextVar('harbourline_gateway', default=None)
 
 
+def _timeout():
+    """Seconds to wait for one model call; long structured outputs can exceed a minute."""
+    try:
+        return max(30.0, float(os.getenv('OPENAI_TIMEOUT_SECONDS', '180')))
+    except ValueError:
+        return 180.0
+
+
 class ModelGateway:
     def __init__(self, *, responder=None, model=None):
         self.responder = responder
@@ -27,7 +35,7 @@ class ModelGateway:
                 raise ValueError('Set OPENAI_MODEL and OPENAI_API_KEY in the backend environment.')
             if self._client is None:
                 from openai import OpenAI
-                self._client = OpenAI(timeout=60, max_retries=0)
+                self._client = OpenAI(timeout=_timeout(), max_retries=0)
             self.api_calls += 1  # Counts attempted HTTP SDK calls; retries are disabled.
             try:
                 response = self._client.responses.create(model=self.model, store=False,
@@ -54,7 +62,7 @@ class ModelGateway:
         if not os.environ.get('OPENAI_API_KEY'):raise ValueError('OPENAI_API_KEY is required')
         if self._client is None:
             from openai import OpenAI
-            self._client=OpenAI(timeout=60,max_retries=0)
+            self._client=OpenAI(timeout=_timeout(),max_retries=0)
         self.api_calls+=1;self.embedding_calls+=1
         try:response=self._client.embeddings.create(model=model,input=texts)
         except Exception:

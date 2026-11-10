@@ -3,147 +3,623 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Member B · Change Event → Schedule Forecast</title>
+<title>Member B Workbench</title>
 <style>
-:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#172b35;background:#f4f3ef}
-body{max-width:980px;margin:2rem auto;padding:0 1rem}
-h1{font-size:1.75rem;margin-bottom:.3rem}p{line-height:1.5}
-.note{background:#eef4f0;padding:.8rem 1rem;border-left:4px solid #508679;border-radius:3px}
-main{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
-section{background:white;border:1px solid #dddeda;border-radius:12px;padding:1.3rem;min-width:0}
-label{display:block;font-weight:650;margin:.8rem 0 .25rem;font-size:.93rem}
-input,select,textarea{box-sizing:border-box;width:100%;border:1px solid #9daaaa;border-radius:6px;padding:.62rem;font:inherit;background:white}
-textarea{min-height:88px;resize:vertical}
-button{border:0;background:#226e66;color:white;border-radius:7px;padding:.8rem 1rem;font:inherit;font-weight:650;cursor:pointer}
-button:disabled{opacity:.5;cursor:not-allowed}
-.alt{background:#273b48}
-small{color:#5b696c}
-.actions{display:flex;gap:.6rem;margin-top:1rem;flex-wrap:wrap}
-#output{white-space:pre-wrap;overflow-wrap:anywhere;background:#f2f5f4;padding:1rem;border-radius:8px;min-height:150px}
-dl{display:grid;grid-template-columns:1fr auto;gap:.55rem 1rem}
-dt{color:#4b5c5e}dd{font-weight:700;margin:0;text-align:right}
-.status{font-weight:bold}
-@media(max-width:760px){main{grid-template-columns:1fr}}
+:root{font-family:system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;color:#172b35;background:#f4f3ef;
+  --ok:#2f7d4f;--warn:#a86412;--bad:#b03a2e;--line:#dddeda;--accent:#226e66;--muted:#5b696c;--chip:#e9efee}
+body{max-width:1240px;margin:1.2rem auto;padding:0 1rem;background:#f4f3ef}
+h1{font-size:1.55rem;margin:.2rem 0}h2{font-size:1.08rem;margin:.1rem 0 .6rem}h3{font-size:.97rem;margin:1.1rem 0 .4rem}
+p{line-height:1.5;margin:.4rem 0}
+.banner{background:#fbe9e7;border-left:4px solid var(--bad);padding:.8rem 1rem;border-radius:3px;display:none}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+section,.panel{background:white;border:1px solid var(--line);border-radius:12px;padding:1rem 1.2rem;min-width:0;margin-bottom:1rem}
+label{display:block;font-weight:650;margin:.6rem 0 .25rem;font-size:.9rem}
+input,select,textarea{box-sizing:border-box;width:100%;border:1px solid #9daaaa;border-radius:6px;padding:.5rem;font:inherit;background:white}
+textarea{min-height:110px;resize:vertical}
+button{border:0;background:var(--accent);color:white;border-radius:7px;padding:.6rem .95rem;font:inherit;font-weight:650;cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
+button.alt{background:#273b48}button.ghost{background:#e6ebea;color:#172b35}
+small,.muted{color:var(--muted)}
+.row{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin-top:.7rem}
+.checks{list-style:none;padding:0;margin:0;display:grid;gap:.35rem}
+.checks li{display:flex;gap:.5rem;align-items:baseline}
+.dot{display:inline-block;width:.7rem;height:.7rem;border-radius:50%;background:#bbb;flex:none;transform:translateY(1px)}
+.dot.ok{background:var(--ok)}.dot.bad{background:var(--bad)}.dot.warn{background:var(--warn)}
+.msg{margin-top:.5rem;font-weight:600}.msg.ok{color:var(--ok)}.msg.bad{color:var(--bad)}.msg.busy{color:var(--warn)}
+.tabs{display:flex;gap:.3rem;flex-wrap:wrap;margin:.2rem 0 0}
+.tabs button{background:#e6ebea;color:#172b35;border-radius:8px 8px 0 0;padding:.55rem .9rem}
+.tabs button[aria-selected="true"]{background:white;border:1px solid var(--line);border-bottom-color:white;position:relative;top:1px}
+.panel{border-radius:0 12px 12px 12px;display:none}.panel.on{display:block}
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.86rem}
+th,td{text-align:left;border-bottom:1px solid var(--line);padding:.38rem .45rem;vertical-align:top}
+th{color:#4b5c5e;font-weight:600;background:#fafaf8;position:sticky;top:0}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.chip{display:inline-block;font-size:.72rem;padding:.05rem .38rem;border-radius:4px;background:var(--chip);margin:.08rem .2rem .08rem 0;cursor:help;white-space:nowrap}
+.tag{display:inline-block;font-size:.72rem;padding:.05rem .4rem;border-radius:4px;background:#e6ebea;font-weight:650}
+.tag.open{background:#fdf0dc;color:#7a4a08}.tag.unres{background:#fbe2df;color:#8a2a20}.tag.ok{background:#dff0ea;color:#1d5a4c}
+.score{display:inline-block;min-width:1.8rem;text-align:center;border-radius:4px;padding:.05rem .3rem;font-weight:700}
+.s-hi{background:#f6d2cd}.s-md{background:#fbe6c4}.s-lo{background:#e0efe6}
+.lvl2{padding-left:1.1rem}.lvl3{padding-left:2.2rem}
+.callout{background:#eef4f0;border-left:4px solid #508679;padding:.7rem 1rem;border-radius:3px}
+.decision{background:#fff6e6;border-left:4px solid var(--warn);padding:.8rem 1rem;border-radius:3px;font-weight:600}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.6rem;margin:.6rem 0}
+.kpi{border:1px solid var(--line);border-radius:10px;padding:.6rem .8rem}
+.kpi b{display:block;font-size:1.25rem}
+details summary{cursor:pointer}
+ul.plain{margin:.3rem 0;padding-left:1.2rem}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f2f5f4;padding:.8rem;border-radius:8px;max-height:320px;overflow:auto;font-size:.82rem}
+dl{display:grid;grid-template-columns:1fr auto;gap:.4rem 1rem;margin:0}dt{color:#4b5c5e}dd{font-weight:700;margin:0;text-align:right}
+@media(max-width:820px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<h1>Member B · Change Event Analysis</h1>
-<p>Enter a <strong>hypothetical</strong> project change, then let Member B compute its conditional schedule impact using source-backed activity dependencies. This is a local demo, not a Sponsor approval or Jira change.</p>
-<p class="note">Uses Member B's <strong>existing backend OpenAI key</strong>. Never paste a key into this page. Click <strong>Load baseline</strong> first to see verified activity IDs. Activity delay is not automatically the same as whole-project delay.</p>
-<main>
+<h1>Member B · Planning &amp; Risk Agent Workbench</h1>
+<p>Module 1 Planning and Module 4 Risk &amp; What-if for the Harbourline Community Hub. The agent reads the verified evidence library (brief + data pack), drafts the plan, risk register and what-ifs, and reviews change events. <strong>Every output is a proposal for human review</strong>: nothing is approved and nothing is written to Jira. Hover any grey source chip to read the quoted row.</p>
+<p class="banner" id="file-banner">This page was opened as a file, so its buttons cannot reach Member B. Start the server with <code>start_member_b.bat</code> (or <code>python -m modules.member_b.http_api</code>) and open <code>http://127.0.0.1:8765/</code>.</p>
+
+<div class="grid">
 <section>
-<h2>1 · Forecast baseline</h2>
-<button type="button" class="alt" id="load">Load baseline & activities</button>
-<p><small>The backend reads the previously generated <code>.local/member_b_live_output.json</code>. An incomplete source pack may return UNRESOLVED.</small></p>
-<p id="baseline" aria-live="polite">Baseline not loaded.</p>
-<h2>2 · Input change event</h2>
-<form id="change-form">
-<label for="event-id">Event ID</label>
-<input id="event-id" value="WHATIF-NEW-01" maxlength="80" required>
+<h2>0 · Connect</h2>
+<ul class="checks">
+<li><span class="dot" id="c-server"></span><span id="t-server">Member B server: checking…</span></li>
+<li><span class="dot" id="c-key"></span><span id="t-key">OpenAI API key</span></li>
+<li><span class="dot" id="c-model"></span><span id="t-model">Model</span></li>
+<li><span class="dot" id="c-lib"></span><span id="t-lib">Evidence library</span></li>
+<li><span class="dot" id="c-saved"></span><span id="t-saved">AI plan &amp; risks</span></li>
+</ul>
+<p id="lib-help" style="display:none"><small>Build the evidence library once: <code>python scripts/prepare_evidence.py --brief "&lt;brief.pdf&gt;" --pack "&lt;Harbourline_Data_Pack.zip&gt;"</code></small></p>
+<div id="access-box" style="display:none">
+<p class="callout" style="margin-top:.6rem">Presentation mode: the OpenAI key is held by the server. Enter the access code to use the AI.</p>
+<form id="access-form" autocomplete="off" class="row" style="margin-top:.2rem">
+<input id="access-code" type="password" placeholder="Presentation access code" style="width:auto;flex:1;min-width:200px" autocomplete="off">
+<button type="submit" id="unlock">Unlock</button><button type="button" class="ghost" id="lock">Lock</button>
+</form>
+<p class="msg" id="access-msg"></p>
+</div>
+<p id="runs-left" class="muted" style="display:none"></p>
+<form id="config-form" autocomplete="off">
+<div class="grid" style="gap:.6rem">
+<div><label for="api-key">OpenAI API key</label>
+<input id="api-key" type="password" placeholder="sk-…  (local server only)" autocomplete="off" spellcheck="false"></div>
+<div><label for="model">Model ID</label>
+<input id="model" placeholder="e.g. gpt-4.1-mini" spellcheck="false"></div>
+</div>
+<label style="font-weight:500"><input id="save-env" type="checkbox" checked style="width:auto"> Also save to the local <code>.env</code> file (git-ignored, never uploaded) so it survives a restart</label>
+<div class="row"><button type="submit" id="save-config">Save connection</button><button type="button" class="ghost" id="forget-key">Forget key</button></div>
+<p><small>Paste with Ctrl+V. The key goes only to the Member B server on this computer (backend-managed, as the team rule requires), is never shown again on the page, and is never part of the GitHub upload.</small></p>
+<p class="msg" id="config-msg"></p>
+</form>
+</section>
+
+<section>
+<h2>1 · Generate the plan &amp; risks</h2>
+<p><small>AI run: Planning → Risk → What-if (model proposes three-point ranges, code computes P50/P80) → code checks → independent Critic, correcting itself up to three times. Usually 2–5 minutes.</small></p>
+<div class="row">
+<button type="button" id="generate">Generate with AI</button>
+<button type="button" class="ghost" id="offline">Offline preview (rules, no AI)</button>
+</div>
+<div class="row"><label for="cutoff" style="margin:0">Evidence cut-off (optional)</label><input id="cutoff" type="date" style="width:auto"></div>
+<p class="msg" id="gen-msg"></p>
+<div id="gen-log"></div>
+<label for="source">Show results from</label>
+<select id="source"><option value="live">AI agent output (latest run)</option><option value="snapshot">Presentation snapshot (recorded AI run, no API call)</option><option value="rules">Offline rules preview (not AI)</option></select>
+<div class="row"><button type="button" class="ghost" id="download" disabled>Download B JSON (for A)</button>
+<button type="button" class="ghost" id="snap-save" disabled title="Records the latest AI run and its change impact notes so the presentation can replay them without calling the API">Save AI run as presentation snapshot</button></div>
+<p class="msg" id="snap-msg"></p>
+</section>
+</div>
+
+<div class="tabs" role="tablist">
+<button role="tab" aria-selected="true" data-tab="plan">Plan</button>
+<button role="tab" aria-selected="false" data-tab="risk">Risk register</button>
+<button role="tab" aria-selected="false" data-tab="whatif">What-if</button>
+<button role="tab" aria-selected="false" data-tab="change">Change impact</button>
+<button role="tab" aria-selected="false" data-tab="sched">Schedule forecast</button>
+</div>
+
+<div class="panel on" id="tab-plan"><p class="muted" id="plan-empty">Generate or load an output to see the plan.</p><div id="plan"></div></div>
+<div class="panel" id="tab-risk"><p class="muted">Generate or load an output to see the risk register.</p><div id="risk"></div></div>
+<div class="panel" id="tab-whatif">
+<section style="margin-bottom:1rem;background:#fbfbf9">
+<h2>Your own what-if</h2>
+<p><small>Change any three-point assumption, or add your own elements, and recompute. P50/P80 are computed in code (10,000 PERT-beta draws), never by the model. Results are labelled as your assumptions; the agent output above is not changed.</small></p>
+<div class="row" style="margin-top:0"><label for="wi-from" style="margin:0">Start from</label>
+<select id="wi-from" style="width:auto;min-width:280px"><option value="">Blank: one cost and one schedule element</option></select></div>
+<div class="tablewrap"><table id="wi-table"><tr><th>Element</th><th>Kind</th><th class="num">O</th><th class="num">M</th><th class="num">P</th><th>On critical path</th><th></th></tr></table></div>
+<div class="row"><button type="button" class="ghost" id="wi-add">+ Add element</button><button type="button" id="wi-run">Compute P50 / P80 in code</button></div>
+<p class="msg" id="wi-msg"></p>
+<div id="wi-result"></div>
+</section>
+<p class="muted">Generate or load an output to see the agent's what-if analysis.</p><div id="whatif"></div></div>
+
+<div class="panel" id="tab-change">
+<div class="grid">
+<div>
+<h2>Change event</h2>
+<p><small>Paste the memo <strong>verbatim</strong>. The agent writes a Week 12 change impact note for the Finance Director against the selected B output; the arithmetic is done in code.</small></p>
+<label for="example">Quick-fill a course change event</label>
+<select id="example"><option value="">— Type your own —</option></select>
+<label for="event-id">Event ID</label><input id="event-id" value="CE-01" maxlength="80">
 <label for="event-type">Change type</label>
 <select id="event-type">
+<option value="GRANT_ELIGIBILITY_RULING">Grant eligibility ruling (CE-01)</option>
+<option value="OPERATOR_WITHDRAWAL">Operator withdrawal (CE-02)</option>
 <option value="ASBESTOS_CONFIRMED">Asbestos works</option>
 <option value="LIFT_DELAY">Lift closure delay</option>
 <option value="CHILDCARE_CHANGE">Childcare handover change</option>
 <option value="GRANT_CHANGE">Grant or approval change</option>
-<option value="OTHER">Other hypothetical change</option>
+<option value="OPERATOR_CHANGE">Operator change</option>
+<option value="ACCESS_CHANGE">Site access change</option>
+<option value="OTHER">Other</option>
 </select>
-<label for="description">What happened? / event description</label>
-<textarea id="description" required maxlength="2000" placeholder="e.g. Hypothetically, lift closure is not approved and the works start 8 weeks later."></textarea>
-<label for="activity-id">Affected activity (source-backed ID)</label>
-<select id="activity-id" required><option value="">Load baseline to choose a task</option></select>
-<label for="days">Additional delay (calendar days)</label>
-<input id="days" type="number" min="0" max="3650" step="1" required value="42">
-<small>Enter an explicit assumption. The agent will not invent a duration.</small>
-<label for="cost">Optional extra cost assumption (SGD)</label>
-<input id="cost" type="number" min="0" max="1000000000" step="0.01" placeholder="Unknown — leave blank">
-<small>Cost is stored as a user assumption; it is not an approved estimate or a recalculated budget.</small>
-<label><input id="hypothetical" type="checkbox" style="width:auto" required checked> This is a hypothetical scenario, not an approved change.</label>
-<div class="actions"><button id="run" type="submit" disabled>Analyze change impact</button></div>
+<label for="description">Memo text</label><textarea id="description" maxlength="4000"></textarea>
+<div class="row"><button type="button" id="write-note">Write change impact note (AI)</button></div>
+<p class="msg" id="note-msg"></p>
+<div id="saved-notes"></div>
+</div>
+<div id="note"><p class="muted">The note appears here: affected elements, three-point re-estimate, P50/P80 from code, contingency and funding, the decision, and what the files do not settle.</p></div>
+</div>
+</div>
+
+<div class="panel" id="tab-sched">
+<div class="grid">
+<div>
+<h2>Schedule forecast (optional)</h2>
+<p><small>Builds a source-backed activity network from the AI plan, computes float in code and applies a hypothetical delay. Needs the AI output.</small></p>
+<div class="row"><button type="button" class="alt" id="load">Load schedule activities</button></div>
+<p id="baseline"><small>Activities not loaded.</small></p>
+<form id="sched-form">
+<label for="activity-id">Affected activity</label>
+<select id="activity-id"><option value="">Load activities to choose a task</option></select>
+<label for="days">Additional delay (calendar days)</label><input id="days" type="number" min="0" max="3650" step="1" value="42">
+<label for="cost">Extra cost assumption (SGD, optional)</label><input id="cost" type="number" min="0" step="0.01" placeholder="Unknown — leave blank">
+<div class="row"><button type="submit" class="alt" id="run" disabled>Forecast schedule impact</button></div>
 </form>
-</section>
-<section>
-<h2>3 · Results and safeguards</h2>
-<p class="status" id="status" aria-live="polite">Awaiting input</p>
+</div>
+<div>
+<p class="msg" id="sched-status">Waiting for input.</p>
 <dl>
 <dt>Baseline forecast finish</dt><dd id="base-finish">—</dd>
 <dt>Conditional project finish</dt><dd id="changed-finish">—</dd>
 <dt>Entered activity delay</dt><dd id="activity-delay">—</dd>
-<dt>Calculated whole-project shift</dt><dd id="finish-shift">—</dd>
+<dt>Whole-project shift</dt><dd id="finish-shift">—</dd>
 <dt>Cost assumption (not computed)</dt><dd id="cost-display">Unknown</dd>
 </dl>
-<h3>Calculation details / unresolved inputs</h3>
-<pre id="output" aria-live="polite">No calculation yet.</pre>
-</section>
-</main>
+<h3>Details</h3><pre id="sched-output">No calculation yet.</pre>
+</div>
+</div>
+</div>
+
 <script>
 "use strict";
 const el=(id)=>document.getElementById(id);
-const show=(x)=>typeof x==="string"?x:JSON.stringify(x,null,2);
-async function submit(body){
-  const res=await fetch("/v1/schedule-forecast",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
-  let output;
-  try{output=await res.json()}catch{throw new Error("Server did not return JSON")}
-  if(!res.ok)throw new Error((output.error||"HTTP "+res.status)+": "+(output.message||output.reason||"Request failed"));
-  return output;
+let STATUS=null, EXAMPLES=[], CURRENT=null, UNLOCKED=false;
+const store={get(k){try{return sessionStorage.getItem(k)}catch{return null}},set(k,v){try{v==null?sessionStorage.removeItem(k):sessionStorage.setItem(k,v)}catch{}}};
+const DOCS={"HARBOURLINE-BRIEF":"Brief","PACK-EDC":"01 EDC minutes","PACK-JAN-PROGRESS":"02 Jan report","PACK-FEB-PROGRESS":"02 Feb report",
+  "PACK-MAR-PROGRESS":"02 Mar report","PACK-CONTRACT":"03 Deliverables","PACK-SEED-RISK":"04 Risk register",
+  "PACK-CONSULTATION":"05 Consultation","PACK-LESSONS":"06 Lessons","PACK-GRANT":"07 Grant"};
+
+function node(tag,props={},...kids){
+  const n=document.createElement(tag);
+  for(const [k,v] of Object.entries(props)){if(k==="class")n.className=v;else if(k==="colspan")n.colSpan=v;else n[k]=v}
+  for(const k of kids.flat()){if(k==null)continue;n.append(k instanceof Node?k:document.createTextNode(String(k)))}
+  return n;
 }
-function present(out, changed){
-  el("status").textContent=out.status+" — "+(out.reason||"");
-  el("output").textContent=show(out.forecast?{
-    critical_activity_ids:out.forecast.critical_activity_ids,
-    external_trigger_float:out.forecast.external_trigger_float,
-    scenario:out.forecast.scenario,
-    limitations:"Source-cited proposed schedule; no baseline approval or Jira write."
-  }:{
-    unresolved:out.proposal?.unresolved,
-    reason:out.reason,
-    missing_evidence:"Provide verified task durations, predecessor links and dated triggers. Unknown stays unknown."
-  });
+const fmt=(n,d=0)=>n==null?"—":Number(n).toLocaleString(undefined,{maximumFractionDigits:d,minimumFractionDigits:d});
+function msg(id,text,kind){const m=el(id);m.textContent=text;m.className="msg"+(kind?" "+kind:"")}
+function dot(id,state){el(id).className="dot"+(state?" "+state:"")}
+function cites(refs){
+  const s=node("span");
+  for(const r of refs||[]){
+    const line=r.line_start===r.line_end?"L"+r.line_start:"L"+r.line_start+"–"+r.line_end;
+    s.append(node("span",{class:"chip",title:(r.quote||"").slice(0,600)},(DOCS[r.document_id]||r.document_id)+" "+line));
+  }
+  if(!(refs||[]).length)s.append(node("span",{class:"muted"},"no source"));
+  return s;
+}
+function statusTag(s){
+  const cls={OPEN:"open",UNRESOLVED:"unres",DECLINED:"unres",CONFIRMED:"ok",ANSWERED:"ok",IN_SCOPE:"ok",OUT_OF_SCOPE:"unres",QUANTIFIED_ASSUMPTION:"ok"}[s]||"";
+  return node("span",{class:"tag "+cls},s||"—");
+}
+function table(headers,rows){
+  const t=node("table");
+  t.append(node("tr",{},headers.map(h=>{const [txt,num]=Array.isArray(h)?h:[h];return node("th",{class:num?"num":""},txt)})));
+  for(const r of rows)t.append(r);
+  return node("div",{class:"tablewrap"},t);
+}
+const td=(x,cls)=>node("td",{class:cls||""},x);
+const ids=(a)=>(a||[]).join(", ")||"—";
+
+async function api(path,body){
+  let res;
+  const headers={"Content-Type":"application/json"};const code=store.get("mb-access");if(code)headers["X-Access-Code"]=code;
+  try{res=await fetch(path,body===undefined?{headers}:{method:"POST",headers,body:JSON.stringify(body)})}
+  catch(e){throw new Error("Cannot reach the Member B server. Is it running?")}
+  let out;
+  try{out=await res.json()}catch{throw new Error("Server did not return JSON (HTTP "+res.status+")")}
+  if(!res.ok){const d=[out.type,out.message||out.reason].filter(Boolean).join(": ");const e=new Error((out.error||"HTTP "+res.status)+(d?" — "+d:""));e.status=res.status;throw e}
+  return out;
+}
+
+/* ---------- status ---------- */
+function renderStatus(s){
+  STATUS=s;
+  dot("c-server","ok");el("t-server").textContent="Member B server: connected";
+  dot("c-key",s.api_key_configured?"ok":"bad");el("t-key").textContent="OpenAI API key: "+(s.api_key_configured?"set":"not set");
+  dot("c-model",s.model?"ok":"bad");el("t-model").textContent="Model: "+(s.model||"not set");
+  if(s.model&&!el("model").value)el("model").value=s.model;
+  dot("c-lib",s.evidence_library?"ok":"bad");el("t-lib").textContent="Evidence library: "+(s.evidence_library?"ready":"missing");
+  el("lib-help").style.display=s.evidence_library?"none":"block";
+  const sv=s.saved_b_output;
+  dot("c-saved",sv&&!sv.error?"ok":"warn");
+  el("t-saved").textContent=sv&&!sv.error?`AI plan & risks: ${sv.wbs_items} WBS, ${sv.milestones} milestones, ${sv.risks} risks, ${sv.scenarios} what-ifs (${new Date(sv.saved_at).toLocaleString()})`:"AI plan & risks: not generated yet";
+  const gated=s.access_code_required&&!UNLOCKED;
+  el("access-box").style.display=s.access_code_required?"block":"none";
+  el("config-form").style.display=s.access_code_required?"none":"block";  // presenters never see the key field
+  el("lock").style.display=UNLOCKED?"inline-block":"none";
+  if(s.access_code_required)msg("access-msg",UNLOCKED?"Unlocked for this browser tab.":"Locked: AI buttons are disabled until the access code is entered.",UNLOCKED?"ok":"");
+  el("runs-left").style.display=s.ai_run_limit?"block":"none";
+  if(s.ai_run_limit)el("runs-left").textContent=`AI runs remaining in this session: ${s.ai_runs_remaining} of ${s.ai_run_limit}`;
+  const live=s.api_key_configured&&s.model&&s.evidence_library&&!gated&&s.ai_runs_remaining!==0;
+  el("generate").disabled=!live;
+  el("write-note").disabled=!live;
+  el("load").disabled=!(live&&sv&&!sv.error);
+  el("snap-save").disabled=!(sv&&!sv.error&&!gated);
+  if(s.saved_snapshot&&!el("snap-msg").textContent)msg("snap-msg",`Presentation snapshot: recorded ${new Date(s.saved_snapshot.saved_at).toLocaleString()}, notes ${(s.saved_snapshot.change_notes||[]).join(", ")||"none"}.`,"");
+  EXAMPLES=s.example_change_events||[];
+  const ex=el("example");
+  if(ex.options.length<=1)for(const e of EXAMPLES)ex.add(new Option(e.event_id+" · "+e.change_type+(e.issued?" · "+e.issued:""),e.event_id));
+}
+async function refresh(){
+  try{renderStatus(await api("/v1/status"))}
+  catch(e){dot("c-server","bad");el("t-server").textContent="Member B server: "+e.message;
+    for(const b of ["generate","offline","write-note","load","save-config","forget-key"])el(b).disabled=true}
+}
+
+/* ---------- load and render a B output ---------- */
+async function loadOutput(){
+  const src=el("source").value;
+  try{
+    CURRENT=await api("/v1/b-output?source="+src);
+    el("download").disabled=false;
+    renderAll(CURRENT);
+  }catch(e){
+    CURRENT=null;el("download").disabled=true;
+    for(const id of ["plan","risk","whatif"])el(id).replaceChildren(node("p",{class:"muted"},e.status===404?
+      ({live:"No AI output yet. Click Generate with AI, or view the offline rules preview.",
+        snapshot:"No presentation snapshot yet. Generate with AI, write the CE-01/CE-02 notes, then click Save AI run as presentation snapshot.",
+        rules:"No offline preview yet. Click Offline preview."})[src]:e.message));
+  }
+  await loadSavedNotes();
+}
+async function loadSavedNotes(){
+  const box=el("saved-notes");box.replaceChildren();
+  const src=el("source").value;if(src==="rules")return;
+  let notes=[];try{notes=(await api("/v1/change-notes?source="+src)).notes}catch{return}
+  if(CURRENT)notes=notes.filter(n=>!n.based_on||n.based_on.run_id===CURRENT.output.run_id);
+  if(!notes.length)return;
+  box.append(node("h3",{},src==="snapshot"?"Recorded notes (no API call)":"Notes already written for this run"));
+  const row=node("div",{class:"row",style:"margin-top:0"});
+  for(const n of notes){const b=node("button",{type:"button",class:"ghost",textContent:"Show "+n.event.event_id});
+    b.addEventListener("click",()=>{renderNote(n);msg("note-msg",(src==="snapshot"?"Recorded note replayed; no API call made. ":"Saved note shown. ")+"Proposal for human review.","ok")});row.append(b)}
+  box.append(row);
+}
+function banner(data){
+  const label={live:"AI agent output · ",snapshot:"Presentation snapshot · ",rules:"Offline rules preview · "}[data.source];
+  return node("p",{class:"callout"},label+data.mode_note+" · run "+(data.output.run_id||"")+" · status "+data.output.status);
+}
+function renderAll(data){
+  for(const id of ["plan","risk","whatif"]){const p=el(id).previousElementSibling;if(p&&p.classList.contains("muted"))p.style.display="none"}
+  renderPlan(data);renderRisk(data);renderWhatif(data);wiOptions();
+}
+
+function renderPlan(data){
+  const P=data.output.planning, box=el("plan");box.replaceChildren(banner(data));
+  const qs=P.sponsor_questions||[], open=qs.filter(q=>q.status!=="ANSWERED").length;
+  box.append(node("div",{class:"kpis"},
+    node("div",{class:"kpi"},node("b",{},qs.length),"Sponsor questions ("+open+" open)"),
+    node("div",{class:"kpi"},node("b",{},(P.scope_items||[]).length),"Scope items"),
+    node("div",{class:"kpi"},node("b",{},(P.wbs_items||[]).length),"WBS elements (levels "+[...new Set((P.wbs_items||[]).map(w=>w.level))].sort().join("/")+")"),
+    node("div",{class:"kpi"},node("b",{},(P.milestones||[]).length),"Milestones")));
+  box.append(node("h3",{},"Scope statement"),node("p",{},P.scope_statement||"UNRESOLVED — no scope statement could be sourced."));
+  box.append(node("h3",{},"Questions for the Sponsor"),node("p",{},node("small",{},"Unanswered questions stay open: the agent never fills in the Sponsor's answer. Hand these to D for the consolidated list.")));
+  box.append(table(["ID","Question","Why it is needed","Status","Answer","Sources"],qs.map(q=>node("tr",{},
+    td(q.question_id),td(q.question),td(q.reason),td(statusTag(q.status)),
+    td(q.answer==null?node("span",{class:"muted"},"Awaiting Sponsor"):q.answer),td(cites(q.answer_sources))))));
+  box.append(node("h3",{},"Scope items"));
+  box.append(table(["ID","Title","Description","Status","Sources"],(P.scope_items||[]).map(s=>node("tr",{},
+    td(s.scope_id),td(s.title),td(s.description),td(statusTag(s.status)),td(cites(s.source_refs))))));
+  box.append(node("h3",{},"WBS to Level 3 with dictionary"),node("p",{},node("small",{},"Expand a title for its WBS dictionary entry. Elements that cannot be traced to a scope line are flagged UNRESOLVED.")));
+  box.append(table(["Code","Element and dictionary","Scope","Depends on","Status","Sources"],(P.wbs_items||[]).map(w=>{
+    const d=w.dictionary||{};
+    const det=node("details",{},node("summary",{},w.title),
+      node("p",{},node("small",{},d.work_description||"")),
+      (d.deliverables||[]).length?node("p",{},node("small",{},"Deliverables: "+d.deliverables.join("; "))):null,
+      (d.acceptance_criteria||[]).length?node("p",{},node("small",{},"Acceptance: "+d.acceptance_criteria.join("; "))):null,
+      (d.exclusions||[]).length?node("p",{},node("small",{},"Exclusions: "+d.exclusions.join("; "))):null,
+      (d.assumptions||[]).length?node("p",{},node("small",{},"Assumptions: "+d.assumptions.join("; "))):null,
+      node("p",{},node("small",{},"Owner: "+(d.owner||"not named in the sources"))));
+    return node("tr",{},td(node("span",{class:"lvl"+w.level},w.wbs_id)),td(det),td(ids(w.scope_ids)),td(ids(w.predecessor_wbs_ids)),td(statusTag(w.status)),td(cites(w.source_refs)));
+  })));
+  box.append(node("h3",{},"Milestone plan with dependencies"),node("p",{},node("small",{},"Relative time until the Sponsor confirms dates.")));
+  box.append(table(["ID","Milestone","Relative timing","Calendar date","Depends on","Related WBS","Status","Sources"],(P.milestones||[]).map(m=>node("tr",{},
+    td(m.milestone_id),td(m.title),td(m.relative_timing),td(m.calendar_date||"—"),td(ids(m.predecessor_milestone_ids)),td(ids(m.related_wbs_ids)),td(statusTag(m.status)),td(cites(m.source_refs))))));
+}
+
+function renderRisk(data){
+  const R=data.output.risk, box=el("risk");box.replaceChildren(banner(data));
+  const risks=[...(R.risks||[])].sort((a,b)=>(b.score??-1)-(a.score??-1));
+  box.append(node("p",{},node("small",{},"Score = probability × impact (1–5 each), checked in code. Unrated means the sources do not establish a rating; it is kept visible, not dropped. An owner the sources do not name stays unassigned.")));
+  box.append(table(["ID","Risk",["P",1],["I",1],["Score",1],"Owner","Trigger","Response","WBS","Milestones","Status","Sources"],risks.map(r=>{
+    const sc=r.score, cls=sc==null?"":sc>=15?"s-hi":sc>=8?"s-md":"s-lo";
+    return node("tr",{},td(r.risk_id),td(node("details",{},node("summary",{},r.title),node("p",{},node("small",{},r.description)))),
+      td(r.probability??"—","num"),td(r.impact??"—","num"),td(sc==null?node("span",{class:"tag unres",title:"Probability or impact is not established by the sources"},"Unrated"):node("span",{class:"score "+cls},sc),"num"),
+      td(r.owner||node("span",{class:"muted"},"Unassigned")),td(r.trigger||"—"),td(r.response_plan||"—"),
+      td(ids(r.related_wbs_ids)),td(ids(r.related_milestone_ids)),td(statusTag(r.status)),td(cites(r.source_refs)));
+  })));
+}
+
+/* ---------- user what-if ---------- */
+function wiRow(e={}){
+  const kind=node("select",{},new Option("Cost (S$k)","COST"),new Option("Schedule (weeks)","SCHEDULE"));kind.value=e.kind||"COST";
+  const num=(v)=>node("input",{type:"number",min:"0",step:"any",value:v??"",style:"width:6.5rem"});
+  const crit=node("input",{type:"checkbox",checked:e.on_critical_path!==false,style:"width:auto"});
+  const del=node("button",{type:"button",class:"ghost",textContent:"Remove"});
+  const tr=node("tr",{},td(node("input",{value:e.label||"",placeholder:"e.g. Licensed asbestos removal"})),td(kind),
+    td(num(e.optimistic)),td(num(e.most_likely)),td(num(e.pessimistic)),td(crit),td(del));
+  del.addEventListener("click",()=>tr.remove());
+  el("wi-table").append(tr);
+}
+function wiFill(elements){
+  for(const tr of [...el("wi-table").querySelectorAll("tr")].slice(1))tr.remove();
+  for(const e of elements)wiRow(e);
+}
+/* Public Week 12 slide examples (method checks, not Harbourline data). Instructor appendix slides are not used. */
+const COURSE={
+  "course:slide26":{title:"Week 12 slide 26 · Smart Locker worked example (S$k) · slide shows P50 ≈ 59, P80 ≈ 64",elements:[
+    {label:"3.2 Access-control integration",kind:"COST",optimistic:25,most_likely:40,pessimistic:60},
+    {label:"4.1 Courier onboarding and vetting",kind:"COST",optimistic:8,most_likely:12,pessimistic:20},
+    {label:"2.3 Operating procedures",kind:"COST",optimistic:3,most_likely:5,pessimistic:8}]},
+  "course:slide11":{title:"Week 12 slide 11 · access-control integration (S$k) · PERT mean 40.8, σ 5.8",elements:[
+    {label:"Access-control integration",kind:"COST",optimistic:25,most_likely:40,pessimistic:60}]},
+  "course:poll2":{title:"Week 12 poll 2 · courier onboarding (S$k) · PERT mean 12.7, σ 2.0",elements:[
+    {label:"Courier onboarding and vetting",kind:"COST",optimistic:8,most_likely:12,pessimistic:20}]},
+};
+function wiScenarioElements(id){
+  if(COURSE[id])return COURSE[id].elements;
+  const d=(CURRENT&&CURRENT.trace&&CURRENT.trace.whatif||[]).find(x=>x.scenario_id===id);
+  if(d)return d.elements;
+  const s=(CURRENT&&CURRENT.output.risk.scenarios||[]).find(x=>x.scenario_id===id);if(!s)return [];
+  const out=[];  // rules preview: single figures become a point estimate you can widen
+  if(s.cost_impact_sgd!=null){const k=s.cost_impact_sgd/1000;out.push({label:s.scenario_id+" cost",kind:"COST",optimistic:k,most_likely:k,pessimistic:k})}
+  if(s.schedule_impact_days!=null){const w=+(s.schedule_impact_days/7).toFixed(1);out.push({label:s.scenario_id+" delay",kind:"SCHEDULE",optimistic:w,most_likely:w,pessimistic:w,on_critical_path:true})}
+  return out;
+}
+function wiOptions(){
+  const sel=el("wi-from");for(const g of [...sel.querySelectorAll("optgroup")])g.remove();
+  const scen=(CURRENT&&CURRENT.output.risk.scenarios)||[];
+  if(scen.length){const g=node("optgroup",{label:"Harbourline scenarios ("+(CURRENT.source==="live"?"AI agent":"rules preview")+")"});
+    for(const s of scen)g.append(new Option(s.scenario_id+" · "+s.description.slice(0,70),s.scenario_id));sel.append(g)}
+  const c=node("optgroup",{label:"Week 12 course examples (method check, not project data)"});
+  for(const [id,x] of Object.entries(COURSE))c.append(new Option(x.title,id));sel.append(c);
+}
+el("wi-from").addEventListener("change",()=>{
+  const id=el("wi-from").value;
+  wiFill(id?wiScenarioElements(id):[{kind:"COST"},{kind:"SCHEDULE",on_critical_path:true}]);
+});
+el("wi-add").addEventListener("click",()=>wiRow());
+el("wi-run").addEventListener("click",async()=>{
+  const elements=[...el("wi-table").querySelectorAll("tr")].slice(1).map(tr=>{const i=tr.querySelectorAll("input,select");
+    return {label:i[0].value,kind:i[1].value,optimistic:i[2].value,most_likely:i[3].value,pessimistic:i[4].value,on_critical_path:i[5].checked}});
+  if(!elements.length){msg("wi-msg","Add at least one element.","bad");return}
+  if(elements.some(e=>e.optimistic===""||e.most_likely===""||e.pessimistic==="")){msg("wi-msg","Fill O, M and P for every element.","bad");return}
+  el("wi-run").disabled=true;
+  try{
+    const r=await api("/v1/whatif-recompute",{elements});const c=r.cost_sgd_k,w=r.schedule_weeks;
+    msg("wi-msg","Computed in code from your assumptions (not sourced, not approved).","ok");
+    el("wi-result").replaceChildren(node("div",{class:"kpis"},
+      node("div",{class:"kpi"},node("b",{},c?"S$"+fmt(c.p50,1)+"k":"—"),"Cost P50 (plan to)"),
+      node("div",{class:"kpi"},node("b",{},c?"S$"+fmt(c.p80,1)+"k":"—"),"Cost P80 (budget for)"),
+      node("div",{class:"kpi"},node("b",{},w?fmt(w.p50,1)+" wk":"—"),"Delay P50 (critical path)"),
+      node("div",{class:"kpi"},node("b",{},w?fmt(w.p80,1)+" wk":"—"),"Delay P80 (critical path)")),
+      node("p",{},node("small",{},(c?`Cost PERT mean S$${fmt(c.pert_mean_total,1)}k, combined σ ${fmt(c.combined_sigma,1)}. `:"")+(w?`Delay PERT mean ${fmt(w.pert_mean_total,1)} wk. `:"")+r.note)));
+  }catch(e){msg("wi-msg","Failed: "+e.message,"bad")}
+  finally{el("wi-run").disabled=false}
+});
+wiFill([{kind:"COST"},{kind:"SCHEDULE",on_critical_path:true}]);wiOptions();
+
+function resultCells(c,unit){return c?[td(fmt(c.p50,1),"num"),td(fmt(c.p80,1),"num")]:[td("—","num"),td("—","num")]}
+function renderWhatif(data){
+  const R=data.output.risk, box=el("whatif");box.replaceChildren(banner(data));
+  const detail=data.trace&&data.trace.whatif;
+  box.append(node("p",{class:"callout"},detail?"Reason → Compute → Check: the model proposed each three-point range with a cited row; P50/P80 below were computed in code (10,000 PERT-beta draws). Contract fields carry P80 (budget to P80, plan to P50).":
+    "These scenarios come from the offline rules generator: their figures are rule constants, not computed ranges."));
+  box.append(node("h3",{},"Scenarios compared"));
+  const byId=Object.fromEntries((detail||[]).map(d=>[d.scenario_id,d]));
+  box.append(table(["ID","Scenario",["Cost P50 S$k",1],["Cost P80 S$k",1],["Delay P50 wk",1],["Delay P80 wk",1],["Contract cost S$",1],["Contract delay days",1],"Status","Affected WBS","Affected risks","Sources"],
+    (R.scenarios||[]).map(s=>{const d=byId[s.scenario_id];
+      return node("tr",{},td(s.scenario_id),td(s.description),...resultCells(d&&d.cost_sgd_k),...resultCells(d&&d.schedule_weeks),
+        td(fmt(s.cost_impact_sgd),"num"),td(fmt(s.schedule_impact_days),"num"),td(statusTag(s.estimate_status)),td(ids(s.affected_wbs_ids)),td(ids(s.affected_risk_ids)),td(cites(s.source_refs)))})));
+  for(const s of R.scenarios||[]){
+    const d=byId[s.scenario_id];
+    box.append(node("h3",{},s.scenario_id+" · "+(d?d.title:s.description)));
+    if(d){
+      box.append(table(["Element","Kind",["O",1],["M",1],["P",1],["PERT mean",1],["σ",1],"Critical path","Reasons (O / M / P)","Sources"],d.elements.map(e=>node("tr",{},
+        td(e.label),td(e.kind==="COST"?"Cost S$k":"Schedule wk"),td(fmt(e.optimistic,1),"num"),td(fmt(e.most_likely,1),"num"),td(fmt(e.pessimistic,1),"num"),
+        td(fmt(e.pert_mean,1),"num"),td(fmt(e.sigma,1),"num"),td(e.kind==="SCHEDULE"?(e.on_critical_path?"yes":"no"):"—"),
+        td(node("small",{},"O: "+e.reason_optimistic+" · M: "+e.reason_most_likely+" · P: "+e.reason_pessimistic)),td(cites(e.source_refs))))));
+      if(d.assumptions.length)box.append(node("p",{},node("small",{},"Assumptions: "+d.assumptions.join(" · "))));
+      if(d.unresolved.length)box.append(node("p",{},node("small",{},"UNRESOLVED: "+d.unresolved.join(" · "))));
+    }else{
+      box.append(node("ul",{class:"plain"},(s.assumptions||[]).map(a=>node("li",{},a))));
+    }
+    box.append(node("p",{},node("small",{},s.calculation_basis||"")));
+  }
+}
+
+/* ---------- change impact note ---------- */
+function renderNote(n){
+  const box=el("note");box.replaceChildren();
+  const L=n.labels||{};
+  box.append(node("p",{class:"callout"},`CHANGE IMPACT NOTE — ${n.event.event_id} — for the Council Finance Director. Based on the ${n.based_on.source==="live"?"AI":"rules preview"} B output ${n.based_on.run_id||""}. ${n.note}`));
+  box.append(node("h3",{},"1 · Affected elements"));
+  box.append(table(["Element","Type","Why affected","B IDs","Sources"],n.affected_elements.map(e=>node("tr",{},
+    td(e.element_ref),td(e.element_type),td(e.why_affected),td(ids([...e.b_wbs_ids,...e.b_milestone_ids,...e.b_risk_ids])),td(cites(e.source_refs))))));
+  box.append(node("h3",{},"2 · Three-point re-estimate"));
+  box.append(n.estimates.length?table(["Element","Unit",["O",1],["M",1],["P",1],["PERT mean",1],"Reasons","Sources"],n.estimates.map(e=>node("tr",{},
+    td(e.label),td(e.kind==="COST"?"S$k":"weeks"),td(fmt(e.optimistic,1),"num"),td(fmt(e.most_likely,1),"num"),td(fmt(e.pessimistic,1),"num"),td(fmt(e.pert_mean,1),"num"),
+    td(node("small",{},"O: "+e.reason_optimistic+" · M: "+e.reason_most_likely+" · P: "+e.reason_pessimistic)),td(cites(e.source_refs))))):node("p",{class:"muted"},"No element had a figure in the files; see UNRESOLVED."));
+  const c=n.result.cost_sgd_k, w=n.result.schedule_weeks;
+  box.append(node("h3",{},"3 · Result from code"));
+  box.append(node("div",{class:"kpis"},
+    node("div",{class:"kpi"},node("b",{},c?"S$"+fmt(c.p50,0)+"k":"—"),"Cost P50 (plan to)"),
+    node("div",{class:"kpi"},node("b",{},c?"S$"+fmt(c.p80,0)+"k":"—"),"Cost P80 (budget for)"),
+    node("div",{class:"kpi"},node("b",{},w?fmt(w.p50,1)+" wk":"—"),"Delay P50"),
+    node("div",{class:"kpi"},node("b",{},w?fmt(w.p80,1)+" wk":"—"),"Delay P80")));
+  box.append(node("p",{},node("small",{},"10,000 PERT-beta draws per element, summed in code; the model did not state these figures.")));
+  const k=n.contingency;
+  box.append(node("h3",{},"4 · Contingency and funding"));
+  box.append(node("dl",{},node("dt",{},"Contingency before"),node("dd",{},k.before_sgd==null?"UNRESOLVED":"S$"+fmt(k.before_sgd)),
+    node("dt",{},"After, at P50"),node("dd",{},k.after_p50_sgd==null?"—":"S$"+fmt(k.after_p50_sgd)),
+    node("dt",{},"After, at P80"),node("dd",{},k.after_p80_sgd==null?"—":"S$"+fmt(k.after_p80_sgd)),
+    node("dt",{},"Gap at P80"),node("dd",{},k.gap_at_p80_sgd==null?"—":"S$"+fmt(k.gap_at_p80_sgd))));
+  box.append(node("p",{},node("small",{},"Basis: "+k.basis+" "),cites(k.source_refs)));
+  box.append(n.funding_status==="UNRESOLVED"?node("p",{},statusTag("UNRESOLVED")," Funding source: the files do not name one."):
+    node("ul",{class:"plain"},n.funding.map(f=>node("li",{},f.source_name+" — "+f.what_it_covers+" ",cites(f.source_refs)))));
+  box.append(node("h3",{},"5 · The decision (a human decides)"),node("p",{class:"decision"},n.decision.sentence));
+  box.append(node("p",{},node("small",{},`Who: ${n.decision.who} · What: ${n.decision.what} · Amount/date: ${n.decision.amount_or_date} · Deadline: ${n.decision.deadline}`)));
+  box.append(node("h3",{},"6 · UNRESOLVED"),node("ul",{class:"plain"},n.unresolved.map(u=>node("li",{},u.item+" — would be settled by "+u.would_be_settled_by))));
+  if(n.conflicts.length){box.append(node("h3",{},"Sources that disagree (not reconciled)"));
+    box.append(table(["Topic","Value A","Value B"],n.conflicts.map(x=>node("tr",{},td(x.topic),td(node("span",{},x.value_a+" ",cites(x.value_a_refs))),td(node("span",{},x.value_b+" ",cites(x.value_b_refs)))))))}
+  box.append(node("h3",{},"Now stale"),node("p",{},node("small",{},
+    `WBS: ${ids(n.stale_wbs_ids)} · Milestones: ${ids(n.stale_milestone_ids)} · Risks: ${ids(n.stale_risk_ids)} · Reports: ${n.stale_reports.join(", ")}`)));
+  const m=n.metrics||{};
+  box.append(node("p",{},node("small",{},`Attempts ${n.attempts.length} · API calls ${m.api_calls??"?"} · tokens in ${m.input_tokens??"?"} / out ${m.output_tokens??"?"}`)));
+}
+
+/* ---------- schedule ---------- */
+function presentForecast(out, changed){
+  msg("sched-status",out.status+" — "+(out.reason||""),out.status==="PROPOSED"?"ok":"bad");
+  el("sched-output").textContent=JSON.stringify(out.forecast?{critical_activity_ids:out.forecast.critical_activity_ids,
+    external_trigger_float:out.forecast.external_trigger_float,scenario:out.forecast.scenario}:{unresolved:out.proposal?.unresolved,reason:out.reason},null,2);
   el("base-finish").textContent=out.forecast?.forecast_finish||"Unresolved";
   el("changed-finish").textContent=out.forecast?.scenario?.conditional_finish||"—";
   el("activity-delay").textContent=out.forecast?.scenario?.activity_delay_days!=null?out.forecast.scenario.activity_delay_days+" days":"—";
   el("finish-shift").textContent=out.forecast?.scenario?.project_finish_shift_days!=null?out.forecast.scenario.project_finish_shift_days+" days":"Unresolved";
   el("cost-display").textContent=changed?.cost_assumption_sgd==null?"Unknown":"S$"+changed.cost_assumption_sgd.toLocaleString();
 }
-el("load").addEventListener("click",async()=>{
-  el("load").disabled=true;el("baseline").textContent="Analyzing source evidence…";
-  try{
-    const out=await submit({});
-    present(out,null);
-    const ids=out.forecast?.activities||[];
-    const select=el("activity-id");
-    select.replaceChildren();
-    const placeholder=new Option("Select a sourced activity","");select.add(placeholder);
-    for(const act of ids){
-      select.add(new Option(act.id+(act.wbs_id?" · WBS "+act.wbs_id:"")+" · float "+act.total_float_days+"d",act.id));
-    }
-    el("run").disabled=ids.length===0;
-    el("baseline").textContent=out.status==="PROPOSED"?
-      "Baseline loaded: "+ids.length+" source-backed activities. Select an activity to apply an illustrative delay.":
-      "Baseline UNRESOLVED — source evidence is insufficient for a defensible network forecast.";
-  }catch(e){
-    el("baseline").textContent="Could not load: "+e.message;el("status").textContent="Failed";
-    el("run").disabled=true;
-  }finally{el("load").disabled=false}
+
+/* ---------- events ---------- */
+for(const b of document.querySelectorAll(".tabs button"))b.addEventListener("click",()=>{
+  for(const x of document.querySelectorAll(".tabs button"))x.setAttribute("aria-selected",x===b?"true":"false");
+  for(const p of document.querySelectorAll(".panel"))p.classList.toggle("on",p.id==="tab-"+b.dataset.tab);
 });
-el("change-form").addEventListener("submit",async(ev)=>{
+el("access-form").addEventListener("submit",async(ev)=>{
   ev.preventDefault();
-  const costText=el("cost").value.trim();
-  const event={
-    event_id:el("event-id").value,
-    change_type:el("event-type").value,
-    description:el("description").value,
-    activity_id:el("activity-id").value,
-    additional_days:Number(el("days").value),
-    cost_assumption_sgd:costText===""?null:Number(costText),
-    hypothetical:el("hypothetical").checked
-  };
-  el("run").disabled=true;el("status").textContent="Calculating…";
+  const code=el("access-code").value;if(!code){msg("access-msg","Enter the access code.","bad");return}
+  store.set("mb-access",code);el("unlock").disabled=true;
+  try{await api("/v1/unlock",{});UNLOCKED=true;el("access-code").value=""}
+  catch(e){store.set("mb-access",null);UNLOCKED=false;msg("access-msg",e.status===403?"Wrong access code.":e.message,"bad")}
+  finally{el("unlock").disabled=false;refresh()}
+});
+el("lock").addEventListener("click",()=>{store.set("mb-access",null);UNLOCKED=false;refresh()});
+el("config-form").addEventListener("submit",async(ev)=>{
+  ev.preventDefault();
+  const body={save_to_env:el("save-env").checked},key=el("api-key").value.trim(),model=el("model").value.trim();
+  if(key)body.api_key=key;if(model)body.model=model;
+  if(!key&&!model){msg("config-msg","Enter a key and/or a model ID.","bad");return}
+  el("save-config").disabled=true;
+  try{const r=await api("/v1/configure",body);el("api-key").value="";msg("config-msg",(key?"Key saved. ":"Model saved. ")+r.note,"ok")}
+  catch(e){msg("config-msg",e.message,"bad")}
+  finally{el("save-config").disabled=false;refresh()}
+});
+el("forget-key").addEventListener("click",async()=>{
+  try{await api("/v1/configure",{forget_key:true,save_to_env:el("save-env").checked});msg("config-msg","Key removed"+(el("save-env").checked?" from server memory and .env.":" from server memory."),"ok")}catch(e){msg("config-msg",e.message,"bad")}
+  refresh();
+});
+el("generate").addEventListener("click",async()=>{
+  el("generate").disabled=true;el("gen-log").replaceChildren();
+  msg("gen-msg","Agent working: Planning → Risk → What-if → checks → Critic… (2–5 min)","busy");
   try{
-    const out=await submit({change_event:event});
-    present(out,event);
-  }catch(e){el("status").textContent="Failed: "+e.message;el("output").textContent="No change was approved or written to Jira."}
+    const body={};if(el("cutoff").value)body.cutoff=el("cutoff").value;
+    const out=await api("/v1/generate-baseline",body);const m=out.metrics||{};
+    msg("gen-msg",`Done: ${out.wbs_items} WBS, ${out.milestones} milestones, ${out.risks} risks, ${out.scenarios} what-ifs, ${out.sponsor_questions} Sponsor questions.`,"ok");
+    el("gen-log").append(node("p",{},node("small",{},`Attempts: ${(out.attempts||[]).map(a=>a.attempt+" "+a.result).join(" → ")} · API calls ${m.api_calls??"?"} · tokens in ${m.input_tokens??"?"} / out ${m.output_tokens??"?"} · ${Math.round(m.elapsed_seconds||0)} s`)));
+    el("source").value="live";await loadOutput();
+  }catch(e){msg("gen-msg","Failed: "+e.message,"bad")}
+  finally{refresh()}
+});
+el("offline").addEventListener("click",async()=>{
+  el("offline").disabled=true;
+  try{const out=await api("/v1/generate-offline",{});msg("gen-msg",`Offline rules preview ready: ${out.wbs_items} WBS, ${out.risks} risks. Not AI.`,"ok");
+    el("source").value="rules";await loadOutput()}
+  catch(e){msg("gen-msg","Failed: "+e.message,"bad")}
+  finally{el("offline").disabled=false;refresh()}
+});
+el("source").addEventListener("change",loadOutput);
+el("snap-save").addEventListener("click",async()=>{
+  el("snap-save").disabled=true;
+  try{const r=await api("/v1/snapshot-save",{});
+    msg("snap-msg",`Snapshot saved: run ${r.run_id}, ${r.api_calls??"?"} API calls, notes ${(r.change_notes||[]).join(", ")||"none (write CE-01/CE-02 notes first, then save again)"}. The presentation can replay it without calling the API.`,"ok");
+    el("source").value="snapshot";await loadOutput()}
+  catch(e){msg("snap-msg","Failed: "+e.message,"bad")}
+  finally{refresh()}
+});
+el("download").addEventListener("click",()=>{
+  if(!CURRENT)return;
+  const blob=new Blob([JSON.stringify(CURRENT.output,null,2)],{type:"application/json"});
+  const a=node("a",{href:URL.createObjectURL(blob),download:"member_b_"+CURRENT.source+"_output.json"});
+  document.body.append(a);a.click();a.remove();
+});
+el("example").addEventListener("change",()=>{
+  const e=EXAMPLES.find(x=>x.event_id===el("example").value);if(!e)return;
+  el("event-id").value=e.event_id;
+  const sel=el("event-type");if(![...sel.options].some(o=>o.value===e.change_type))sel.add(new Option(e.change_type,e.change_type));
+  sel.value=e.change_type;el("description").value=e.description||"";
+});
+el("write-note").addEventListener("click",async()=>{
+  const ev={event_id:el("event-id").value.trim(),change_type:el("event-type").value,description:el("description").value.trim()};
+  if(!ev.event_id||!ev.description){msg("note-msg","Enter an event ID and paste the memo.","bad");return}
+  el("write-note").disabled=true;msg("note-msg","Agent writing the note; code computing P50/P80… (about 1 min)","busy");
+  try{const n=await api("/v1/change-note",{change_event:ev,source:el("source").value});renderNote(n);msg("note-msg","Note ready for human review (not approved).","ok")}
+  catch(e){msg("note-msg","Failed: "+e.message,"bad")}
+  finally{refresh()}
+});
+el("load").addEventListener("click",async()=>{
+  el("load").disabled=true;el("baseline").textContent="Building the schedule network from evidence…";
+  try{
+    const out=await api("/v1/schedule-forecast",{});presentForecast(out,null);
+    const acts=out.forecast?.activities||[];const s=el("activity-id");s.replaceChildren(new Option("Select a sourced activity",""));
+    for(const a of acts)s.add(new Option(a.id+(a.wbs_id?" · WBS "+a.wbs_id:"")+" · float "+a.total_float_days+"d",a.id));
+    el("run").disabled=acts.length===0;
+    el("baseline").textContent=out.status==="PROPOSED"?acts.length+" source-backed activities loaded.":"Schedule UNRESOLVED — the evidence is not enough for a defensible network.";
+  }catch(e){el("baseline").textContent="Could not load: "+e.message;el("run").disabled=true}
+  finally{refresh()}
+});
+el("sched-form").addEventListener("submit",async(ev)=>{
+  ev.preventDefault();
+  if(!el("activity-id").value){msg("sched-status","Choose an affected activity first.","bad");return}
+  const costText=el("cost").value.trim();
+  const event={event_id:el("event-id").value.trim()||"WHATIF-1",change_type:el("event-type").value,
+    description:el("description").value.trim()||"Hypothetical delay",activity_id:el("activity-id").value,
+    additional_days:Number(el("days").value),cost_assumption_sgd:costText===""?null:Number(costText),hypothetical:true};
+  el("run").disabled=true;msg("sched-status","Calculating schedule…","busy");
+  try{presentForecast(await api("/v1/schedule-forecast",{change_event:event}),event)}
+  catch(e){msg("sched-status","Failed: "+e.message,"bad")}
   finally{el("run").disabled=false}
 });
+
+if(location.protocol==="file:"){
+  el("file-banner").style.display="block";dot("c-server","bad");el("t-server").textContent="Member B server: not reachable from a file";
+  for(const b of ["generate","offline","write-note","load","save-config","forget-key"])el(b).disabled=true;
+}else{(async()=>{if(store.get("mb-access")){try{await api("/v1/unlock",{});UNLOCKED=true}catch{store.set("mb-access",null)}}})().then(refresh).then(async()=>{
+  if(!STATUS)return;
+  // Presentation mode opens on the recorded run; otherwise the latest AI run, then the snapshot, then rules.
+  const order=STATUS.access_code_required?["snapshot","live","rules"]:["live","snapshot","rules"];
+  const has={live:STATUS.saved_b_output,snapshot:STATUS.saved_snapshot,rules:STATUS.saved_rules_output};
+  const pick=order.find(k=>has[k]);
+  if(pick){el("source").value=pick;await loadOutput()}
+})}
 </script>
 </body></html>

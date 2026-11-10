@@ -67,8 +67,9 @@ class Week12EventTests(unittest.TestCase):
             self.assertIn(rid, out["stale_risk_ids"])
         self.assertIn("M16", out["stale_milestone_ids"])
         notes = " ".join(out["impact_notes"])
-        self.assertIn("S$10.2m", notes)
-        self.assertIn("UNKNOWN", notes)  # roof strengthening stays unpriced, not zero
+        # The rules path holds no pre-written findings; the AI note derives them with citations.
+        self.assertIn("change impact note", notes)
+        self.assertNotIn("S$", notes)
         self.assertFalse(out["approved"])
 
     def test_ce02_operator_withdrawal(self):
@@ -78,7 +79,8 @@ class Week12EventTests(unittest.TestCase):
         self.assertIn("M12", out["stale_milestone_ids"])
         for rid in ("R06", "R17"):
             self.assertIn(rid, out["stale_risk_ids"])
-        self.assertTrue(any("D14" in a for a in out["human_actions"]))
+        self.assertTrue(any("source document" in a for a in out["human_actions"]))
+        self.assertFalse(any("D14" in a for a in out["human_actions"]))
         self.assertFalse(out["approved"])
 
     def test_memo_ids_work_as_change_type_aliases(self):

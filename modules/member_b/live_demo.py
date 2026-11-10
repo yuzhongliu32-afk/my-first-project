@@ -32,10 +32,14 @@ def main():
     request=json.loads(args.request.read_text(encoding='utf-8'))
     request['run_id']='B-LIVE-'+str(uuid4())
     request['source_snapshot_id']=library.snapshot
+    trace={'run_id':request['run_id']}
     output=generate(request,library,ModelGateway(model=args.model),cutoff=args.cutoff,
-                    max_rounds=request['request']['max_review_rounds'])
+                    max_rounds=max(request['request']['max_review_rounds'],3),trace=trace)
     args.out.parent.mkdir(parents=True,exist_ok=True)
     args.out.write_text(json.dumps(output,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    # What-if computation detail (three-point inputs, P50/P80) for the workbench page.
+    args.out.with_name('member_b_live_trace.json').write_text(
+        json.dumps({**trace,'result':'PASSED'},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print(json.dumps({'status':output['status'],'mode':'LIVE_OPENAI',
          'api_calls':output['metrics']['api_calls'],
          'input_tokens':output['metrics']['input_tokens'],

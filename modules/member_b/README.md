@@ -57,6 +57,41 @@ that attempt's Critic call is skipped. A Critic `REVISE` is fed back the same wa
 stops. Nothing is returned unless both the code checks and the Critic pass. Attempts are capped
 by `max_review_rounds` (at most 3, each up to 3 calls).
 
+### Local test environment and workbench (Windows)
+
+1. Build the evidence library once, including the Sponsor's formal answers:
+   `python scripts/prepare_evidence.py --brief "<brief.pdf>" --pack "<Harbourline_Data_Pack.zip>" --sponsor-answers "<Capstone Sponsor Answers — Round 1.pdf>"`
+   (SPONSOR_ANSWER evidence; a Sponsor question may be ANSWERED only by citing it.)
+2. Double-click `start_member_b.bat` in the repository root. It creates `.venv`, installs
+   `requirements-live.txt`, copies `.env.example` to a git-ignored `.env` if missing, starts the
+   server and opens `http://127.0.0.1:8765/`. Do not double-click the HTML file itself.
+3. **0 · Connect**: put `OPENAI_API_KEY` and `OPENAI_MODEL` in `.env` (preferred, the team rule is
+   backend-managed keys) or type them on the page (held in server memory only, never saved).
+4. **1 · Generate with AI** (2–5 min) or **Offline preview (rules, no AI)** to test the page
+   without a key. The preview is labelled as rules output everywhere it appears.
+5. Tabs: **Plan** (scope statement, Sponsor questions, scope items, WBS L3 with dictionary,
+   milestones with dependencies), **Risk register**, **What-if** (three scenarios compared, plus *Your own what-if*: edit any O/M/P and recompute P50/P80 in code),
+   **Change impact** (Week 12 Template B note), **Schedule forecast**. Every row shows its source
+   chips; hover one to read the quoted line. **Download B JSON** gives the A contract file.
+
+### How B meets the brief (Module 1 + Module 4)
+
+| Requirement | Where it is enforced |
+|---|---|
+| Scope statement, Sponsor questions | Planning role; code rejects a plan with no Sponsor questions |
+| Unanswered Sponsor questions are not filled in | Code: an OPEN/DECLINED question with an answer fails; an ANSWERED one must cite SPONSOR_ANSWER evidence (Sponsor Answers Round 1) |
+| WBS to Level 3 with dictionary, traceable to scope | Code: levels 1–3, parent levels, no cycles; a WBS without a scope line must be UNRESOLVED |
+| Milestones with dependencies (relative time) | Code: predecessors exist, no cycles |
+| Risk register: score, owner, trigger, linked WBS | Code: score = P × I, links exist, every risk cites evidence; unnamed owners stay null |
+| What-if with schedule and cost, stated assumptions | What-if role proposes O/M/P per element with a cited reason per bound; **code** computes PERT and a 10,000-draw PERT-beta Monte Carlo (P50/P80). At least one scenario must carry both cost and schedule |
+| Change impact | `change_note.py` (Week 12 Template B): affected elements, three-point re-estimate, P50/P80 in code, contingency before/after, funding only from cited sources else UNRESOLVED, one decision sentence (evasive wording rejected), UNRESOLVED list, conflicting sources shown side by side, stale WBS/milestones/risks/reports |
+| Output in A's format | `validate(output, 'B')` against `schemas/Harbourline_B_Schema.json`; every SourceRef re-verified against the library |
+
+Each attempt runs Planning → Risk → What-if → code checks → Critic; a failed check is fed back
+as `MECHANICAL_CHECK_FAILED` (up to 3 attempts). The trace with each attempt's findings and the
+what-if computation is saved to `.local/member_b_live_trace.json`. All outputs are proposals for
+human review: no approvals, no Jira writes.
+
 ## Run A → B → C using OpenAI B mode
 
 Keep A's existing integration as-is; A calls `refine()` when `--plan-mode live`. In this version, `refine()` regenerates Planning and Risk **from the evidence library**, without giving the deterministic B draft to the model.
