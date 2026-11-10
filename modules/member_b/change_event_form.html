@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Member B · Change Event → Schedule Forecast</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#172b35;background:#f4f3ef}
+body{max-width:980px;margin:2rem auto;padding:0 1rem}
+h1{font-size:1.75rem;margin-bottom:.3rem}p{line-height:1.5}
+.note{background:#eef4f0;padding:.8rem 1rem;border-left:4px solid #508679;border-radius:3px}
+main{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+section{background:white;border:1px solid #dddeda;border-radius:12px;padding:1.3rem;min-width:0}
+label{display:block;font-weight:650;margin:.8rem 0 .25rem;font-size:.93rem}
+input,select,textarea{box-sizing:border-box;width:100%;border:1px solid #9daaaa;border-radius:6px;padding:.62rem;font:inherit;background:white}
+textarea{min-height:88px;resize:vertical}
+button{border:0;background:#226e66;color:white;border-radius:7px;padding:.8rem 1rem;font:inherit;font-weight:650;cursor:pointer}
+button:disabled{opacity:.5;cursor:not-allowed}
+.alt{background:#273b48}
+small{color:#5b696c}
+.actions{display:flex;gap:.6rem;margin-top:1rem;flex-wrap:wrap}
+#output{white-space:pre-wrap;overflow-wrap:anywhere;background:#f2f5f4;padding:1rem;border-radius:8px;min-height:150px}
+dl{display:grid;grid-template-columns:1fr auto;gap:.55rem 1rem}
+dt{color:#4b5c5e}dd{font-weight:700;margin:0;text-align:right}
+.status{font-weight:bold}
+@media(max-width:760px){main{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<h1>Member B · Change Event Analysis</h1>
+<p>Enter a <strong>hypothetical</strong> project change, then let Member B compute its conditional schedule impact using source-backed activity dependencies. This is a local demo, not a Sponsor approval or Jira change.</p>
+<p class="note">Uses Member B's <strong>existing backend OpenAI key</strong>. Never paste a key into this page. Click <strong>Load baseline</strong> first to see verified activity IDs. Activity delay is not automatically the same as whole-project delay.</p>
+<main>
+<section>
+<h2>1 · Forecast baseline</h2>
+<button type="button" class="alt" id="load">Load baseline & activities</button>
+<p><small>The backend reads the previously generated <code>.local/member_b_live_output.json</code>. An incomplete source pack may return UNRESOLVED.</small></p>
+<p id="baseline" aria-live="polite">Baseline not loaded.</p>
+<h2>2 · Input change event</h2>
+<form id="change-form">
+<label for="event-id">Event ID</label>
+<input id="event-id" value="WHATIF-NEW-01" maxlength="80" required>
+<label for="event-type">Change type</label>
+<select id="event-type">
+<option value="ASBESTOS_CONFIRMED">Asbestos works</option>
+<option value="LIFT_DELAY">Lift closure delay</option>
+<option value="CHILDCARE_CHANGE">Childcare handover change</option>
+<option value="GRANT_CHANGE">Grant or approval change</option>
+<option value="OTHER">Other hypothetical change</option>
+</select>
+<label for="description">What happened? / event description</label>
+<textarea id="description" required maxlength="2000" placeholder="e.g. Hypothetically, lift closure is not approved and the works start 8 weeks later."></textarea>
+<label for="activity-id">Affected activity (source-backed ID)</label>
+<select id="activity-id" required><option value="">Load baseline to choose a task</option></select>
+<label for="days">Additional delay (calendar days)</label>
+<input id="days" type="number" min="0" max="3650" step="1" required value="42">
+<small>Enter an explicit assumption. The agent will not invent a duration.</small>
+<label for="cost">Optional extra cost assumption (SGD)</label>
+<input id="cost" type="number" min="0" max="1000000000" step="0.01" placeholder="Unknown — leave blank">
+<small>Cost is stored as a user assumption; it is not an approved estimate or a recalculated budget.</small>
+<label><input id="hypothetical" type="checkbox" style="width:auto" required checked> This is a hypothetical scenario, not an approved change.</label>
+<div class="actions"><button id="run" type="submit" disabled>Analyze change impact</button></div>
+</form>
+</section>
+<section>
+<h2>3 · Results and safeguards</h2>
+<p class="status" id="status" aria-live="polite">Awaiting input</p>
+<dl>
+<dt>Baseline forecast finish</dt><dd id="base-finish">—</dd>
+<dt>Conditional project finish</dt><dd id="changed-finish">—</dd>
+<dt>Entered activity delay</dt><dd id="activity-delay">—</dd>
+<dt>Calculated whole-project shift</dt><dd id="finish-shift">—</dd>
+<dt>Cost assumption (not computed)</dt><dd id="cost-display">Unknown</dd>
+</dl>
+<h3>Calculation details / unresolved inputs</h3>
+<pre id="output" aria-live="polite">No calculation yet.</pre>
+</section>
+</main>
+<script>
+"use strict";
+const el=(id)=>document.getElementById(id);
+const show=(x)=>typeof x==="string"?x:JSON.stringify(x,null,2);
+async function submit(body){
+  const res=await fetch("/v1/schedule-forecast",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+  let output;
+  try{output=await res.json()}catch{throw new Error("Server did not return JSON")}
+  if(!res.ok)throw new Error((output.error||"HTTP "+res.status)+": "+(output.message||output.reason||"Request failed"));
+  return output;
+}
+function present(out, changed){
+  el("status").textContent=out.status+" — "+(out.reason||"");
+  el("output").textContent=show(out.forecast?{
+    critical_activity_ids:out.forecast.critical_activity_ids,
+    external_trigger_float:out.forecast.external_trigger_float,
+    scenario:out.forecast.scenario,
+    limitations:"Source-cited proposed schedule; no baseline approval or Jira write."
+  }:{
+    unresolved:out.proposal?.unresolved,
+    reason:out.reason,
+    missing_evidence:"Provide verified task durations, predecessor links and dated triggers. Unknown stays unknown."
+  });
+  el("base-finish").textContent=out.forecast?.forecast_finish||"Unresolved";
+  el("changed-finish").textContent=out.forecast?.scenario?.conditional_finish||"—";
+  el("activity-delay").textContent=out.forecast?.scenario?.activity_delay_days!=null?out.forecast.scenario.activity_delay_days+" days":"—";
+  el("finish-shift").textContent=out.forecast?.scenario?.project_finish_shift_days!=null?out.forecast.scenario.project_finish_shift_days+" days":"Unresolved";
+  el("cost-display").textContent=changed?.cost_assumption_sgd==null?"Unknown":"S$"+changed.cost_assumption_sgd.toLocaleString();
+}
+el("load").addEventListener("click",async()=>{
+  el("load").disabled=true;el("baseline").textContent="Analyzing source evidence…";
+  try{
+    const out=await submit({});
+    present(out,null);
+    const ids=out.forecast?.activities||[];
+    const select=el("activity-id");
+    select.replaceChildren();
+    const placeholder=new Option("Select a sourced activity","");select.add(placeholder);
+    for(const act of ids){
+      select.add(new Option(act.id+(act.wbs_id?" · WBS "+act.wbs_id:"")+" · float "+act.total_float_days+"d",act.id));
+    }
+    el("run").disabled=ids.length===0;
+    el("baseline").textContent=out.status==="PROPOSED"?
+      "Baseline loaded: "+ids.length+" source-backed activities. Select an activity to apply an illustrative delay.":
+      "Baseline UNRESOLVED — source evidence is insufficient for a defensible network forecast.";
+  }catch(e){
+    el("baseline").textContent="Could not load: "+e.message;el("status").textContent="Failed";
+    el("run").disabled=true;
+  }finally{el("load").disabled=false}
+});
+el("change-form").addEventListener("submit",async(ev)=>{
+  ev.preventDefault();
+  const costText=el("cost").value.trim();
+  const event={
+    event_id:el("event-id").value,
+    change_type:el("event-type").value,
+    description:el("description").value,
+    activity_id:el("activity-id").value,
+    additional_days:Number(el("days").value),
+    cost_assumption_sgd:costText===""?null:Number(costText),
+    hypothetical:el("hypothetical").checked
+  };
+  el("run").disabled=true;el("status").textContent="Calculating…";
+  try{
+    const out=await submit({change_event:event});
+    present(out,event);
+  }catch(e){el("status").textContent="Failed: "+e.message;el("output").textContent="No change was approved or written to Jira."}
+  finally{el("run").disabled=false}
+});
+</script>
+</body></html>

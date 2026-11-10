@@ -34,3 +34,27 @@ def run(request: dict, context: dict) -> dict:
             output[field]=deepcopy(request[field])
         return output
     return run_real(request,context)
+
+
+def forecast(request: dict, context: dict, *, scenario=None, change_event=None, gateway=None) -> dict:
+    """Run the optional B schedule supplement using B's existing key and source library.
+
+    Deliberately separate from run(): the team's strict A/B/C PLAN_RISK
+    exchange contract remains unchanged. No Jira writes or approvals.
+    """
+    import os
+    from harbourline.llm import ModelGateway
+    from harbourline.sources import EvidenceLibrary
+    from .schedule_forecast import generate_forecast
+    library = context.get('evidence_library')
+    if library is None:
+        library = EvidenceLibrary(context.get('evidence_library_path') or
+                                  Path(__file__).resolve().parents[2] / 'data/evidence_library.json')
+    if gateway is None:
+        model = context.get('model') or os.environ.get('OPENAI_MODEL')
+        if not model or not os.environ.get('OPENAI_API_KEY'):
+            raise ValueError('Existing B OPENAI_API_KEY and OPENAI_MODEL are required')
+        gateway = ModelGateway(model=model)
+    return generate_forecast(request,library,gateway,
+            planning=context.get('planning'),risk=context.get('risk'),
+            cutoff=context.get('cutoff'),scenario=scenario,change_event=change_event)
