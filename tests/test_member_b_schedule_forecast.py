@@ -3,7 +3,7 @@ import copy
 import unittest
 from modules.member_b.schedule_forecast import compute_network, generate_forecast
 from modules.member_b.adapter import forecast
-from tests.test_member_b_dynamic_ai import FakeLibrary, request
+from test_member_b_dynamic_ai import FakeLibrary, request
 
 
 REF = {"document_id":"TEST","source_type":"BRIEF","page":1}
