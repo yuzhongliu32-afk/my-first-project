@@ -2,13 +2,13 @@
 
 Not a public endpoint: binds loopback and does not provide authentication.
 POST /v1/plan-risk {request: ..., context: ..., mode: "live"|"rules", model?: ...}
-POST /v1/change-impact {event: ..., planning: ..., risk: ...}
+POST /v1/change-impact {event: ..., planning: ..., risk: ...}\nPOST /v1/schedule-forecast {request: ..., context: {planning?,risk?,cutoff?}, scenario?: ...}
 """
 import argparse
 import json
 import os
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-from .adapter import run
+from .adapter import run, forecast
 from .change import analyse_change
 
 MAX_BODY=5*1024*1024
@@ -27,7 +27,7 @@ class MemberBHTTPHandler(BaseHTTPRequestHandler):
         if self.path=='/health':self.send(200,{'service':'member-b','status':'ok','modes':['rules','live']})
         else:self.send(404,{'error':'unknown path'})
     def do_POST(self):
-        if self.path not in ('/v1/plan-risk','/v1/change-impact'):
+        if self.path not in ('/v1/plan-risk','/v1/change-impact','/v1/schedule-forecast'):
             self.send(404,{'error':'unknown path'});return
         try:
             length=int(self.headers.get('Content-Length','-1'))
@@ -36,6 +36,14 @@ class MemberBHTTPHandler(BaseHTTPRequestHandler):
             if not isinstance(body,dict):raise ValueError('Body must be JSON object')
             if self.path=='/v1/change-impact':
                 out=analyse_change(body['event'],body['planning'],body['risk'])
+            elif self.path=='/v1/schedule-forecast':
+                if not os.getenv('OPENAI_API_KEY') or not (body.get('model') or os.getenv('OPENAI_MODEL')):
+                    self.send(503,{'error':'LIVE_MODEL_NOT_CONFIGURED','message':'Existing B OPENAI_API_KEY and OPENAI_MODEL required'})
+                    return
+                context=body.get('context',{}).copy()
+                if body.get('model'):context['model']=body['model']
+                if body.get('cutoff'):context['cutoff']=body['cutoff']
+                out=forecast(body['request'],context,scenario=body.get('scenario'))
             else:
                 context=body.get('context',{}).copy()
                 context['mode']=body.get('mode','rules')
