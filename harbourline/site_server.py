@@ -86,9 +86,11 @@ def recorded_runs():
     runs = []
     for f in sorted(RECORDED.glob('api-*.json')):
         try:
-            runs.append(json.loads(f.read_text(encoding='utf-8')))
+            run = json.loads(f.read_text(encoding='utf-8'))
         except (ValueError, OSError):
             continue
+        run['published'] = True  # the page opens on this verified run when no result is chosen
+        runs.append(run)
     return runs
 
 
@@ -430,8 +432,13 @@ class Handler(BaseHTTPRequestHandler):
                     runs.append(json.loads(f.read_text(encoding='utf-8')))
                 except (ValueError, OSError):
                     continue
+            published = recorded_runs()
+            ids = {r.get('id') for r in published}
+            for r in runs:  # a local copy of a published run keeps the published mark
+                if r.get('id') in ids:
+                    r['published'] = True
             seen = {r.get('id') for r in runs}
-            runs = [r for r in recorded_runs() if r.get('id') not in seen] + runs
+            runs = [r for r in published if r.get('id') not in seen] + runs
             if self.state.db and self.state.db.exists():
                 try:  # show the current approvals, Jira writes, readbacks and incidents for each run
                     with governance_store(self.state.db) as store:

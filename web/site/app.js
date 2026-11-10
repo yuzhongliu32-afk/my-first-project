@@ -104,6 +104,8 @@ async function loadLocalRuns(){
     // A shared link (#view=...&run=...) may name a run that only arrives with this list: open it now.
     const link=new URLSearchParams(BOOT_HASH.slice(1)),want=link.get('run');
     if(want&&S.liveRuns[want]&&S.record?.id!==want){if(VIEWS.includes(link.get('view')))S.view=link.get('view');loadRecord(want);}
+    // No result chosen yet: open the published verified agent run instead of the original 20-item template.
+    else if(!want&&!S.record&&!S.busy){const pub=(d.runs||[]).find(r=>r.published&&S.liveRuns[r.id]);if(pub)loadRecord(pub.id);}
   }catch{}
 }
 const BOOT_HASH=location.hash;
