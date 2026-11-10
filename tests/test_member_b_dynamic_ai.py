@@ -109,6 +109,21 @@ class DynamicAgentTests(unittest.TestCase):
     def test_critic_escalation_blocked(self):
         with self.assertRaisesRegex(ValueError,'did not PASS'):
             generate(request(),FakeLibrary(),MockGateway(critic='ESCALATE'))
+    def test_mechanical_failure_is_fed_back_and_corrected(self):
+        class FixesOnSecondTry(MockGateway):
+            def ask(self,name,shape,instructions,payload):
+                attempt=sum(1 for n,_ in self.calls if n=='harbourline_b_risk')
+                self.wrong_citation = name=='harbourline_b_risk' and attempt==0
+                return super().ask(name,shape,instructions,payload)
+        g=FixesOnSecondTry()
+        out=generate(request(),FakeLibrary(),g,max_rounds=2)
+        names=[x[0] for x in g.calls]
+        # Attempt 1 fails the code checks, so its Critic call is skipped.
+        self.assertEqual(names,['harbourline_b_planning','harbourline_b_risk',
+                                'harbourline_b_planning','harbourline_b_risk','harbourline_b_critic'])
+        second_planning_payload=g.calls[2][1]
+        self.assertIn('MECHANICAL_CHECK_FAILED',' '.join(second_planning_payload['prior_findings']))
+        self.assertEqual(out['status'],'PARTIAL')
     def test_missing_evidence_blocks(self):
         lib=FakeLibrary();lib.documents=[]
         with self.assertRaisesRegex(ValueError,'library is empty'):

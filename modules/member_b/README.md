@@ -35,6 +35,28 @@ python -m modules.member_b.live_demo --model "<valid OpenAI model ID>" --cutoff 
 
 Output: `.local/member_b_live_output.json`. Check `metrics.api_calls`, token metrics, structure and citations. No real AI success is claimed unless an actual provider request succeeds.
 
+### Using your own key from a local .env (Windows or macOS)
+
+1. Copy `.env.example` to `.env` in the repository root. `.env` is already in `.gitignore`; never commit it.
+2. Fill in only `OPENAI_API_KEY=` and `OPENAI_MODEL=` (a model ID your key can use).
+3. Build the evidence library once (brief + zipped data pack):
+   `python scripts/prepare_evidence.py --brief "<brief.pdf>" --pack "<Harbourline_Data_Pack.zip>"`
+4. Run B on its own: `python -m modules.member_b.live_demo --env-file .env`
+
+`--env-file` loads only the OpenAI settings, never overrides variables already set, and prints
+the variable names it loaded, never their values. Without `--cutoff`, all catalogued lines are
+eligible; with `--cutoff`, lines without verified availability dates are excluded, so supply
+`--metadata` to `prepare_evidence.py` first or very little evidence remains.
+
+### Agent loop
+
+Each attempt runs Planning → Risk → mechanical checks → independent Critic. If the mechanical
+checks fail (unknown citation ID, broken WBS parent, score ≠ P × I, dependency cycle), the
+failure is fed back to Planning and Risk as `MECHANICAL_CHECK_FAILED` on the next attempt and
+that attempt's Critic call is skipped. A Critic `REVISE` is fed back the same way; `ESCALATE`
+stops. Nothing is returned unless both the code checks and the Critic pass. Attempts are capped
+by `max_review_rounds` (at most 3, each up to 3 calls).
+
 ## Run A → B → C using OpenAI B mode
 
 Keep A's existing integration as-is; A calls `refine()` when `--plan-mode live`. In this version, `refine()` regenerates Planning and Risk **from the evidence library**, without giving the deterministic B draft to the model.

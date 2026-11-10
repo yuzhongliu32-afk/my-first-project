@@ -7,6 +7,7 @@ import argparse
 import json
 from pathlib import Path
 from .adapter import forecast
+from .env_file import load_env_file
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -19,6 +20,7 @@ def main():
                         default=ROOT / "data/evidence_library.json")
     parser.add_argument("--cutoff", help="Evidence as-of date YYYY-MM-DD")
     parser.add_argument("--model", help="Override configured OPENAI_MODEL")
+    parser.add_argument("--env-file", type=Path, help="Local .env with OPENAI_API_KEY/OPENAI_MODEL; never commit it")
     parser.add_argument("--activity-id", help="Activity ID to delay in scenario")
     parser.add_argument("--additional-days", type=int, help="Conditional calendar-day delay")
     parser.add_argument("--scenario-id", default="USER-ILLUSTRATIVE")
@@ -27,6 +29,8 @@ def main():
     parser.add_argument("--out", type=Path,
                         default=ROOT / ".local/member_b_schedule_output.json")
     args = parser.parse_args()
+    if args.env_file:
+        print(json.dumps({"env_file_loaded": load_env_file(args.env_file)}))  # names only
     if args.change_event is not None and (args.activity_id is not None or args.additional_days is not None):
         parser.error("Use --change-event OR --activity-id / --additional-days")
     if (args.activity_id is None) != (args.additional_days is None):

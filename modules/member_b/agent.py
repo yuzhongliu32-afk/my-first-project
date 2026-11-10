@@ -269,8 +269,16 @@ def generate(request, library, gateway, *, cutoff=None, max_rounds=2) -> dict:
             {'context':context,'evidence':evidence,'planning':planning,
              'prior_findings':findings,'previous_attempt':risk})
         risk = rr['risk']
-        expanded_plan, expanded_risk = _expand(planning,catalog),_expand(risk,catalog)
-        _check_model_bundles(expanded_plan,expanded_risk,catalog)
+        try:
+            expanded_plan, expanded_risk = _expand(planning,catalog),_expand(risk,catalog)
+            _check_model_bundles(expanded_plan,expanded_risk,catalog)
+        except ValueError as exc:
+            # Observe -> correct: a structural or citation failure is fed back to the
+            # Planning and Risk roles on the next attempt instead of ending the run.
+            # The model Critic is skipped for a draft that already failed the code checks.
+            findings = [f'MECHANICAL_CHECK_FAILED: {exc}. Fix this and keep every other '
+                        'rule; cite only catalogued evidence IDs.']
+            continue
         critique = gateway.ask('harbourline_b_critic',_review_schema(),
             RULES + ' You are an INDEPENDENT CRITIC, not the author. Review planning and risks '
             'against actual quoted evidence. Find gaps, factual inventions, missing sponsor questions, '
@@ -302,8 +310,8 @@ def generate(request, library, gateway, *, cutoff=None, max_rounds=2) -> dict:
             return output
         findings = critique['findings'] or ['Critic rejected the draft']
         if critique['verdict']=='ESCALATE':break
-    raise ValueError('Independent B Critic did not PASS; no unverified output returned. '
-                     + '; '.join(findings[:6]))
+    raise ValueError('B draft did not PASS both the mechanical checks and the independent '
+                     'Critic; no unverified output returned. ' + '; '.join(findings[:6]))
 
 
 def refine(b_output, library, gateway):
