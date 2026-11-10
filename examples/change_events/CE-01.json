@@ -1,0 +1,8 @@
+{
+  "event_id": "CE-01",
+  "change_type": "GRANT_ELIGIBILITY_RULING",
+  "issued": "2027-04-06",
+  "source_note": "MA6094 Week 12 change-event memo (fictional course scenario). Record the ruling as a source document before treating it as a project fact.",
+  "description": "The grant body has confirmed in writing that asbestos removal and associated works will not be accepted as eligible cost under the grant. The contractor's variation for these works, as tabled at the March committee meeting, stands as submitted. No change to the programme has been agreed.",
+  "hypothetical": false
+}

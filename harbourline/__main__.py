@@ -23,14 +23,14 @@ def main():
             check_schemas()
             print("PASS: all five contracts meet Draft 2020-12 meta-schema")
         elif args.command == "validate":
-            validate(json.loads(args.path.read_text()), args.role)
+            validate(json.loads(args.path.read_text(encoding='utf-8')), args.role)
             print("PASS: structural and implemented cross-field checks; source verification is separate")
         else:
             def load(spec):
                 module, function = spec.split(":")
                 return getattr(importlib.import_module(module), function)
-            common = json.loads(Path("examples/request.json").read_text())
-            source = json.loads(Path("examples/source_registry.json").read_text())
+            common = json.loads(Path("examples/request.json").read_text(encoding='utf-8'))
+            source = json.loads(Path("examples/source_registry.json").read_text(encoding='utf-8'))
             docs = {(x["document_id"], x["version"]): x["lines"] for x in source}
             result, trace = run_handoff(common, load(args.b), load(args.c), docs)
             args.out.mkdir(parents=True, exist_ok=True)
