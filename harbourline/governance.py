@@ -94,6 +94,9 @@ class GovernanceStore:
                 self.db.execute("UPDATE batches SET state='INVALIDATED' WHERE run_id=? AND state IN ('PENDING','APPROVED')",(run_id,))
             self.db.execute('INSERT OR REPLACE INTO artifacts(run_id,snapshot,version,data,stale,mode) VALUES(?,?,?,?,0,?)',(run_id,full['source_snapshot_id'],version,json.dumps(full),mode))
             self._audit('ARTIFACT_SAVED',{'run_id':run_id,'version':version,'snapshot':full['source_snapshot_id']})
+            for check in full.get('governance',{}).get('fairness_checks',[]):
+                self._audit('FAIRNESS_CHECK_RECORDED',{'run_id':run_id,'check_id':check['check_id'],
+                            'groups':check['groups_considered'],'findings':len(check['findings'])})
         return version
 
     def artifact(self,run_id):
@@ -115,6 +118,34 @@ class GovernanceStore:
         """Log a verified read-only Jira readback (Brief: start read-only; the read path is logged)."""
         with self.transaction():
             self._audit('JIRA_READ_VERIFIED',{'run_id':run_id,'target':target,'summary':summary})
+
+    def resolve_incident(self,incident_id,corrective_action):
+        """A human records what was changed in response to an incident (Deliverable 4)."""
+        if not corrective_action or not corrective_action.strip():raise GateError('Describe the corrective action')
+        with self.transaction():
+            self._audit('INCIDENT_RESOLVED',{'incident_id':incident_id,'corrective_action':corrective_action.strip()})
+
+    def incidents(self,run_id,full,events=None):
+        """Incidents for a run, derived from the audit chain and the run outcome (never invented)."""
+        events=self.audit() if events is None else events
+        batches={r['id'] for r in self.db.execute('SELECT id FROM batches WHERE run_id=?',(run_id,))}
+        found=[]
+        for e in events:
+            d=e['detail']
+            if e['event'] in ('EXECUTION_FAILED','EXECUTION_BLOCKED') and d.get('batch_id') in batches:
+                found.append(('INC-'+d['batch_id']+'-'+e['event'],
+                              f"{e['event']} for approved batch {d['batch_id']} at {e['time']}"
+                              + (f" ({d.get('error_type')})" if d.get('error_type') else '')))
+        for err in full.get('errors',[]):
+            if err.get('code','').endswith('_BLOCKED') or err.get('code') in ('LIVE_AGENT_FAILED',):
+                found.append((f"INC-{run_id}-{err['code']}",f"{err['code']}: {err.get('message','')}"))
+        for r in full.get('reporting',{}).get('reports',[]):
+            if r.get('status')=='BLOCKED':
+                found.append((f"INC-{run_id}-{r.get('report_type')}-STOPPED",
+                              f"Critic stopped the {r.get('report_type')} report before human review (stop condition)."))
+        resolved={e['detail']['incident_id']:e['detail']['corrective_action'] for e in events if e['event']=='INCIDENT_RESOLVED'}
+        return [{'incident_id':i,'description':text,'status':'RESOLVED' if i in resolved else 'OPEN',
+                 'corrective_action':resolved.get(i),'related_run_id':run_id} for i,text in dict(found).items()]
 
     def batch(self,bid):
         row=self.db.execute('SELECT * FROM batches WHERE id=?',(bid,)).fetchone()
@@ -215,6 +246,7 @@ class GovernanceStore:
                     'outcome':'SUCCESS' if e['event'] in ('JIRA_READBACK_VERIFIED','EXECUTION_VERIFIED') else ('BLOCKED' if e['event']=='EXECUTION_BLOCKED' else 'FAILED'),
                     'before_hash':None,'after_hash':e['detail'].get('hash'),'details':e['event']+'; '+b['target']})
         full['governance']['approvals']=approvals;full['governance']['audit_entries']=entries
+        full['governance']['incidents']=self.incidents(run_id,full,events)
         full['integration']['jira_actions']=actions
         project_keys={b['target'].split('#')[-1] for b in (self.batch(r['id']) for r in rows) if b['kind']=='JIRA_WRITE'}
         full['integration']['jira_project_key']=next(iter(project_keys)) if len(project_keys)==1 else None

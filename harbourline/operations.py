@@ -40,6 +40,7 @@ def main():
     run.add_argument('--semantic-index',type=Path);run.add_argument('--pack-dir',type=Path);run.add_argument('--scripted-test',action='store_true')
     run.add_argument('--out',type=Path,default=Path('.local/integrated_run'))
     preview=sub.add_parser('jira-preview');preview.add_argument('run_id');preview.add_argument('--out',type=Path,default=Path('.local/jira_preview.json'))
+    incident=sub.add_parser('incident-resolve');incident.add_argument('incident_id');incident.add_argument('--action',required=True)
     board=sub.add_parser('jira-read');board.add_argument('run_id');board.add_argument('--out',type=Path,default=Path('.local/jira_board.json'))
     approve=sub.add_parser('approve');approve.add_argument('batch_id');approve.add_argument('--confirm-hash',required=True)
     approve.add_argument('--decision',choices=['APPROVED','REJECTED'],default='APPROVED')
@@ -77,6 +78,8 @@ def main():
             jira=client(store);payload=plan_actions(full,jira)
             batch=store.propose(a.run_id,'JIRA_WRITE',jira.target,payload);write(a.out,batch)
             print(json.dumps({'batch_id':batch['id'],'review_hash':batch['hash'],'preview':str(a.out)}))
+        elif a.command=='incident-resolve':
+            store.resolve_incident(a.incident_id,a.action);print(json.dumps({'incident_id':a.incident_id,'status':'RESOLVED'}))
         elif a.command=='jira-read':
             # Read-only: compares the plan (WBS, milestones, risks, links) with the Jira board.
             row,full=store.artifact(a.run_id)

@@ -72,5 +72,10 @@ def run_project(common,library_path,*,cutoff,plan_mode='rules',b_context=None,c_
     a=empty_backend(request);a['integration']['handoff_completed']=include_reports
     a['integration']['handoff_trace_ids']=[r['trace_id'] for r in trace]
     full=aggregate(a,b,c);full['metrics']['elapsed_seconds']=monotonic()-started
+    from .fairness import fairness_check
+    fairness=fairness_check(lib)
+    if fairness:
+        full['governance']['fairness_checks']=[fairness]
+        record('FAIRNESS_CHECK_RECORDED',fairness)
     validate(full,'Full',expected_producer='A')
     return full,trace
