@@ -32,9 +32,11 @@ Environment variables (Render dashboard, never in the repository):
 | `OPENAI_TIMEOUT_SECONDS` | e.g. `180` |
 | `MEMBER_B_ACCESS_CODE` | presentation access code for the run buttons |
 | `SITE_MAX_RUNS` | cap on OpenAI runs per server start, e.g. `5` |
+| `HARBOURLINE_DATA_PACK_DIR` | `/etc/secrets/pack_sources.json` |
 
-Secret files (course material, kept out of the repository): `evidence_library.json` and
-`brief_source_registry.json`, built locally by `scripts/prepare_evidence.py`.
+Secret files (course material, kept out of the repository): `evidence_library.json`,
+`brief_source_registry.json` (built by `scripts/prepare_evidence.py`) and `pack_sources.json`
+(built by `scripts/export_pack_bundle.py`; B reads the Data Pack from it). `/api/status` → `checks` shows each loads.
 
 The cloud copy does not hold Jira credentials. It shows the verified run and Jira read-back
 published in `web/site/data/recorded/` (exported with `scripts/publish_recorded_run.py`).

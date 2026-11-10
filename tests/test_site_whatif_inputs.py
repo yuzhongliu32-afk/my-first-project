@@ -94,3 +94,23 @@ class CloudDeployment(unittest.TestCase):
         for f in RECORDED.glob('*.json'):
             text = f.read_text(encoding='utf-8')
             self.assertIsNone(re.search(r'sk-[A-Za-z0-9_-]{20,}|ATATT[A-Za-z0-9_=-]{20,}|@gmail\.com', text), f.name)
+
+
+class PackBundle(unittest.TestCase):
+    def test_bundle_round_trip_gives_the_same_sources(self):
+        import tempfile
+        from pathlib import Path
+        from modules.member_b.data_pack import load_pack_sources, resolve_pack_dir
+        root = Path(__file__).resolve().parents[1]
+        folder = resolve_pack_dir(root, {})
+        if not folder.is_dir():
+            self.skipTest('Data Pack folder not present (course material is not in the repository)')
+        import subprocess, sys
+        with tempfile.TemporaryDirectory() as d:
+            out = Path(d) / 'pack.json'
+            subprocess.run([sys.executable, str(root / 'scripts/export_pack_bundle.py'), '--pack', str(folder), '--out', str(out)],
+                           check=True, capture_output=True)
+            a, b = load_pack_sources(folder), load_pack_sources(out)
+            self.assertEqual(a.keys(), b.keys())
+            for k in a:
+                self.assertEqual((a[k]['lines'], a[k]['sha256'], a[k]['page']), (b[k]['lines'], b[k]['sha256'], b[k]['page']))

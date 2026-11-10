@@ -5,6 +5,8 @@ Jira writes, sponsor approval, or fabricated certainty. Original seed rows stay
 traceable, even if subsequently contradicted; proposed responses are advice.
 """
 import csv
+import io
+import json
 import hashlib
 import os
 from copy import deepcopy
@@ -36,7 +38,17 @@ def resolve_pack_dir(root: Path, context: dict) -> Path:
 
 
 def load_pack_sources(pack_dir: Path) -> dict:
-    """Documents indexed by (id, content version). Re-reads physical source lines."""
+    """Documents indexed by (id, content version). Re-reads physical source lines.
+
+    pack_dir may also be a JSON bundle written by scripts/export_pack_bundle.py (the same extracted
+    lines plus each original file's sha256), for hosts where the PDF/CSV originals cannot be placed.
+    """
+    if pack_dir.suffix.lower() == ".json" and pack_dir.is_file():
+        bundle = json.loads(pack_dir.read_text(encoding="utf-8"))
+        if bundle.get("pack_version") != PACK_VERSION or set(bundle["documents"]) != set(FILES):
+            raise ValueError("Data Pack bundle does not match this pack version")
+        return {(doc_id, PACK_VERSION): {**doc, "document_id": doc_id, "version": PACK_VERSION}
+                for doc_id, doc in bundle["documents"].items()}
     if not pack_dir.is_dir():
         raise FileNotFoundError(f"Data Pack directory missing: {pack_dir}")
     result = {}
@@ -188,9 +200,13 @@ def update_plan_and_risks(planning_in: dict, risk_in: dict, sources: dict, pack_
     # Historical register: retain ALL inherited IDs and input provenance; never
     # silently 'correct' a conflicting row or turn a realised incident into forecast.
     risk_path=pack_dir / FILES["PACK-SEED-RISK"]
-    with risk_path.open(encoding="utf-8-sig",newline="") as f:
-        f.readline()  # an explanatory one-line comment precedes CSV header
-        seed=list(csv.DictReader(f))
+    if pack_dir.suffix.lower()==".json":  # bundle: the same file lines as load_pack_sources read them
+        seed_lines=sources[("PACK-SEED-RISK",PACK_VERSION)]["lines"]
+        seed=list(csv.DictReader(io.StringIO("\n".join(seed_lines[1:]))))
+    else:
+        with risk_path.open(encoding="utf-8-sig",newline="") as f:
+            f.readline()  # an explanatory one-line comment precedes CSV header
+            seed=list(csv.DictReader(f))
 
     mapping = {
         "R01":(["1.4.3"],["M11","M12","M13"],"Grant eligible costs capped at S$17m, maximum S$10.2m; prior listed owner left Council."),

@@ -403,6 +403,11 @@ class Handler(BaseHTTPRequestHandler):
             checks['sources'] = f'OK {len(rows)} records'
         except Exception as exc:
             checks['sources'] = f'FAILED {type(exc).__name__}: {str(exc)[:160]}'
+        try:
+            from modules.member_b.data_pack import load_pack_sources, resolve_pack_dir
+            checks['data_pack'] = f'OK {len(load_pack_sources(resolve_pack_dir(ROOT, {})))} files'
+        except Exception as exc:
+            checks['data_pack'] = f'FAILED {type(exc).__name__}: {str(exc)[:160]}'
         cap = int(os.getenv('SITE_MAX_RUNS', '0') or 0)
         checks['paid_runs_used'] = self.state.paid_runs
         checks['paid_runs_cap'] = cap or None
