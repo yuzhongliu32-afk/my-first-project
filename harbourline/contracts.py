@@ -15,7 +15,7 @@ class ContractError(ValueError):
 def schema(role):
     if role not in ROLES:
         raise ContractError("Unknown contract role")
-    return json.loads((ROOT / "schemas" / f"Harbourline_{role}_Schema.json").read_text())
+    return json.loads((ROOT / "schemas" / f"Harbourline_{role}_Schema.json").read_text(encoding='utf-8'))
 
 
 def check_schemas():

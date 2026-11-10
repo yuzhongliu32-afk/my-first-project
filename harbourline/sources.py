@@ -88,7 +88,7 @@ class EvidenceLibrary:
 
     def semantic_search(self,query,cutoff,limit,gateway):
         if gateway is None:raise ValueError('Semantic retrieval requires a model gateway')
-        index=json.loads(Path(self.semantic_path).read_text())
+        index=json.loads(Path(self.semantic_path).read_text(encoding='utf-8'))
         if index['source_snapshot_id']!=self.snapshot:raise ValueError('Semantic index is stale; rebuild it')
         eligible=[]
         for chunk in index['chunks']:

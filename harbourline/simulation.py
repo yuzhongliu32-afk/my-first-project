@@ -26,5 +26,8 @@ class ScriptedModel:
         if name=='harbourline_revision':
             return {'sections':[{'section_id':s['section_id'],'text':'Revised scripted test: '+s['text']} for s in payload['report']['sections']],
                     'open_issues':payload['report']['open_issues'],'assumptions':payload['report']['assumptions']}
-        if name=='harbourline_planning_risk':return {'planning':payload['preliminary_plan'],'risk':payload['preliminary_risk']}
+        if name=='harbourline_planning_risk':
+            if 'preliminary_plan' in payload:
+                return {'planning':payload['preliminary_plan'],'risk':payload['preliminary_risk']}
+            return {'wbs_updates': [], 'risk_updates': []}
         raise ValueError('Unknown scripted model task')

@@ -1,0 +1,256 @@
+{
+  "run_id": "B-LIVE-af3b24c3-9688-4f33-b47a-49c3b518a2c9",
+  "started_at": "2026-11-10T17:35:32.094229+00:00",
+  "model": "gpt-6-luna",
+  "attempts": [
+    {
+      "round": 1,
+      "stage": "Planning",
+      "try": 1,
+      "result": "PASSED",
+      "findings": []
+    },
+    {
+      "round": 1,
+      "stage": "Risk",
+      "try": 1,
+      "result": "PASSED",
+      "findings": []
+    },
+    {
+      "round": 1,
+      "stage": "What-if",
+      "try": 1,
+      "result": "PASSED",
+      "findings": []
+    },
+    {
+      "round": 1,
+      "stage": "Critic",
+      "try": 1,
+      "result": "CRITIC_PASS",
+      "findings": [],
+      "notes": [
+        "The draft appropriately keeps closure, garden, budget allocation, and programme questions open rather than inventing Sponsor answers; OPEN questions with null answers and UNRESOLVED items are appropriate.",
+        "The March progress report was issued on 6 April but reports March progress, so its use for the reporting period ending 31 March is not cutoff contamination. The report’s date and reporting period should remain clear in any downstream status summary. [E358,E359,E361,E363]",
+        "Retain the distinctions between approved budget, contract sum, grant-eligible cost cap, and unapproved contingency/allocation. The evidence does not establish a final funding allocation or garden strengthening cost. [E019,E079,E081,E082,E083,E084,E232,E236,E143]",
+        "The risk ratings are arithmetically consistent with the stated P×I scores. Proposed risk owners are explicitly labelled as proposed where not evidenced, which is appropriate.",
+        "The three-point ranges in WF01 and WF02 are supported as scenario assumptions by cited contractor estimates; they remain unapproved estimates, not forecasts. The underlying P50/P80 calculations are reported as code-derived rather than sourced facts, so a human reviewer may want to verify the calculation method and outputs.",
+        "M10: The title conflates practical completion with the Hub being fully open, but the evidence does not establish that these are the same milestone. Keep the conflicting practical-completion dates and the brief’s fully-open target distinct until reconciled; do not present practical completion as proof of full reopening.",
+        "1.5.2: The WBS makes the garden delivery/deferral decision a successor to roof assessment and instruction. That sequence is not supported and may reverse the decision dependency: the evidence records that garden disposition is undecided and that KHB awaits instruction before pricing strengthening. Do not make a garden decision dependent on the instruction/pricing step without evidence; show the dependency as unresolved or sequence the decision before any conditional instruction."
+      ]
+    }
+  ],
+  "auto_flags": [],
+  "whatif": [
+    {
+      "scenario_id": "WF01",
+      "title": "Proposed: confirmed asbestos removal and critical-path effect",
+      "description": "Model the sourced removal estimate and schedule impact for the confirmed chrysotile issue in the level 2 west wing. This is a confirmed issue, not a future-probability event; the removal sequence and variation remain unresolved.",
+      "assumptions": [
+        "KHB’s cited removal estimate is used as the range for this proposed scenario; it is not an approved variation or forecast. [E383,E384]",
+        "The schedule element represents the cited removal duration and critical-path effect through level 2 M&E risers. [E383,E384]"
+      ],
+      "unresolved": [
+        "Removal sequence is not yet agreed and the variation is to be submitted; no approved cost or schedule forecast is evidenced. [E159,E400]"
+      ],
+      "affected_wbs_ids": [
+        "1.6.1",
+        "1.7.1"
+      ],
+      "affected_risk_ids": [
+        "R01"
+      ],
+      "elements": [
+        {
+          "element_id": "WF01-COST",
+          "label": "Asbestos removal estimate",
+          "kind": "COST",
+          "unit": "SGD_THOUSANDS",
+          "optimistic": 350,
+          "most_likely": 475,
+          "pessimistic": 600,
+          "reason_optimistic": "Lower end of the cited S$0.35–0.60 million estimate. [E383]",
+          "reason_most_likely": "midpoint of the cited range",
+          "reason_pessimistic": "Upper end of the cited S$0.35–0.60 million estimate. [E383]",
+          "on_critical_path": false,
+          "pert_mean": 475.0,
+          "sigma": 41.67,
+          "source_refs": [
+            {
+              "document_id": "PACK-MAR-PROGRESS",
+              "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+              "source_type": "DATA_PACK",
+              "page": 1,
+              "line_start": 26,
+              "line_end": 26,
+              "chunk_id": "PACK-MAR-PROGRESS:26-26",
+              "quote": " Asbestos (chrysotile) confirmed. Licensed removal contractor required; estimate S$0.35–0.60M, 4–6 weeks."
+            },
+            {
+              "document_id": "PACK-MAR-PROGRESS",
+              "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+              "source_type": "DATA_PACK",
+              "page": 1,
+              "line_start": 27,
+              "line_end": 27,
+              "chunk_id": "PACK-MAR-PROGRESS:27-27",
+              "quote": "Variation to be submitted. Critical path affected via level 2 M&E risers."
+            }
+          ]
+        },
+        {
+          "element_id": "WF01-SCHEDULE",
+          "label": "Asbestos removal duration affecting completion in series",
+          "kind": "SCHEDULE",
+          "unit": "WEEKS",
+          "optimistic": 4,
+          "most_likely": 5,
+          "pessimistic": 6,
+          "reason_optimistic": "Lower end of the cited 4–6-week removal estimate. [E383]",
+          "reason_most_likely": "midpoint of the cited range",
+          "reason_pessimistic": "Upper end of the cited 4–6-week removal estimate; report identifies the critical path through level 2 M&E risers. [E383,E384]",
+          "on_critical_path": true,
+          "pert_mean": 5.0,
+          "sigma": 0.33,
+          "source_refs": [
+            {
+              "document_id": "PACK-MAR-PROGRESS",
+              "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+              "source_type": "DATA_PACK",
+              "page": 1,
+              "line_start": 26,
+              "line_end": 26,
+              "chunk_id": "PACK-MAR-PROGRESS:26-26",
+              "quote": " Asbestos (chrysotile) confirmed. Licensed removal contractor required; estimate S$0.35–0.60M, 4–6 weeks."
+            },
+            {
+              "document_id": "PACK-MAR-PROGRESS",
+              "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+              "source_type": "DATA_PACK",
+              "page": 1,
+              "line_start": 27,
+              "line_end": 27,
+              "chunk_id": "PACK-MAR-PROGRESS:27-27",
+              "quote": "Variation to be submitted. Critical path affected via level 2 M&E risers."
+            }
+          ]
+        }
+      ],
+      "cost_sgd_k": {
+        "draws": 10000,
+        "method": "PERT-beta Monte Carlo, independent elements, summed",
+        "pert_mean_total": 475.0,
+        "combined_sigma": 41.67,
+        "p50": 476.46,
+        "p80": 520.5,
+        "min": 356.79,
+        "max": 595.18
+      },
+      "schedule_weeks": {
+        "draws": 10000,
+        "method": "PERT-beta Monte Carlo, independent elements, summed",
+        "pert_mean_total": 5.0,
+        "combined_sigma": 0.33,
+        "p50": 5.0,
+        "p80": 5.35,
+        "min": 4.05,
+        "max": 5.97
+      }
+    },
+    {
+      "scenario_id": "WF02",
+      "title": "Proposed: lift works cannot start as planned pending closure decision",
+      "description": "Model the contractor-reported schedule delay if lift works cannot start in June 2027 because facility closures have not been accepted. The closure decision and compliant access arrangement remain unresolved; this is not an approved completion forecast.",
+      "assumptions": [
+        "KHB’s reported 6–8-week delay estimate is used as a range, not as an approved forecast. [E386]",
+        "The cited delay is treated as affecting completion in series because KHB identifies it as delay if lift works cannot start in June. [E386]"
+      ],
+      "unresolved": [
+        "Council has not accepted the proposed closures; the access-compliant phasing decision and any alternative access arrangement are not recorded. [E117,E214,E255,E256,E467]",
+        "The governing completion date remains unreconciled; this scenario does not select among the conflicting dates. [E067,E125,E128,E129,E146]"
+      ],
+      "affected_wbs_ids": [
+        "1.6.2",
+        "1.7.1"
+      ],
+      "affected_risk_ids": [
+        "R02",
+        "R03",
+        "R08"
+      ],
+      "elements": [
+        {
+          "element_id": "WF02-SCHEDULE",
+          "label": "Delay if lift works cannot start in June 2027",
+          "kind": "SCHEDULE",
+          "unit": "WEEKS",
+          "optimistic": 6,
+          "most_likely": 7,
+          "pessimistic": 8,
+          "reason_optimistic": "Lower end of KHB’s cited 6–8-week delay estimate. [E386]",
+          "reason_most_likely": "midpoint of the cited range",
+          "reason_pessimistic": "Upper end of KHB’s cited 6–8-week delay estimate. [E386]",
+          "on_critical_path": true,
+          "pert_mean": 7.0,
+          "sigma": 0.33,
+          "source_refs": [
+            {
+              "document_id": "PACK-MAR-PROGRESS",
+              "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+              "source_type": "DATA_PACK",
+              "page": 1,
+              "line_start": 29,
+              "line_end": 29,
+              "chunk_id": "PACK-MAR-PROGRESS:29-29",
+              "quote": " Closures still not accepted by Council. KHB estimates 6–8 weeks of delay if lift works cannot start June 2027."
+            }
+          ]
+        }
+      ],
+      "cost_sgd_k": null,
+      "schedule_weeks": {
+        "draws": 10000,
+        "method": "PERT-beta Monte Carlo, independent elements, summed",
+        "pert_mean_total": 7.0,
+        "combined_sigma": 0.33,
+        "p50": 6.99,
+        "p80": 7.34,
+        "min": 6.06,
+        "max": 7.95
+      }
+    },
+    {
+      "scenario_id": "WF03",
+      "title": "Proposed: active ageing operator agreement dependency for grant Tranche 2",
+      "description": "Consider the effect of the unresolved active ageing operator procurement and signed-agreement dependency on Tranche 2 readiness. The EOI received one response against a three-response procurement requirement and was extended; no appointment date is confirmed. No sourced duration or cost is available for quantifying this scenario.",
+      "assumptions": [
+        "The signed operator agreements for all social service spaces are a Tranche 2 release condition. [E241,E242]",
+        "No appointment date, delay duration, or cost is assumed. [E133,E151,E152,E153,E461]"
+      ],
+      "unresolved": [
+        "No sourced cost or schedule duration quantifies the effect of delayed procurement or agreement signing. [E133,E151,E152,E153,E461]"
+      ],
+      "affected_wbs_ids": [
+        "1.3.2",
+        "1.8.1"
+      ],
+      "affected_risk_ids": [
+        "R04"
+      ],
+      "elements": [],
+      "cost_sgd_k": null,
+      "schedule_weeks": null
+    }
+  ],
+  "critic_notes": [
+    "The draft appropriately keeps closure, garden, budget allocation, and programme questions open rather than inventing Sponsor answers; OPEN questions with null answers and UNRESOLVED items are appropriate.",
+    "The March progress report was issued on 6 April but reports March progress, so its use for the reporting period ending 31 March is not cutoff contamination. The report’s date and reporting period should remain clear in any downstream status summary. [E358,E359,E361,E363]",
+    "Retain the distinctions between approved budget, contract sum, grant-eligible cost cap, and unapproved contingency/allocation. The evidence does not establish a final funding allocation or garden strengthening cost. [E019,E079,E081,E082,E083,E084,E232,E236,E143]",
+    "The risk ratings are arithmetically consistent with the stated P×I scores. Proposed risk owners are explicitly labelled as proposed where not evidenced, which is appropriate.",
+    "The three-point ranges in WF01 and WF02 are supported as scenario assumptions by cited contractor estimates; they remain unapproved estimates, not forecasts. The underlying P50/P80 calculations are reported as code-derived rather than sourced facts, so a human reviewer may want to verify the calculation method and outputs.",
+    "M10: The title conflates practical completion with the Hub being fully open, but the evidence does not establish that these are the same milestone. Keep the conflicting practical-completion dates and the brief’s fully-open target distinct until reconciled; do not present practical completion as proof of full reopening.",
+    "1.5.2: The WBS makes the garden delivery/deferral decision a successor to roof assessment and instruction. That sequence is not supported and may reverse the decision dependency: the evidence records that garden disposition is undecided and that KHB awaits instruction before pricing strengthening. Do not make a garden decision dependent on the instruction/pricing step without evidence; show the dependency as unresolved or sequence the decision before any conditional instruction."
+  ],
+  "result": "PASSED"
+}

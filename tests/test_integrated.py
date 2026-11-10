@@ -53,7 +53,7 @@ class IntegrationTests(unittest.TestCase):
         out=run(r,{'source_snapshot_id':self.lib.snapshot,'evidence_library':str(self.lib.path),'as_of_date':'2027-04-06','planning':{},'risk':{}})
         self.assertEqual(out['status'],'BLOCKED');self.assertEqual(out['metrics']['api_calls'],0)
     def test_snapshot_tamper_blocks(self):
-        raw=json.loads(self.lib.path.read_text());raw['documents'][0]['lines'][0]+='changed';self.lib.path.write_text(json.dumps(raw))
+        raw=json.loads(self.lib.path.read_text(encoding='utf-8'));raw['documents'][0]['lines'][0]+='changed';self.lib.path.write_text(json.dumps(raw),encoding='utf-8')
         with self.assertRaises(ValueError):EvidenceLibrary(self.lib.path)
     def test_request_snapshot_mismatch(self):
         self.request['source_snapshot_id']='OTHER'

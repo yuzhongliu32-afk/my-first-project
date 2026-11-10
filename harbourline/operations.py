@@ -15,7 +15,7 @@ from .simulation import ScriptedModel
 
 def write(path,value):
     path=Path(path);path.parent.mkdir(parents=True,exist_ok=True)
-    path.write_text(json.dumps(value,indent=2,ensure_ascii=False)+'\n')
+    path.write_text(json.dumps(value,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
 
 
 def client(store):
@@ -51,7 +51,7 @@ def main():
     a=p.parse_args();store=GovernanceStore(a.db)
     try:
         if a.command=='run':
-            lib=EvidenceLibrary(a.library);base=json.loads((Path(__file__).resolve().parents[1]/'examples/request.json').read_text())
+            lib=EvidenceLibrary(a.library);base=json.loads((Path(__file__).resolve().parents[1]/'examples/request.json').read_text(encoding='utf-8'))
             base.update(message_id='REQUEST-'+str(uuid4()),run_id='RUN-'+str(uuid4()),source_snapshot_id=lib.snapshot)
             base['request'].update(instructions='Prepare source-grounded proposals and human-review report drafts.',
               reporting_period={'start_date':a.start,'end_date':a.end},requested_report_type=None if a.report_type=='both' else a.report_type)
@@ -81,7 +81,7 @@ def main():
         elif a.command=='jira-apply':
             jira=client(store);result=store.execute(a.batch_id,jira.target,lambda payload,audit:execute_actions(payload,jira,audit))
             print(json.dumps({'batch_id':result['id'],'state':result['state'],'mode':'LIVE_JIRA'}))
-        elif a.command=='change':print(json.dumps(store.record_change(a.run_id,json.loads(a.event.read_text()))))
+        elif a.command=='change':print(json.dumps(store.record_change(a.run_id,json.loads(a.event.read_text(encoding='utf-8')))))
         elif a.command=='audit':write(a.out,store.audit());print(str(a.out))
         elif a.command=='show':
             row,full=store.artifact(a.run_id);write(a.out,{'run_mode':row['mode'],'stale':bool(row['stale']),'version':row['version'],'state':store.export(a.run_id)});print(str(a.out))
@@ -103,7 +103,7 @@ def main():
                 for i,r in enumerate(payload['reports']):
                     file=root/f'{i+1}_{r["report_type"]}.json';audit('REPORT_EXPORT_ATTEMPT',{'path':str(file),'hash':digest(r)})
                     write(file,r)
-                    if digest(json.loads(file.read_text()))!=digest(r):raise GateError('Report export readback mismatch')
+                    if digest(json.loads(file.read_text(encoding='utf-8')))!=digest(r):raise GateError('Report export readback mismatch')
                 return {'local_files_verified':len(payload['reports']),'external_submission':False}
             print(json.dumps({'state':store.execute(a.batch_id,b['target'],export)['state']}))
     except (ValueError,KeyError,FileNotFoundError) as exc:p.exit(1,str(exc)+'\n')
