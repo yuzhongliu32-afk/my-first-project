@@ -1,0 +1,38 @@
+name: Validate new Member B Complete with A-B-C
+on:
+  push:
+    branches:
+      - validation/member-b-complete-20261111
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements-live.txt
+      - name: Check Python syntax
+        run: python -m compileall -q harbourline modules scripts tests
+      - name: Audit contract schemas
+        run: python scripts/audit_schemas.py
+      - name: Run B and A/B/C tests including change events and workbench
+        run: python -m unittest discover -s tests -v
+      - name: Validate presentation snapshot against B exchange contract
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from harbourline.contracts import validate
+          file=Path('examples/member_b_presentation_snapshot/b_output.json')
+          obj=json.loads(file.read_text(encoding='utf-8'))
+          validate(obj,'B',expected_producer='B')
+          print('B presentation snapshot contract validation: OK')
+          PY
