@@ -77,6 +77,11 @@ INSTRUCTIONS = (
     'do not invent one: leave that element out and list it under unresolved. No round numbers without '
     'a reason. Mark on_critical_path true only for schedule elements that delay completion in series. '
     'Do NOT state totals, P50, P80, probabilities or likelihood words: code computes those. '
+    'When a cited row gives only a range (e.g. S$0.35-0.60m, 4-6 weeks), take optimistic and pessimistic '
+    'from its ends and most likely as the midpoint, with the reason "midpoint of the cited range", unless '
+    'another row supports a different central value. '
+    'If previous_attempt is given, REVISE it: fix exactly the prior_findings and keep every other '
+    'scenario, element and citation unchanged. '
     'Where two sources disagree, record both in assumptions and do not pick one.'
 )
 
@@ -221,12 +226,14 @@ def compute(proposal: dict) -> tuple[list[dict], list[dict]]:
 
 
 def run_whatif(gateway, rules: str, payload: dict, catalog: dict, planning: dict, risk: dict,
-               findings: list[str] | None = None) -> tuple[list[dict], list[dict]]:
+               findings: list[str] | None = None, *, previous: dict | None = None,
+               return_proposal: bool = False):
     """Ask the What-if role for ranges, check them, compute P50/P80 in code."""
     proposal = gateway.ask('harbourline_b_whatif', proposal_schema(), rules + INSTRUCTIONS,
                            {**payload, 'planning': planning, 'risk': risk,
-                            'prior_findings': findings or []})
+                            'prior_findings': findings or [], 'previous_attempt': previous})
     from .agent import normalize_ids
     normalize_ids(proposal, catalog)
     validate_proposal(proposal, catalog, planning, risk)
-    return compute(proposal)
+    records, details = compute(proposal)
+    return (records, details, proposal) if return_proposal else (records, details)

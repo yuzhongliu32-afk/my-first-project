@@ -135,7 +135,13 @@ class PlanRules(unittest.TestCase):
         plan = draft_plan()
         plan['wbs_items'][2]['source_ids'] = ['e1', 'E01']
         normalize_ids(plan, self.catalog)
-        self.assertEqual(plan['wbs_items'][2]['source_ids'], ['E001', 'E001'])
+        self.assertEqual(plan['wbs_items'][2]['source_ids'], ['E001'])  # duplicates merged
+        plan['wbs_items'][2]['source_ids'] = ['E001-E003', 'E2']
+        normalize_ids(plan, self.catalog)
+        self.assertEqual(plan['wbs_items'][2]['source_ids'], ['E001', 'E002', 'E003'])
+        plan['wbs_items'][2]['source_ids'] = ['E003-E009']  # E005+ do not exist: left for the check
+        normalize_ids(plan, self.catalog)
+        self.assertEqual(plan['wbs_items'][2]['source_ids'], ['E003-E009'])
         plan['wbs_items'][2]['source_ids'] = ['E777']
         normalize_ids(plan, self.catalog)
         with self.assertRaisesRegex(ValueError, r'WBS 1\.1\.1 cited nonexistent evidence ID\(s\) E777'):

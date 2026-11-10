@@ -69,6 +69,7 @@ class MemberBHTTPHandler(BaseHTTPRequestHandler):
     # Presentation mode: MEMBER_B_ACCESS_CODE in .env makes every AI action require the code,
     # so presenters type a password, never the key. MEMBER_B_AI_RUN_LIMIT caps AI runs per start.
     _runs_used = 0
+    _inflight = {}   # run_id -> live trace of a generation in progress (for the progress display)
     _runs_lock = threading.Lock()
     PROTECTED = {'/v1/unlock', '/v1/configure', '/v1/snapshot-save', '/v1/plan-risk', '/v1/schedule-forecast',
                  '/v1/generate-baseline', '/v1/change-note', '/v1/change-impact-live'}
@@ -232,6 +233,18 @@ class MemberBHTTPHandler(BaseHTTPRequestHandler):
                             'change_notes': [n['event']['event_id'] for n in self._change_notes(source)]
                                             if source != 'rules' else [],
                             'mode_note': note[source]})
+        elif path == '/v1/progress':
+            now = time.monotonic()
+            runs = []
+            for run_id, tr in list(type(self)._inflight.items()):
+                cur = tr.get('current') or {}
+                runs.append({'run_id': run_id, 'model': tr.get('model'),
+                             'elapsed_seconds': round(now - tr.get('started', now)),
+                             'current': {k: cur.get(k) for k in ('round', 'stage', 'try')} if cur else None,
+                             'current_seconds': round(now - cur['started']) if cur else None,
+                             'done': [{k: x.get(k) for k in ('round', 'stage', 'try', 'result')}
+                                      for x in tr.get('attempts', [])]})
+            self.send(200, {'runs': runs})
         elif path == '/v1/change-notes':
             source = 'snapshot' if 'source=snapshot' in self.path else 'live'
             self.send(200, {'source': source, 'notes': self._change_notes(source)})
@@ -409,16 +422,23 @@ class MemberBHTTPHandler(BaseHTTPRequestHandler):
         request['run_id'] = 'B-LIVE-' + str(uuid4())
         request['source_snapshot_id'] = library.snapshot
         gateway = self.gateway_factory(self._model(body))
-        trace = {'run_id': request['run_id'], 'started_at': datetime.now(timezone.utc).isoformat()}
+        trace = {'run_id': request['run_id'], 'started_at': datetime.now(timezone.utc).isoformat(),
+                 'model': self._model(body), 'started': time.monotonic()}
+        type(self)._inflight[request['run_id']] = trace
         try:
             # Up to 3 attempts so mechanical-check and Critic findings can be corrected.
             output = generate(request, library, gateway, cutoff=body.get('cutoff') or None,
                               max_rounds=3, trace=trace)
-        except ValueError:
+        except Exception as exc:
+            type(self)._inflight.pop(request['run_id'], None)
+            trace.pop('started', None)
             trace['result'] = 'FAILED'
+            trace['error'] = f'{type(exc).__name__}: {str(exc)[:300]}'
             trace['metrics'] = gateway.metrics() if hasattr(gateway, 'metrics') else None
             self._write(self._path('trace'), trace)  # keep findings for diagnosis
             raise
+        type(self)._inflight.pop(request['run_id'], None)
+        trace.pop('current', None); trace.pop('started', None)
         trace['result'] = 'PASSED'
         self._write(self._path('live'), output)
         self._write(self._path('trace'), trace)
@@ -500,6 +520,15 @@ class MemberBHTTPHandler(BaseHTTPRequestHandler):
         """Offline preview from the deterministic rules generator: no key, no AI."""
         request = json.loads(Path(self.request_path).read_text(encoding='utf-8'))
         output = run(request, {'mode': 'rules'})
+        if output.get('status') == 'BLOCKED':
+            # A fresh clone has no local brief/pack copies (data/ is git-ignored): say what to do.
+            reason = '; '.join(e.get('message', '') for e in output.get('errors', [])[:2])
+            self.send(422, {'error': 'OFFLINE_PREVIEW_BLOCKED',
+                            'message': 'The local source files are missing. Build them once: python '
+                                       'scripts/prepare_evidence.py --brief "<brief.pdf>" --pack '
+                                       '"<Harbourline_Data_Pack.zip>" --sponsor-answers "<Sponsor Answers.pdf>". '
+                                       + reason[:300]})
+            return None
         self._write(self._path('rules'), output)
         return {'status': output['status'], 'source': 'rules',
                 'wbs_items': len(output['planning']['wbs_items']),

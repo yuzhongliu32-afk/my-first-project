@@ -121,6 +121,25 @@ class DynamicAgentTests(unittest.TestCase):
     def test_inconsistent_risk_score_blocked(self):
         with self.assertRaisesRegex(ValueError,'score must equal'):
             generate(request(),FakeLibrary(),MockGateway(wrong_score=True))
+    def test_critic_finding_revises_only_the_named_role(self):
+        class WhatIfFinding(MockGateway):
+            def ask(self,name,shape,instructions,payload):
+                if name=='harbourline_b_critic':
+                    self.calls.append((name,payload))
+                    first=sum(1 for n,_ in self.calls if n=='harbourline_b_critic')==1
+                    return {'verdict':'REVISE' if first else 'PASS','notes':[],
+                            'blocking_findings':[{'item_id':'SC01','problem':'Most likely value unsupported',
+                                                  'evidence_ids':['E002']}] if first else []}
+                return super().ask(name,shape,instructions,payload)
+        g=WhatIfFinding()
+        out=generate(request(),FakeLibrary(),g,max_rounds=2)
+        names=[n for n,_ in g.calls]
+        self.assertEqual(names,['harbourline_b_planning','harbourline_b_risk','harbourline_b_whatif',
+                                'harbourline_b_critic','harbourline_b_whatif','harbourline_b_critic'])
+        second_whatif=g.calls[4][1]
+        self.assertIn('CRITIC: SC01',' '.join(second_whatif['prior_findings']))
+        self.assertIsNotNone(second_whatif['previous_attempt'])  # revise, not rewrite
+        self.assertEqual(out['status'],'PARTIAL')
     def test_critic_notes_do_not_block_but_are_kept(self):
         class NotesOnly(MockGateway):
             def ask(self,name,shape,instructions,payload):
@@ -150,6 +169,26 @@ class DynamicAgentTests(unittest.TestCase):
         t=_triage_critique(c,plan,{'risks':[],'scenarios':[]})
         self.assertEqual([b['item_id'] for b in t['blocking_findings']],['Q02','WBS 1.2'])
         self.assertEqual(len(t['notes']),2)
+    def test_proposed_owner_complaint_is_a_note_but_unlabelled_owner_blocks(self):
+        from modules.member_b.agent import _triage_critique, _route
+        plan={'wbs_items':[],'milestones':[],'scope_items':[],'sponsor_questions':[]}
+        risk={'risks':[{'risk_id':'R01','owner':'Proposed: Council PM'},{'risk_id':'R02','owner':'KHB'}],'scenarios':[]}
+        c={'verdict':'REVISE','notes':[],'blocking_findings':[
+            {'item_id':'R01','problem':'assigns Council PM as owner without evidence','evidence_ids':[]},
+            {'item_id':'R02','problem':'assigns KHB as owner without evidence','evidence_ids':[]}]}
+        t=_triage_critique(c,plan,risk)
+        self.assertEqual([b['item_id'] for b in t['blocking_findings']],['R02'])
+        self.assertEqual(_route('W02'),{'whatif'})
+    def test_invented_day_is_removed_but_sourced_date_kept(self):
+        from modules.member_b.agent import _unsupported_dates
+        cat={'E1':{'quote':'Enrolment is intended to begin in July 2028.'},
+             'E2':{'quote':'Site possession is Monday 4 January 2027.'}}
+        p={'milestones':[{'milestone_id':'M12','calendar_date':'2028-07-01','relative_timing':'Month 18','source_ids':['E1']},
+                         {'milestone_id':'M02','calendar_date':'2027-01-04','relative_timing':'Start','source_ids':['E2']}]}
+        self.assertEqual(_unsupported_dates(p,cat),['M12'])
+        self.assertIsNone(p['milestones'][0]['calendar_date'])
+        self.assertIn('July 2028',p['milestones'][0]['relative_timing'])
+        self.assertEqual(p['milestones'][1]['calendar_date'],'2027-01-04')
     def test_critic_escalation_blocked(self):
         with self.assertRaisesRegex(ValueError,'did not PASS'):
             generate(request(),FakeLibrary(),MockGateway(critic='ESCALATE'))

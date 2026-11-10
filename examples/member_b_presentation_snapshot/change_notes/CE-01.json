@@ -1,0 +1,1042 @@
+{
+  "status": "REVIEW_REQUIRED",
+  "approved": false,
+  "event": {
+    "event_id": "CE-01",
+    "change_type": "GRANT_ELIGIBILITY_RULING",
+    "description": "The grant body has confirmed in writing that asbestos removal and associated works will not be accepted as eligible cost under the grant. The contractor's variation for these works, as tabled at the March committee meeting, stands as submitted. No change to the programme has been agreed.",
+    "hypothetical": false
+  },
+  "affected_elements": [
+    {
+      "element_ref": "Asbestos removal variation / hazardous-materials work",
+      "element_type": "WBS",
+      "why_affected": "The confirmed grant ruling in the change event makes the asbestos removal and associated works ineligible; the contractor variation remains submitted as stated in the event. The evidence prices the variation at S$0.35–0.60 million, estimates 4–6 weeks, and identifies the level 2 M&E risers as the critical-path link. The existing WBS does not have a dedicated asbestos element; the directly related B work is mapped to M&E replacement and live-site phasing.",
+      "b_wbs_ids": [
+        "1.6.1",
+        "1.7.1"
+      ],
+      "b_milestone_ids": [],
+      "b_risk_ids": [
+        "R01",
+        "R06"
+      ],
+      "source_refs": [
+        {
+          "document_id": "PACK-MAR-PROGRESS",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": 1,
+          "line_start": 26,
+          "line_end": 26,
+          "chunk_id": "PACK-MAR-PROGRESS:26-26",
+          "quote": " Asbestos (chrysotile) confirmed. Licensed removal contractor required; estimate S$0.35–0.60M, 4–6 weeks."
+        },
+        {
+          "document_id": "PACK-MAR-PROGRESS",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": 1,
+          "line_start": 27,
+          "line_end": 27,
+          "chunk_id": "PACK-MAR-PROGRESS:27-27",
+          "quote": "Variation to be submitted. Critical path affected via level 2 M&E risers."
+        },
+        {
+          "document_id": "PACK-MAR-PROGRESS",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": 1,
+          "line_start": 42,
+          "line_end": 42,
+          "chunk_id": "PACK-MAR-PROGRESS:42-42",
+          "quote": "350,000 – 600,000"
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 79,
+          "line_end": 79,
+          "chunk_id": "PACK-EDC:79-79",
+          "quote": "    commissioned; KHB estimates removal at S$0.35–0.60 million and 4–6 weeks."
+        }
+      ]
+    },
+    {
+      "element_ref": "Grant eligibility, eligible-cost cap, and project funding allocation",
+      "element_type": "GRANT_CONDITION",
+      "why_affected": "The event adds asbestos removal and associated works to the ineligible costs. Existing grant terms apply 60% only to eligible cost, cap eligible cost at S$17.0 million, and require the recipient to bear cost increases above the cap. EDC also recorded food-court refresh and rooftop garden as ineligible, so the grant-eligible expenditure forecast and R06 funding exposure need to reflect the ruling without assuming a funding source for the asbestos amount.",
+      "b_wbs_ids": [
+        "1.8.1"
+      ],
+      "b_milestone_ids": [],
+      "b_risk_ids": [
+        "R06"
+      ],
+      "source_refs": [
+        {
+          "document_id": "PACK-GRANT",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 7,
+          "line_end": 7,
+          "chunk_id": "PACK-GRANT:7-7",
+          "quote": "   1.1 The grant is 60% of eligible project cost."
+        },
+        {
+          "document_id": "PACK-GRANT",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 8,
+          "line_end": 8,
+          "chunk_id": "PACK-GRANT:8-8",
+          "quote": "   1.2 Eligible project cost is capped at S$17.0 million. Maximum grant S$10.2 million."
+        },
+        {
+          "document_id": "PACK-GRANT",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 9,
+          "line_end": 9,
+          "chunk_id": "PACK-GRANT:9-9",
+          "quote": "   1.3 Ineligible items include: refurbishment of commercial premises (including food"
+        },
+        {
+          "document_id": "PACK-GRANT",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 10,
+          "line_end": 10,
+          "chunk_id": "PACK-GRANT:10-10",
+          "quote": "       courts and leased retail), and landscaping or rooftop amenity not forming part"
+        },
+        {
+          "document_id": "PACK-GRANT",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 11,
+          "line_end": 11,
+          "chunk_id": "PACK-GRANT:11-11",
+          "quote": "       of a social service facility."
+        },
+        {
+          "document_id": "PACK-GRANT",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 12,
+          "line_end": 12,
+          "chunk_id": "PACK-GRANT:12-12",
+          "quote": "   1.4 Cost increases above the cap are borne by the recipient."
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 33,
+          "line_end": 33,
+          "chunk_id": "PACK-EDC:33-33",
+          "quote": "    Fund caps ELIGIBLE cost at S$17.0 million and the 60% grant applies to eligible"
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 34,
+          "line_end": 34,
+          "chunk_id": "PACK-EDC:34-34",
+          "quote": "    cost only. The food court refresh and rooftop community garden are listed as"
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 35,
+          "line_end": 35,
+          "chunk_id": "PACK-EDC:35-35",
+          "quote": "    ineligible. Ms Ong to report the funding effect at the next meeting."
+        }
+      ]
+    },
+    {
+      "element_ref": "Asbestos disruption and critical-path risk entry",
+      "element_type": "RISK",
+      "why_affected": "The asbestos finding is confirmed, removal is required, works in the zone have stopped, and the estimate is 4–6 weeks with critical-path impact. These are confirmed issues, not future probability events. R01 is the existing asbestos-related B risk and should be updated to distinguish the confirmed work, cost eligibility and schedule impact from any remaining uncertainty about sequence or actual outcome.",
+      "b_wbs_ids": [
+        "1.6.1",
+        "1.7.1"
+      ],
+      "b_milestone_ids": [],
+      "b_risk_ids": [
+        "R01"
+      ],
+      "source_refs": [
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 98,
+          "line_end": 98,
+          "chunk_id": "PACK-EDC:98-98",
+          "quote": "6.5 Asbestos survey confirmed chrysotile in level 2 ceiling boards. Variation order"
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 99,
+          "line_end": 99,
+          "chunk_id": "PACK-EDC:99-99",
+          "quote": "    to be raised by KHB. Removal sequence not yet agreed."
+        },
+        {
+          "document_id": "PACK-MAR-PROGRESS",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": 1,
+          "line_start": 6,
+          "line_end": 6,
+          "chunk_id": "PACK-MAR-PROGRESS:6-6",
+          "quote": "Asbestos confirmed in level 2 west wing; works in that zone stopped from 3 March. Overall the project remains"
+        },
+        {
+          "document_id": "PACK-MAR-PROGRESS",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": 1,
+          "line_start": 26,
+          "line_end": 26,
+          "chunk_id": "PACK-MAR-PROGRESS:26-26",
+          "quote": " Asbestos (chrysotile) confirmed. Licensed removal contractor required; estimate S$0.35–0.60M, 4–6 weeks."
+        },
+        {
+          "document_id": "PACK-MAR-PROGRESS",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": 1,
+          "line_start": 27,
+          "line_end": 27,
+          "chunk_id": "PACK-MAR-PROGRESS:27-27",
+          "quote": "Variation to be submitted. Critical path affected via level 2 M&E risers."
+        }
+      ]
+    },
+    {
+      "element_ref": "Grant eligibility and unresolved budget allocation risk",
+      "element_type": "RISK",
+      "why_affected": "R06 already covers grant eligibility and budget allocation exposure. The event confirms an additional ineligible cost category, while the grant cap and existing ineligible categories remain applicable; the evidence does not establish the approved funding allocation for this variation.",
+      "b_wbs_ids": [
+        "1.4",
+        "1.5",
+        "1.8.1"
+      ],
+      "b_milestone_ids": [],
+      "b_risk_ids": [
+        "R06"
+      ],
+      "source_refs": [
+        {
+          "document_id": "PACK-GRANT",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 7,
+          "line_end": 7,
+          "chunk_id": "PACK-GRANT:7-7",
+          "quote": "   1.1 The grant is 60% of eligible project cost."
+        },
+        {
+          "document_id": "PACK-GRANT",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 8,
+          "line_end": 8,
+          "chunk_id": "PACK-GRANT:8-8",
+          "quote": "   1.2 Eligible project cost is capped at S$17.0 million. Maximum grant S$10.2 million."
+        },
+        {
+          "document_id": "PACK-GRANT",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 9,
+          "line_end": 9,
+          "chunk_id": "PACK-GRANT:9-9",
+          "quote": "   1.3 Ineligible items include: refurbishment of commercial premises (including food"
+        },
+        {
+          "document_id": "PACK-GRANT",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 10,
+          "line_end": 10,
+          "chunk_id": "PACK-GRANT:10-10",
+          "quote": "       courts and leased retail), and landscaping or rooftop amenity not forming part"
+        },
+        {
+          "document_id": "PACK-GRANT",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 11,
+          "line_end": 11,
+          "chunk_id": "PACK-GRANT:11-11",
+          "quote": "       of a social service facility."
+        },
+        {
+          "document_id": "PACK-GRANT",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 12,
+          "line_end": 12,
+          "chunk_id": "PACK-GRANT:12-12",
+          "quote": "   1.4 Cost increases above the cap are borne by the recipient."
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 17,
+          "line_end": 17,
+          "chunk_id": "PACK-EDC:17-17",
+          "quote": "1.2 Ms Ong noted the approved budget of S$18.5 million leaves about S$1.18 million"
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 18,
+          "line_end": 18,
+          "chunk_id": "PACK-EDC:18-18",
+          "quote": "    once fees are deducted, and asked whether this is to be treated as contingency."
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 19,
+          "line_end": 19,
+          "chunk_id": "PACK-EDC:19-19",
+          "quote": "    No decision recorded."
+        }
+      ]
+    },
+    {
+      "element_ref": "Grant and project reporting: eligible expenditure and tranche tracking",
+      "element_type": "REPORT",
+      "why_affected": "The grant report must state expenditure against eligible cost and tranche-condition status. The asbestos cost must therefore not be included as eligible expenditure under the ruling in the change event; the grant cap and other ineligible categories also remain relevant to reporting.",
+      "b_wbs_ids": [
+        "1.8.1",
+        "1.8.2"
+      ],
+      "b_milestone_ids": [
+        "M06",
+        "M11",
+        "M12"
+      ],
+      "b_risk_ids": [
+        "R06",
+        "R09"
+      ],
+      "source_refs": [
+        {
+          "document_id": "PACK-GRANT",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 25,
+          "line_end": 25,
+          "chunk_id": "PACK-GRANT:25-25",
+          "quote": "   3.2 It must state: progress against the baseline programme, expenditure to date"
+        },
+        {
+          "document_id": "PACK-GRANT",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 26,
+          "line_end": 26,
+          "chunk_id": "PACK-GRANT:26-26",
+          "quote": "       against eligible cost, status of each tranche condition, and top five risks."
+        },
+        {
+          "document_id": "PACK-GRANT",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 7,
+          "line_end": 7,
+          "chunk_id": "PACK-GRANT:7-7",
+          "quote": "   1.1 The grant is 60% of eligible project cost."
+        },
+        {
+          "document_id": "PACK-GRANT",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 8,
+          "line_end": 8,
+          "chunk_id": "PACK-GRANT:8-8",
+          "quote": "   1.2 Eligible project cost is capped at S$17.0 million. Maximum grant S$10.2 million."
+        },
+        {
+          "document_id": "PACK-GRANT",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 9,
+          "line_end": 9,
+          "chunk_id": "PACK-GRANT:9-9",
+          "quote": "   1.3 Ineligible items include: refurbishment of commercial premises (including food"
+        },
+        {
+          "document_id": "PACK-GRANT",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 10,
+          "line_end": 10,
+          "chunk_id": "PACK-GRANT:10-10",
+          "quote": "       courts and leased retail), and landscaping or rooftop amenity not forming part"
+        },
+        {
+          "document_id": "PACK-GRANT",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 11,
+          "line_end": 11,
+          "chunk_id": "PACK-GRANT:11-11",
+          "quote": "       of a social service facility."
+        },
+        {
+          "document_id": "PACK-GRANT",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 12,
+          "line_end": 12,
+          "chunk_id": "PACK-GRANT:12-12",
+          "quote": "   1.4 Cost increases above the cap are borne by the recipient."
+        }
+      ]
+    },
+    {
+      "element_ref": "Completion date chain and milestone M10 practical completion / fully open",
+      "element_type": "DATE_CHAIN",
+      "why_affected": "The asbestos work has a 4–6 week estimate and is reported to affect the critical path through level 2 M&E risers. No programme change is agreed in the event, so the existing completion date is not revised here. M10 remains unresolved against the brief's Q4 2028 commitment, the contract tracker date, and the programme/EDC date; the event does not settle that conflict or establish a revised forecast.",
+      "b_wbs_ids": [
+        "1.6.1",
+        "1.8.1"
+      ],
+      "b_milestone_ids": [
+        "M10",
+        "M11",
+        "M12"
+      ],
+      "b_risk_ids": [
+        "R01",
+        "R08"
+      ],
+      "source_refs": [
+        {
+          "document_id": "PACK-MAR-PROGRESS",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": 1,
+          "line_start": 26,
+          "line_end": 26,
+          "chunk_id": "PACK-MAR-PROGRESS:26-26",
+          "quote": " Asbestos (chrysotile) confirmed. Licensed removal contractor required; estimate S$0.35–0.60M, 4–6 weeks."
+        },
+        {
+          "document_id": "PACK-MAR-PROGRESS",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": 1,
+          "line_start": 27,
+          "line_end": 27,
+          "chunk_id": "PACK-MAR-PROGRESS:27-27",
+          "quote": "Variation to be submitted. Critical path affected via level 2 M&E risers."
+        },
+        {
+          "document_id": "HARBOURLINE-BRIEF",
+          "document_version": "2026-10-10",
+          "source_type": "BRIEF",
+          "page": 3,
+          "line_start": 21,
+          "line_end": 21,
+          "chunk_id": "HARBOURLINE-BRIEF:21-21",
+          "quote": "Works are to complete within 22 months, with the Hub fully open by the fourth"
+        },
+        {
+          "document_id": "HARBOURLINE-BRIEF",
+          "document_version": "2026-10-10",
+          "source_type": "BRIEF",
+          "page": 3,
+          "line_start": 22,
+          "line_end": 22,
+          "chunk_id": "HARBOURLINE-BRIEF:22-22",
+          "quote": "quarter of 2028."
+        },
+        {
+          "document_id": "PACK-CONTRACT",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 23,
+          "line_end": 23,
+          "chunk_id": "PACK-CONTRACT:23-23",
+          "quote": "D22,Practical completion,KHB,2028-10-31,Not started,,Programme shows 31 Dec 2028"
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 63,
+          "line_end": 63,
+          "chunk_id": "PACK-EDC:63-63",
+          "quote": "4.1 KHB baseline programme submitted. Key dates: practical completion"
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 64,
+          "line_end": 64,
+          "chunk_id": "PACK-EDC:64-64",
+          "quote": "    31 December 2028; childcare floor handover to operator for fit-out"
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 65,
+          "line_end": 65,
+          "chunk_id": "PACK-EDC:65-65",
+          "quote": "    month 20 (August 2028); phased reopening of sports hall from month 14."
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 66,
+          "line_end": 66,
+          "chunk_id": "PACK-EDC:66-66",
+          "quote": "4.2 The Chair queried how a 31 December 2028 completion fits the \"fully open by"
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 67,
+          "line_end": 67,
+          "chunk_id": "PACK-EDC:67-67",
+          "quote": "    Q4 2028\" commitment. Mr Shankar to reconcile and report."
+        },
+        {
+          "document_id": "PACK-GRANT",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 32,
+          "line_end": 32,
+          "chunk_id": "PACK-GRANT:32-32",
+          "quote": "   4.2 Completion later than 31 December 2028 requires the Fund's prior approval."
+        }
+      ]
+    },
+    {
+      "element_ref": "Approved budget residual / contingency designation",
+      "element_type": "BUDGET",
+      "why_affected": "The asbestos variation introduces a stated S$0.35–0.60 million cost exposure, but the evidence records only about S$1.18 million remaining after contract sum and fees and says no decision was recorded on whether that amount is contingency. It therefore cannot be treated as confirmed available contingency or as an approved funding allocation.",
+      "b_wbs_ids": [
+        "1.8.1"
+      ],
+      "b_milestone_ids": [],
+      "b_risk_ids": [
+        "R06"
+      ],
+      "source_refs": [
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 14,
+          "line_end": 14,
+          "chunk_id": "PACK-EDC:14-14",
+          "quote": "    Builders Pte Ltd on 18 December 2026 at a contract sum of S$16.42 million."
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 16,
+          "line_end": 16,
+          "chunk_id": "PACK-EDC:16-16",
+          "quote": "    estimated at S$0.90 million, held outside the contract."
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 17,
+          "line_end": 17,
+          "chunk_id": "PACK-EDC:17-17",
+          "quote": "1.2 Ms Ong noted the approved budget of S$18.5 million leaves about S$1.18 million"
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 18,
+          "line_end": 18,
+          "chunk_id": "PACK-EDC:18-18",
+          "quote": "    once fees are deducted, and asked whether this is to be treated as contingency."
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 19,
+          "line_end": 19,
+          "chunk_id": "PACK-EDC:19-19",
+          "quote": "    No decision recorded."
+        },
+        {
+          "document_id": "PACK-MAR-PROGRESS",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": 1,
+          "line_start": 26,
+          "line_end": 26,
+          "chunk_id": "PACK-MAR-PROGRESS:26-26",
+          "quote": " Asbestos (chrysotile) confirmed. Licensed removal contractor required; estimate S$0.35–0.60M, 4–6 weeks."
+        },
+        {
+          "document_id": "PACK-MAR-PROGRESS",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": 1,
+          "line_start": 42,
+          "line_end": 42,
+          "chunk_id": "PACK-MAR-PROGRESS:42-42",
+          "quote": "350,000 – 600,000"
+        }
+      ]
+    }
+  ],
+  "estimates": [
+    {
+      "element_id": "CE-01-ASBESTOS-COST",
+      "label": "Asbestos removal and associated works variation; cost estimate, not a grant-eligible amount",
+      "kind": "COST",
+      "unit": "SGD_THOUSANDS",
+      "optimistic": 350,
+      "most_likely": 475,
+      "pessimistic": 600,
+      "reason_optimistic": "The contractor estimate's stated lower bound is S$350,000; the event says the variation stands as submitted.",
+      "reason_most_likely": "The evidence provides only a S$350,000–S$600,000 range and no single most-likely figure; 475 is the arithmetic midpoint of those bounds, not a separately quoted contractor forecast.",
+      "reason_pessimistic": "The contractor estimate's stated upper bound is S$600,000; the event says the variation stands as submitted.",
+      "on_critical_path": true,
+      "pert_mean": 475.0,
+      "sigma": 41.67,
+      "source_refs": [
+        {
+          "document_id": "PACK-MAR-PROGRESS",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": 1,
+          "line_start": 26,
+          "line_end": 26,
+          "chunk_id": "PACK-MAR-PROGRESS:26-26",
+          "quote": " Asbestos (chrysotile) confirmed. Licensed removal contractor required; estimate S$0.35–0.60M, 4–6 weeks."
+        },
+        {
+          "document_id": "PACK-MAR-PROGRESS",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": 1,
+          "line_start": 42,
+          "line_end": 42,
+          "chunk_id": "PACK-MAR-PROGRESS:42-42",
+          "quote": "350,000 – 600,000"
+        }
+      ]
+    },
+    {
+      "element_id": "CE-01-ASBESTOS-SCHEDULE",
+      "label": "Asbestos removal and associated works duration",
+      "kind": "SCHEDULE",
+      "unit": "WEEKS",
+      "optimistic": 4,
+      "most_likely": 5,
+      "pessimistic": 6,
+      "reason_optimistic": "The reported estimate's stated lower bound is 4 weeks.",
+      "reason_most_likely": "The evidence gives a 4–6 week range and no single most-likely duration; 5 is the arithmetic midpoint, not a separate contractor commitment.",
+      "reason_pessimistic": "The reported estimate's stated upper bound is 6 weeks.",
+      "on_critical_path": true,
+      "pert_mean": 5.0,
+      "sigma": 0.33,
+      "source_refs": [
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 79,
+          "line_end": 79,
+          "chunk_id": "PACK-EDC:79-79",
+          "quote": "    commissioned; KHB estimates removal at S$0.35–0.60 million and 4–6 weeks."
+        },
+        {
+          "document_id": "PACK-MAR-PROGRESS",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": 1,
+          "line_start": 26,
+          "line_end": 26,
+          "chunk_id": "PACK-MAR-PROGRESS:26-26",
+          "quote": " Asbestos (chrysotile) confirmed. Licensed removal contractor required; estimate S$0.35–0.60M, 4–6 weeks."
+        },
+        {
+          "document_id": "PACK-MAR-PROGRESS",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": 1,
+          "line_start": 27,
+          "line_end": 27,
+          "chunk_id": "PACK-MAR-PROGRESS:27-27",
+          "quote": "Variation to be submitted. Critical path affected via level 2 M&E risers."
+        }
+      ]
+    }
+  ],
+  "result": {
+    "cost_sgd_k": {
+      "draws": 10000,
+      "method": "PERT-beta Monte Carlo, independent elements, summed",
+      "pert_mean_total": 475.0,
+      "combined_sigma": 41.67,
+      "p50": 474.31,
+      "p80": 518.67,
+      "min": 354.76,
+      "max": 597.85
+    },
+    "schedule_weeks": {
+      "draws": 10000,
+      "method": "PERT-beta Monte Carlo, independent elements, summed",
+      "pert_mean_total": 5.0,
+      "combined_sigma": 0.33,
+      "p50": 5.01,
+      "p80": 5.35,
+      "min": 4.02,
+      "max": 5.95
+    },
+    "computed_in_code": true
+  },
+  "contingency": {
+    "before_sgd": null,
+    "basis": "The evidence records about S$1.18 million remaining after contract and fee amounts, but explicitly says no decision was recorded on whether it is contingency; no amount is confirmed as contingency.",
+    "source_refs": [
+      {
+        "document_id": "PACK-EDC",
+        "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+        "source_type": "DATA_PACK",
+        "page": null,
+        "line_start": 14,
+        "line_end": 14,
+        "chunk_id": "PACK-EDC:14-14",
+        "quote": "    Builders Pte Ltd on 18 December 2026 at a contract sum of S$16.42 million."
+      },
+      {
+        "document_id": "PACK-EDC",
+        "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+        "source_type": "DATA_PACK",
+        "page": null,
+        "line_start": 16,
+        "line_end": 16,
+        "chunk_id": "PACK-EDC:16-16",
+        "quote": "    estimated at S$0.90 million, held outside the contract."
+      },
+      {
+        "document_id": "PACK-EDC",
+        "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+        "source_type": "DATA_PACK",
+        "page": null,
+        "line_start": 17,
+        "line_end": 17,
+        "chunk_id": "PACK-EDC:17-17",
+        "quote": "1.2 Ms Ong noted the approved budget of S$18.5 million leaves about S$1.18 million"
+      },
+      {
+        "document_id": "PACK-EDC",
+        "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+        "source_type": "DATA_PACK",
+        "page": null,
+        "line_start": 18,
+        "line_end": 18,
+        "chunk_id": "PACK-EDC:18-18",
+        "quote": "    once fees are deducted, and asked whether this is to be treated as contingency."
+      },
+      {
+        "document_id": "PACK-EDC",
+        "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+        "source_type": "DATA_PACK",
+        "page": null,
+        "line_start": 19,
+        "line_end": 19,
+        "chunk_id": "PACK-EDC:19-19",
+        "quote": "    No decision recorded."
+      }
+    ],
+    "after_p50_sgd": null,
+    "after_p80_sgd": null,
+    "gap_at_p80_sgd": null
+  },
+  "funding_status": "UNRESOLVED",
+  "funding": [],
+  "decision": {
+    "who": "Council Finance Director, with the Council decision-maker responsible for budget allocation",
+    "what": "Decide the funding allocation for the asbestos variation that the change event states stands as submitted, and whether any approved budget residual is designated to cover this ineligible work; do not charge it to eligible grant cost.",
+    "amount_or_date": "S$350,000–S$600,000 variation estimate; no approved funding amount is established",
+    "deadline": "Before the variation is authorized for payment or included in a grant claim",
+    "sentence": "The Council Finance Director must decide, before the variation is authorized for payment or included in a grant claim, how to fund the submitted S$350,000–S$600,000 asbestos variation that the change event states stands as submitted, because the event rules it ineligible for grant cost."
+  },
+  "unresolved": [
+    {
+      "item": "The change-event grant body's written ruling itself is not present as a catalogued source excerpt; its full wording, scope of associated works, and effective application to any costs already incurred cannot be independently checked against the catalog.",
+      "would_be_settled_by": "The grant body's written ruling and confirmation of the eligible-cost treatment and effective date."
+    },
+    {
+      "item": "The approved funding source and allocation for the asbestos variation, including whether any residual budget is available and formally designated as contingency, are not established.",
+      "would_be_settled_by": "A Council Finance Director/Council budget decision identifying the funding source, amount, and authorized budget treatment."
+    },
+    {
+      "item": "The contractor's exact submitted variation amount within the evidenced S$350,000–S$600,000 range is not given; the event says it stands as submitted but supplies no amount.",
+      "would_be_settled_by": "KHB's submitted variation and the Council's documented acceptance/authorization record."
+    },
+    {
+      "item": "The exact completion forecast and whether the asbestos work changes the programme are unsettled; the event states no programme change has been agreed, not that no delay will occur.",
+      "would_be_settled_by": "A revised, logic-linked contractor programme and Council reconciliation of the completion target, including the existing conflicting completion records."
+    },
+    {
+      "item": "Whether the remaining S$1.18 million budget residual can cover this ineligible cost without displacing other costs is not established.",
+      "would_be_settled_by": "A current cost-to-complete and eligible/ineligible funding forecast approved by Finance."
+    }
+  ],
+  "conflicts": [
+    {
+      "topic": "Completion date / fully open target remains unreconciled; the asbestos ruling does not resolve it",
+      "value_a": "Brief commitment: fully open by Q4 2028; works complete within 22 months.",
+      "value_a_refs": [
+        {
+          "document_id": "HARBOURLINE-BRIEF",
+          "document_version": "2026-10-10",
+          "source_type": "BRIEF",
+          "page": 3,
+          "line_start": 21,
+          "line_end": 21,
+          "chunk_id": "HARBOURLINE-BRIEF:21-21",
+          "quote": "Works are to complete within 22 months, with the Hub fully open by the fourth"
+        },
+        {
+          "document_id": "HARBOURLINE-BRIEF",
+          "document_version": "2026-10-10",
+          "source_type": "BRIEF",
+          "page": 3,
+          "line_start": 22,
+          "line_end": 22,
+          "chunk_id": "HARBOURLINE-BRIEF:22-22",
+          "quote": "quarter of 2028."
+        }
+      ],
+      "value_b": "Contract tracker: practical completion 31 October 2028; programme and EDC records: 31 December 2028.",
+      "value_b_refs": [
+        {
+          "document_id": "PACK-CONTRACT",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 23,
+          "line_end": 23,
+          "chunk_id": "PACK-CONTRACT:23-23",
+          "quote": "D22,Practical completion,KHB,2028-10-31,Not started,,Programme shows 31 Dec 2028"
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 63,
+          "line_end": 63,
+          "chunk_id": "PACK-EDC:63-63",
+          "quote": "4.1 KHB baseline programme submitted. Key dates: practical completion"
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 64,
+          "line_end": 64,
+          "chunk_id": "PACK-EDC:64-64",
+          "quote": "    31 December 2028; childcare floor handover to operator for fit-out"
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 65,
+          "line_end": 65,
+          "chunk_id": "PACK-EDC:65-65",
+          "quote": "    month 20 (August 2028); phased reopening of sports hall from month 14."
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 66,
+          "line_end": 66,
+          "chunk_id": "PACK-EDC:66-66",
+          "quote": "4.2 The Chair queried how a 31 December 2028 completion fits the \"fully open by"
+        },
+        {
+          "document_id": "PACK-EDC",
+          "document_version": "2027-04-SYNTHETIC-COURSE-PACK",
+          "source_type": "DATA_PACK",
+          "page": null,
+          "line_start": 67,
+          "line_end": 67,
+          "chunk_id": "PACK-EDC:67-67",
+          "quote": "    Q4 2028\" commitment. Mr Shankar to reconcile and report."
+        }
+      ]
+    }
+  ],
+  "stale_wbs_ids": [
+    "1.4",
+    "1.5",
+    "1.6.1",
+    "1.7.1",
+    "1.8.1",
+    "1.8.2"
+  ],
+  "stale_milestone_ids": [
+    "M06",
+    "M10",
+    "M11",
+    "M12"
+  ],
+  "stale_risk_ids": [
+    "R01",
+    "R06",
+    "R08",
+    "R09"
+  ],
+  "stale_reports": [
+    "WEEKLY_COMMITTEE",
+    "MONTHLY_GRANT"
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "findings": []
+    }
+  ],
+  "note": "Proposal for human review: the agent recommends, a human decides. No baseline change approved and nothing written to Jira.",
+  "based_on": {
+    "source": "live",
+    "run_id": "B-LIVE-af3b24c3-9688-4f33-b47a-49c3b518a2c9"
+  },
+  "labels": {
+    "wbs": {
+      "1": "Harbourline Community Hub Refurbishment",
+      "1.1": "Sports hall refurbishment",
+      "1.1.1": "Sports hall design and works planning",
+      "1.1.2": "Sports hall refurbishment and reopening",
+      "1.2": "Early childhood centre",
+      "1.2.1": "Early childhood centre design and coordination",
+      "1.2.2": "Centre construction and operator handover",
+      "1.3": "Active ageing centre",
+      "1.3.1": "Active ageing centre design and construction",
+      "1.3.2": "Operator procurement and agreement dependency",
+      "1.4": "Community kitchen and food-court refresh",
+      "1.4.1": "Kitchen and food-court design and permits",
+      "1.4.2": "Kitchen and food-court works",
+      "1.5": "Rooftop community garden",
+      "1.5.1": "Roof structural assessment and instruction",
+      "1.5.2": "Rooftop garden delivery or deferral decision",
+      "1.6": "Accessibility, lifts and M&E systems",
+      "1.6.1": "M&E replacement and integration",
+      "1.6.2": "Lift replacement and barrier-free access arrangements",
+      "1.7": "Live-site phasing and resident consultation",
+      "1.7.1": "Live-site phasing, access and user notices",
+      "1.7.2": "Resident consultation and design input",
+      "1.8": "Grant and project reporting",
+      "1.8.1": "Grant condition and tranche tracking",
+      "1.8.2": "Monthly grant progress reporting"
+    },
+    "milestones": {
+      "M01": "Design-and-build contract award",
+      "M02": "Site possession / construction start",
+      "M03": "Resident consultation period",
+      "M04": "Resident consultation summary/design input",
+      "M05": "Active ageing operator appointment",
+      "M06": "Signed operator agreements for all social service spaces (grant T2 condition)",
+      "M07": "Council decision on facility closures and access/phasing",
+      "M08": "Childcare floor handover",
+      "M09": "Childcare enrolment begins",
+      "M10": "Practical completion / fully open",
+      "M11": "Temporary Occupation Permit for whole facility (grant T3 condition)",
+      "M12": "Six months of operation and utilisation report (grant T4 condition)"
+    },
+    "risks": {
+      "R01": "Asbestos removal disrupts works and critical path",
+      "R02": "Lift closure/access plan conflicts with public access requirements",
+      "R03": "Unresolved facility closures delay lift and sports hall packages",
+      "R04": "Active ageing operator appointment delays grant condition or design coordination",
+      "R05": "Childcare handover timing may not allow operator fit-out and licensing",
+      "R06": "Grant eligibility and unresolved budget allocation create funding exposure",
+      "R07": "Rooftop garden instruction and strengthening decision may affect scope and cost",
+      "R08": "Programme completion and childcare dates remain unreconciled",
+      "R09": "Monthly grant reporting lateness could threaten tranche release"
+    }
+  },
+  "metrics": {
+    "api_calls": 1,
+    "input_tokens": 39487,
+    "output_tokens": 2435,
+    "estimated_cost_usd": null
+  }
+}

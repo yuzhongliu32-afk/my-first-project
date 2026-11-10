@@ -1,0 +1,15 @@
+{
+  "saved_at": "2026-11-10T17:38:13.031920+00:00",
+  "run_id": "B-LIVE-af3b24c3-9688-4f33-b47a-49c3b518a2c9",
+  "model": "gpt-6-luna",
+  "source_snapshot_id": "SRC-7dc99648203a9ddace0c",
+  "api_calls": 4,
+  "input_tokens": 177871,
+  "output_tokens": 13157,
+  "elapsed_seconds": 111.15599999998813,
+  "change_notes": [
+    "CE-01",
+    "CE-02"
+  ],
+  "note": "Recorded real AI run for the presentation. Replaying it makes no API call. Proposal for human review; nothing approved or written to Jira."
+}

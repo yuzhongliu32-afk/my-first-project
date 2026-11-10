@@ -42,6 +42,8 @@ class WorkbenchTests(unittest.TestCase):
         library = tmp / 'evidence_library.json'
         library.write_text('{}', encoding='utf-8')  # existence only; FakeLibrary is injected
         request = json.loads((ROOT / 'examples/member_b_request.json').read_text(encoding='utf-8'))
+        # Committed fixture output, so the tests pass in a fresh clone without local data/.
+        request['source_snapshot_id'] = 'FIXTURE-WORKBENCH-TEST'
         (tmp / 'request.json').write_text(json.dumps(request), encoding='utf-8')
         cls.gateways = []
 
@@ -180,6 +182,21 @@ class WorkbenchTests(unittest.TestCase):
             live.unlink()
         status, body = self.call('POST', '/v1/snapshot-save', {})
         self.assertEqual(status, 422)
+
+    def test_progress_lists_runs_only_while_running(self):
+        seen = []
+        original = ImpactGateway.ask
+
+        def spy(gw, name, shape, instructions, payload):
+            if name == 'harbourline_b_risk':
+                seen.append(self.call('GET', '/v1/progress')[1])
+            return original(gw, name, shape, instructions, payload)
+        with mock.patch.object(ImpactGateway, 'ask', spy):
+            self.assertEqual(self.call('POST', '/v1/generate-baseline', {})[0], 200)
+        run = seen[0]['runs'][0]
+        self.assertEqual(run['current']['stage'], 'Risk')
+        self.assertEqual(run['done'][0]['stage'], 'Planning')
+        self.assertEqual(self.call('GET', '/v1/progress')[1]['runs'], [])
 
     def test_cross_origin_post_is_refused(self):
         status, body = self.call('POST', '/v1/configure', {'model': 'evil'},

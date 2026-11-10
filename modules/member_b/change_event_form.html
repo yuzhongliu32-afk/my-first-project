@@ -101,6 +101,7 @@ dl{display:grid;grid-template-columns:1fr auto;gap:.4rem 1rem;margin:0}dt{color:
 </div>
 <div class="row"><label for="cutoff" style="margin:0">Evidence cut-off (optional)</label><input id="cutoff" type="date" style="width:auto"></div>
 <p class="msg" id="gen-msg"></p>
+<div id="gen-progress" aria-live="polite"></div>
 <div id="gen-log"></div>
 <label for="source">Show results from</label>
 <select id="source"><option value="live">AI agent output (latest run)</option><option value="snapshot">Presentation snapshot (recorded AI run, no API call)</option><option value="rules">Offline rules preview (not AI)</option></select>
@@ -322,6 +323,14 @@ function renderPlan(data){
     node("div",{class:"kpi"},node("b",{},(P.scope_items||[]).length),"Scope items"),
     node("div",{class:"kpi"},node("b",{},(P.wbs_items||[]).length),"WBS elements (levels "+[...new Set((P.wbs_items||[]).map(w=>w.level))].sort().join("/")+")"),
     node("div",{class:"kpi"},node("b",{},(P.milestones||[]).length),"Milestones")));
+  const tr=data.trace||{};
+  if((tr.auto_flags||[]).length||(tr.critic_notes||[]).length||(tr.attempts||[]).length){
+    const rev=node("details",{},node("summary",{},`Review trail: ${(tr.attempts||[]).length} checked steps, ${(tr.auto_flags||[]).length} code flags, ${(tr.critic_notes||[]).length} Critic notes for the human reviewer`));
+    if((tr.attempts||[]).length)rev.append(node("p",{},node("small",{},"Self-correction: "+tr.attempts.map(a=>"R"+a.round+" "+a.stage+(a.try>1?" #"+a.try:"")+" "+a.result).join(" → "))));
+    for(const f of tr.auto_flags||[])rev.append(node("p",{},node("span",{class:"tag unres"},"Code flag")," "+(f.wbs_ids||f.milestone_ids||[]).join(", ")+" — "+f.reason));
+    if((tr.critic_notes||[]).length)rev.append(node("h3",{},"Critic notes (not blocking; for the human reviewer)"),node("ul",{class:"plain"},tr.critic_notes.map(n=>node("li",{},n))));
+    box.append(rev);
+  }
   box.append(node("h3",{},"Scope statement"),node("p",{},P.scope_statement||"UNRESOLVED — no scope statement could be sourced."));
   box.append(node("h3",{},"Questions for the Sponsor"),node("p",{},node("small",{},"Unanswered questions stay open: the agent never fills in the Sponsor's answer. Hand these to D for the consolidated list.")));
   box.append(table(["ID","Question","Why it is needed","Status","Answer","Sources"],qs.map(q=>node("tr",{},
@@ -538,16 +547,41 @@ el("forget-key").addEventListener("click",async()=>{
   try{await api("/v1/configure",{forget_key:true,save_to_env:el("save-env").checked});msg("config-msg","Key removed"+(el("save-env").checked?" from server memory and .env.":" from server memory."),"ok")}catch(e){msg("config-msg",e.message,"bad")}
   refresh();
 });
+/* ---------- live progress while the agent runs ---------- */
+let PROGRESS_TIMER=null;
+const fmtTime=(s)=>s==null?"":(s>=60?Math.floor(s/60)+" min "+(s%60)+" s":s+" s");
+function stageLine(done,cur){
+  const parts=done.map(d=>d.stage+(d.result==="PASSED"||d.result==="CRITIC_PASS"?" ✓":d.result==="CRITIC_REVISE"?" → revise":" ✗ retry"));
+  return parts.concat(cur?[cur.stage+(cur.try>1?" (try "+cur.try+")":"")+" running…"]:[]).join("  ·  ");
+}
+async function pollProgress(){
+  try{
+    const p=await api("/v1/progress");
+    if(!p.runs.length){stopProgress();return false}
+    const box=el("gen-progress");box.replaceChildren();
+    for(const r of p.runs){
+      box.append(node("p",{},node("small",{},`${r.model||""} · running ${fmtTime(r.elapsed_seconds)} · round ${r.current?r.current.round:"-"}`),node("br"),
+        stageLine(r.done,r.current)+(r.current_seconds!=null?` (${fmtTime(r.current_seconds)})`:"")));
+    }
+    el("generate").disabled=true;
+    return true;
+  }catch{return false}
+}
+function startProgress(){stopProgress();pollProgress();PROGRESS_TIMER=setInterval(pollProgress,2000)}
+function stopProgress(){if(PROGRESS_TIMER)clearInterval(PROGRESS_TIMER);PROGRESS_TIMER=null;el("gen-progress").replaceChildren()}
+
 el("generate").addEventListener("click",async()=>{
   el("generate").disabled=true;el("gen-log").replaceChildren();
-  msg("gen-msg","Agent working: Planning → Risk → What-if → checks → Critic… (2–5 min)","busy");
+  msg("gen-msg","Agent working: Planning → Risk → What-if → code checks → Critic. Each stage is shown below as it runs.","busy");
+  startProgress();
   try{
     const body={};if(el("cutoff").value)body.cutoff=el("cutoff").value;
     const out=await api("/v1/generate-baseline",body);const m=out.metrics||{};
+    stopProgress();
     msg("gen-msg",`Done: ${out.wbs_items} WBS, ${out.milestones} milestones, ${out.risks} risks, ${out.scenarios} what-ifs, ${out.sponsor_questions} Sponsor questions.`,"ok");
-    el("gen-log").append(node("p",{},node("small",{},`Attempts: ${(out.attempts||[]).map(a=>a.attempt+" "+a.result).join(" → ")} · API calls ${m.api_calls??"?"} · tokens in ${m.input_tokens??"?"} / out ${m.output_tokens??"?"} · ${Math.round(m.elapsed_seconds||0)} s`)));
+    el("gen-log").append(node("p",{},node("small",{},`Self-correction: ${(out.attempts||[]).map(a=>"R"+a.round+" "+a.stage+(a.try>1?" #"+a.try:"")+" "+a.result).join(" → ")} · API calls ${m.api_calls??"?"} · tokens in ${m.input_tokens??"?"} / out ${m.output_tokens??"?"} · ${fmtTime(Math.round(m.elapsed_seconds||0))}`)));
     el("source").value="live";await loadOutput();
-  }catch(e){msg("gen-msg","Failed: "+e.message,"bad")}
+  }catch(e){stopProgress();msg("gen-msg","Failed: "+e.message,"bad")}
   finally{refresh()}
 });
 el("offline").addEventListener("click",async()=>{
@@ -620,6 +654,8 @@ if(location.protocol==="file:"){
   const has={live:STATUS.saved_b_output,snapshot:STATUS.saved_snapshot,rules:STATUS.saved_rules_output};
   const pick=order.find(k=>has[k]);
   if(pick){el("source").value=pick;await loadOutput()}
+  // A run started earlier (or in another tab) is still going: show its progress.
+  if(await pollProgress()){msg("gen-msg","An AI run is in progress.","busy");PROGRESS_TIMER=setInterval(async()=>{if(!(await pollProgress())){msg("gen-msg","The AI run finished. Results are loaded below.","ok");refresh();loadOutput()}},2000)}
 })}
 </script>
 </body></html>
