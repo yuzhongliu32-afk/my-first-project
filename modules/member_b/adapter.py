@@ -46,8 +46,10 @@ def forecast(request: dict, context: dict, *, scenario=None, gateway=None) -> di
     from harbourline.llm import ModelGateway
     from harbourline.sources import EvidenceLibrary
     from .schedule_forecast import generate_forecast
-    library = EvidenceLibrary(context.get('evidence_library_path') or
-                              Path(__file__).resolve().parents[2] / 'data/evidence_library.json')
+    library = context.get('evidence_library')
+    if library is None:
+        library = EvidenceLibrary(context.get('evidence_library_path') or
+                                  Path(__file__).resolve().parents[2] / 'data/evidence_library.json')
     if gateway is None:
         model = context.get('model') or os.environ.get('OPENAI_MODEL')
         if not model or not os.environ.get('OPENAI_API_KEY'):
