@@ -8,7 +8,7 @@ from .contracts import validate
 from .sources import EvidenceLibrary,digest
 from .pipeline import run_project
 from .governance import GovernanceStore,GateError
-from .jira import JiraCloud,MockJira,plan_actions,execute_actions
+from .jira import JiraCloud,MockJira,plan_actions,execute_actions,read_board
 from .llm import ModelGateway
 from .simulation import ScriptedModel
 
@@ -40,6 +40,7 @@ def main():
     run.add_argument('--semantic-index',type=Path);run.add_argument('--pack-dir',type=Path);run.add_argument('--scripted-test',action='store_true')
     run.add_argument('--out',type=Path,default=Path('.local/integrated_run'))
     preview=sub.add_parser('jira-preview');preview.add_argument('run_id');preview.add_argument('--out',type=Path,default=Path('.local/jira_preview.json'))
+    board=sub.add_parser('jira-read');board.add_argument('run_id');board.add_argument('--out',type=Path,default=Path('.local/jira_board.json'))
     approve=sub.add_parser('approve');approve.add_argument('batch_id');approve.add_argument('--confirm-hash',required=True)
     approve.add_argument('--decision',choices=['APPROVED','REJECTED'],default='APPROVED')
     apply=sub.add_parser('jira-apply');apply.add_argument('batch_id')
@@ -76,6 +77,12 @@ def main():
             jira=client(store);payload=plan_actions(full,jira)
             batch=store.propose(a.run_id,'JIRA_WRITE',jira.target,payload);write(a.out,batch)
             print(json.dumps({'batch_id':batch['id'],'review_hash':batch['hash'],'preview':str(a.out)}))
+        elif a.command=='jira-read':
+            # Read-only: compares the plan (WBS, milestones, risks, links) with the Jira board.
+            row,full=store.artifact(a.run_id)
+            jira=client(store);report=read_board(full,jira)
+            store.record_read(a.run_id,jira.target,report['summary']);write(a.out,report)
+            print(json.dumps({'read_only':True,**report['summary'],'output':str(a.out)}))
         elif a.command=='approve':
             print(json.dumps(store.approve(a.batch_id,confirmed_hash=a.confirm_hash,decision=a.decision)))
         elif a.command=='jira-apply':
