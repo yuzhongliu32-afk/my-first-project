@@ -100,8 +100,13 @@ async function loadLocalRuns(){
   // Runs saved by the local Harbourline server appear in the result list after the same citation check.
   try{const r=await fetch('/api/local-runs',{cache:'no-store'});if(!r.ok)return;const d=await r.json();
     for(const run of d.runs||[]){try{if(run.evidence_additions)Object.assign(S.data.extra_evidence??={},run.evidence_additions);S.engine.checkEvidence(run.full,S.data);if(!S.liveRuns[run.id])S.liveRuns[run.id]=run;}catch{}}
-    fillHistory();}catch{}
+    fillHistory();
+    // A shared link (#view=...&run=...) may name a run that only arrives with this list: open it now.
+    const link=new URLSearchParams(BOOT_HASH.slice(1)),want=link.get('run');
+    if(want&&S.liveRuns[want]&&S.record?.id!==want){if(VIEWS.includes(link.get('view')))S.view=link.get('view');loadRecord(want);}
+  }catch{}
 }
+const BOOT_HASH=location.hash;
 function fillHistory(){const el=$('historySelect'),options=[];const fresh=document.createElement('option');fresh.value='';fresh.textContent='Live demo — choose inputs and run';options.push(fresh);for(const r of Object.values(S.liveRuns).reverse()){const o=document.createElement('option');o.value=r.id;o.textContent=`${r.operation==='change_demo'?'TEST change':isLiveApi(r)?'Live OpenAI run':'Live free run'} · ${r.full.request.reporting_period.start_date} · #${r.id.slice(-6)}`;options.push(o);}for(const h of S.boot.history.filter(x=>x.provider==='openai')){const o=document.createElement('option');o.value=h.id;o.textContent=`Historical LLM comparison · ${h.report_type==='MONTHLY_GRANT'?'monthly':'weekly'} · ${label(h.status)}${h.report_count===0?' · no report':''}`;options.push(o);}el.replaceChildren(...options);el.value=S.record?.id||'';}
 function persist(){try{sessionStorage.setItem(SESSION,JSON.stringify(S.liveRuns));}catch{message('This browser could not retain the session. The current result is still available.');}}
 function remember(view){S.liveRuns[view.id]=structuredClone(view);const ids=Object.keys(S.liveRuns);while(ids.length>8)delete S.liveRuns[ids.shift()];persist();fillHistory();}
