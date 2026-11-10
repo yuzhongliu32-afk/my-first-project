@@ -139,12 +139,17 @@ def compute_network(activities, anchor_date, external_triggers=None, scenario=No
 
 
 def generate_forecast(request, library, gateway, *, planning=None, risk=None,
-                      cutoff=None, scenario=None):
+                      cutoff=None, scenario=None, change_event=None):
     """Member B supplement using the SAME library and OpenAI gateway as B live.
 
     If evidence lacks complete dates/durations/dependencies, return UNRESOLVED
     instead of creating a fabricated precise completion date.
     """
+    # The interactive change input is a hypothetical proposed scenario, never an approved fact.
+    if change_event is not None:
+        if scenario is not None:
+            raise ValueError("Provide either scenario or change_event, not both")
+        scenario = scenario_from_change_event(change_event)
     if request["source_snapshot_id"] not in (library.snapshot, library.bundle["b_source_mode"]):
         raise ValueError("Source snapshot mismatch; schedule forecast blocked")
     if cutoff:
@@ -213,5 +218,44 @@ def generate_forecast(request, library, gateway, *, planning=None, risk=None,
                 "metrics": gateway.metrics()}
     return {"status": "PROPOSED", "source_snapshot_id": library.snapshot,
             "reason": "Calculated from source-cited inputs; not an approved baseline",
+            "change_event": safe_change_event(change_event) if change_event is not None else None,
             "proposal": normalized, "forecast": calculated,
             "metrics": gateway.metrics()}
+
+
+def safe_change_event(event: dict) -> dict:
+    """Validate and normalize an event submitted by a user, not an authoritative source."""
+    if not isinstance(event, dict):
+        raise ValueError("change_event must be an object")
+    event_id = event.get("event_id")
+    change_type = event.get("change_type")
+    description = event.get("description")
+    activity_id = event.get("activity_id")
+    days = event.get("additional_days")
+    cost = event.get("cost_assumption_sgd")
+    if not isinstance(event_id, str) or not 1 <= len(event_id.strip()) <= 80:
+        raise ValueError("event_id is required (1–80 characters)")
+    if not isinstance(change_type, str) or not 1 <= len(change_type.strip()) <= 80:
+        raise ValueError("change_type is required (1–80 characters)")
+    if not isinstance(description, str) or not 1 <= len(description.strip()) <= 2000:
+        raise ValueError("description is required (1–2000 characters)")
+    if not isinstance(activity_id, str) or not 1 <= len(activity_id.strip()) <= 80:
+        raise ValueError("activity_id must identify a verified forecast activity")
+    if type(days) is not int or not 0 <= days <= 3650:
+        raise ValueError("additional_days must be a whole number from 0 to 3650")
+    if cost is not None and (type(cost) not in (int, float) or not 0 <= cost <= 1_000_000_000):
+        raise ValueError("cost_assumption_sgd must be a nonnegative numeric assumption or null")
+    if event.get("hypothetical") is not True:
+        raise ValueError("Only hypothetical, not approved, change events are allowed here")
+    return {"event_id": event_id.strip(), "change_type": change_type.strip(),
+            "description": description.strip(), "activity_id": activity_id.strip(),
+            "additional_days": days, "cost_assumption_sgd": cost,
+            "hypothetical": True, "status": "PROPOSED_NOT_APPROVED"}
+
+
+def scenario_from_change_event(event: dict) -> dict:
+    """Convert a human-entered event to a deterministic, conditional CPM scenario."""
+    normalized = safe_change_event(event)
+    return {"scenario_id": normalized["event_id"],
+            "activity_id": normalized["activity_id"],
+            "additional_days": normalized["additional_days"]}
