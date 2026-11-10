@@ -72,3 +72,25 @@ class TeamAccessCodes(unittest.TestCase):
         os.environ['OPENAI_API_KEY_C'] = 'kc'
         self.assertEqual(ModelGateway(key_env='OPENAI_API_KEY_C').key_env, 'OPENAI_API_KEY_C')
         self.assertEqual(billing(), {'B': 'OPENAI_API_KEY', 'C': 'OPENAI_API_KEY_C'})
+
+
+class CloudDeployment(unittest.TestCase):
+    def test_public_host_is_allowed_only_when_configured(self):
+        import os
+        from harbourline.site_server import allowed_hosts
+        saved = os.environ.pop('RENDER_EXTERNAL_HOSTNAME', None)
+        try:
+            self.assertNotIn('demo.onrender.com', allowed_hosts())
+            os.environ['RENDER_EXTERNAL_HOSTNAME'] = 'demo.onrender.com'
+            self.assertIn('demo.onrender.com', allowed_hosts())
+            self.assertIn('127.0.0.1', allowed_hosts())
+        finally:
+            os.environ.pop('RENDER_EXTERNAL_HOSTNAME', None)
+            if saved: os.environ['RENDER_EXTERNAL_HOSTNAME'] = saved
+
+    def test_published_records_hold_no_credentials(self):
+        import re
+        from harbourline.site_server import RECORDED
+        for f in RECORDED.glob('*.json'):
+            text = f.read_text(encoding='utf-8')
+            self.assertIsNone(re.search(r'sk-[A-Za-z0-9_-]{20,}|ATATT[A-Za-z0-9_=-]{20,}|@gmail\.com', text), f.name)

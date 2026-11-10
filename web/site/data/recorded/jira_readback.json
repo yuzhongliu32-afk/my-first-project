@@ -1,0 +1,25 @@
+{
+ "url": "https://zhouai29.atlassian.net/jira/software/projects/HL/boards",
+ "mode": "recorded",
+ "run_id": "RUN-72ff003f-50e8-4563-b38d-a5fe3a79d710",
+ "observed_count": 51,
+ "readback_at": "2026-11-10T22:49:55.850030+00:00",
+ "readback_verified": true,
+ "new_writes_on_replay": 0,
+ "duplicate_external_keys": 0,
+ "summary": {
+  "differs": 0,
+  "duplicate_external_keys": 0,
+  "in_sync": 51,
+  "links_linked": 89,
+  "links_not_linked": 0,
+  "links_pending": 0,
+  "missing": 0,
+  "new_writes_on_replay": 0,
+  "not_in_plan": 0,
+  "observed_count": 51,
+  "planned_items": 51,
+  "risks": 8
+ },
+ "notice": "Recorded read-back from the team Jira sandbox (approved write, then read-only verification)."
+}

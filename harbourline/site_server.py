@@ -70,14 +70,46 @@ def governance_store(path):
         store.db.close(); store._lockfile.close()
 
 
+def allowed_hosts():
+    """This computer, plus the public host name of a cloud deployment."""
+    hosts = {'127.0.0.1', 'localhost', '::1'}
+    for name in ('RENDER_EXTERNAL_HOSTNAME', 'PUBLIC_HOSTS'):
+        hosts |= {h.strip() for h in os.getenv(name, '').split(',') if h.strip()}
+    return hosts
+
+
+RECORDED = SITE / 'data/recorded'
+
+
+def recorded_runs():
+    """Verified runs published with the page (exported from the local audit database)."""
+    runs = []
+    for f in sorted(RECORDED.glob('api-*.json')):
+        try:
+            runs.append(json.loads(f.read_text(encoding='utf-8')))
+        except (ValueError, OSError):
+            continue
+    return runs
+
+
+def recorded_jira():
+    try:
+        return json.loads((RECORDED / 'jira_readback.json').read_text(encoding='utf-8'))
+    except (ValueError, OSError):
+        return None
+
+
 def jira_board_url():
     base, key = os.getenv('JIRA_BASE_URL', '').rstrip('/'), os.getenv('JIRA_PROJECT_KEY', '')
     return f'{base}/jira/software/projects/{key}/boards' if base and key else None
 
 
 class SiteState:
-    def __init__(self, library_path: Path, env_file: Path | None, run_dir: Path, db: Path | None = None):
+    def __init__(self, library_path: Path, env_file: Path | None, run_dir: Path, db: Path | None = None,
+                 sources: Path | None = None):
         self.db = Path(db) if db else None
+        self.sources = Path(sources) if sources else ROOT / 'data/brief_source_registry.json'
+        self.paid_runs = 0  # OpenAI runs since start; capped by SITE_MAX_RUNS on a public deployment
         self.library_path = Path(library_path)
         self.env_file = env_file
         self.env_mtime = None
@@ -195,7 +227,7 @@ def execute_run(state: SiteState, params: dict) -> dict:
     base['request'].update(instructions='Prepare source-grounded proposals and human-review report drafts.',
                            reporting_period=period, requested_report_type=params['report_type'],
                            max_review_rounds=params['max_review_rounds'])
-    ctx = {'source_registry_path': str(ROOT / 'data/brief_source_registry.json')}
+    ctx = {'source_registry_path': str(state.sources)}
     live = params['planning_mode'] == 'live'
     b_trace: dict = {}
     refiner = (lambda b, library, gateway: generate(b, library, gateway, max_rounds=3, trace=b_trace)) if live else None
@@ -343,6 +375,9 @@ class Handler(BaseHTTPRequestHandler):
                 latest = reads[-1] if reads else None
             except Exception:
                 latest = None
+        if latest is None and recorded_jira():
+            rec = recorded_jira()
+            return {**rec, 'previous_site': previous.get('url')}
         s = (latest or {}).get('detail', {}).get('summary', {})
         return {'url': jira_board_url(), 'mode': 'local' if latest else 'not_yet_read',
                 'observed_count': s.get('observed_count', 0), 'readback_at': (latest or {}).get('time'),
@@ -367,7 +402,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def same_origin(self):
         host = (self.headers.get('Host') or '').rsplit(':', 1)[0].strip('[]')
-        if host not in ('127.0.0.1', 'localhost', '::1'):
+        if host not in allowed_hosts():
             return False
         origin = self.headers.get('Origin')
         return origin is None or origin.split('://', 1)[-1] == self.headers.get('Host')
@@ -395,6 +430,8 @@ class Handler(BaseHTTPRequestHandler):
                     runs.append(json.loads(f.read_text(encoding='utf-8')))
                 except (ValueError, OSError):
                     continue
+            seen = {r.get('id') for r in runs}
+            runs = [r for r in recorded_runs() if r.get('id') not in seen] + runs
             if self.state.db and self.state.db.exists():
                 try:  # show the current approvals, Jira writes, readbacks and incidents for each run
                     with governance_store(self.state.db) as store:
@@ -424,7 +461,7 @@ class Handler(BaseHTTPRequestHandler):
             else:
                 self.send_json(200, {k: v for k, v in entry.items() if k != 'fingerprint'})
             return
-        if path == '/data/presentation-data.json' and jira_board_url():
+        if path == '/data/presentation-data.json' and (jira_board_url() or recorded_jira()):
             # Point the page at this team's own Jira. Evidence and corpus (the hashed parts) are untouched.
             data = json.loads((SITE / 'data/presentation-data.json').read_text(encoding='utf-8'))
             data['bootstrap']['jira'] = self.jira_bootstrap(data['bootstrap'].get('jira') or {})
@@ -489,6 +526,12 @@ class Handler(BaseHTTPRequestHandler):
             if self.state.active:
                 self.error(409, 'RUN_IN_PROGRESS', 'Another run is in progress on this server.')
                 return
+            cap = int(os.getenv('SITE_MAX_RUNS', '0') or 0)
+            if cap and self.state.paid_runs >= cap:
+                self.error(429, 'RUN_LIMIT_REACHED', f'This deployment allows {cap} OpenAI runs; the limit is reached. '
+                           'Use the free demo or the recorded verified run in the Result list.')
+                return
+            self.state.paid_runs += 1
             self.state.active = key
             self.state.runs[key] = {'status': 'RUNNING', 'fingerprint': fingerprint}
         try:
@@ -519,6 +562,10 @@ def _post_change_note(self):
     with self.state.lock:
         if self.state.active:
             self.error(409, 'RUN_IN_PROGRESS', 'Another run is in progress on this server.'); return
+        cap = int(os.getenv('SITE_MAX_RUNS', '0') or 0)
+        if cap and self.state.paid_runs >= cap:
+            self.error(429, 'RUN_LIMIT_REACHED', f'This deployment allows {cap} OpenAI runs; the limit is reached.'); return
+        self.state.paid_runs += 1
         self.state.active = 'change-note'
     try:
         note = write_change_note(self.state, json.loads(self.rfile.read(length)))
@@ -538,7 +585,10 @@ Handler.post_change_note = _post_change_note
 def main():
     from modules.member_b.env_file import load_env_file
     p = argparse.ArgumentParser(description='Serve the Harbourline demo page on the local A-B-C pipeline')
-    p.add_argument('--port', type=int, default=8080)
+    p.add_argument('--host', default=os.getenv('HOST', '127.0.0.1'),
+                   help='0.0.0.0 on a cloud host; 127.0.0.1 keeps it on this computer')
+    p.add_argument('--port', type=int, default=int(os.getenv('PORT', '8080')))
+    p.add_argument('--sources', type=Path, default=ROOT / 'data/brief_source_registry.json')
     p.add_argument('--library', type=Path, default=ROOT / 'data/evidence_library.json')
     p.add_argument('--env-file', type=Path)
     p.add_argument('--runs', type=Path, default=ROOT / '.local/site_runs')
@@ -547,9 +597,9 @@ def main():
     a = p.parse_args()
     if a.env_file:
         print(json.dumps({'env_file_loaded': load_env_file(a.env_file, override=True)}))
-    Handler.state = SiteState(a.library, a.env_file, a.runs, a.db)
-    server = ThreadingHTTPServer(('127.0.0.1', a.port), Handler)
-    print(f'Harbourline site: http://127.0.0.1:{a.port}/', flush=True)
+    Handler.state = SiteState(a.library, a.env_file, a.runs, a.db, a.sources)
+    server = ThreadingHTTPServer((a.host, a.port), Handler)
+    print(f'Harbourline site: http://{a.host}:{a.port}/', flush=True)
     try:
         server.serve_forever()
     except KeyboardInterrupt:
