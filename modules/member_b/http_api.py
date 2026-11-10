@@ -7,6 +7,7 @@ POST /v1/change-impact {event: ..., planning: ..., risk: ...}\nPOST /v1/schedule
 import argparse
 import json
 import os
+from pathlib import Path
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from .adapter import run, forecast
 from .change import analyse_change
@@ -24,8 +25,20 @@ class MemberBHTTPHandler(BaseHTTPRequestHandler):
         self.send_header('Content-Length',str(len(content)))
         self.end_headers();self.wfile.write(content)
     def do_GET(self):
-        if self.path=='/health':self.send(200,{'service':'member-b','status':'ok','modes':['rules','live']})
-        else:self.send(404,{'error':'unknown path'})
+        if self.path=='/health':
+            self.send(200,{'service':'member-b','status':'ok','modes':['rules','live']})
+        elif self.path=='/change-event':
+            page=Path(__file__).with_name('change_event_form.html')
+            data=page.read_bytes()
+            self.send_response(200)
+            self.send_header('Content-Type','text/html; charset=utf-8')
+            self.send_header('Content-Security-Policy',"default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self'; form-action 'self'; base-uri 'none'")
+            self.send_header('Cache-Control','no-store')
+            self.send_header('Content-Length',str(len(data)))
+            self.end_headers()
+            self.wfile.write(data)
+        else:
+            self.send(404,{'error':'unknown path'})
     def do_POST(self):
         if self.path not in ('/v1/plan-risk','/v1/change-impact','/v1/schedule-forecast'):
             self.send(404,{'error':'unknown path'});return
@@ -43,7 +56,20 @@ class MemberBHTTPHandler(BaseHTTPRequestHandler):
                 context=body.get('context',{}).copy()
                 if body.get('model'):context['model']=body['model']
                 if body.get('cutoff'):context['cutoff']=body['cutoff']
-                out=forecast(body['request'],context,scenario=body.get('scenario'))
+                request=body.get('request')
+                if request is None:
+                    # Local browser form reuses an existing B output, never loads
+                    # a browser-supplied filesystem path or a public URL.
+                    saved=Path(__file__).resolve().parents[2]/'.local/member_b_live_output.json'
+                    if not saved.is_file():
+                        self.send(422,{'error':'B_OUTPUT_NOT_FOUND',
+                                       'message':'Run Member B live first to create .local/member_b_live_output.json; no API key is accepted in the browser.'})
+                        return
+                    request=json.loads(saved.read_text(encoding='utf-8'))
+                context.setdefault('planning',request.get('planning'))
+                context.setdefault('risk',request.get('risk'))
+                out=forecast(request,context,scenario=body.get('scenario'),
+                             change_event=body.get('change_event'))
             else:
                 context=body.get('context',{}).copy()
                 context['mode']=body.get('mode','rules')
@@ -53,7 +79,7 @@ class MemberBHTTPHandler(BaseHTTPRequestHandler):
                 if body.get('model'):context['model']=body['model']
                 if body.get('cutoff'):context['cutoff']=body['cutoff']
                 out=run(body['request'],context)
-            self.send(200 if out.get('status')!='BLOCKED' else 422,out)
+            self.send(200 if out.get('status') not in ('BLOCKED','FAILED') else 422,out)
         except (KeyError,TypeError,ValueError,json.JSONDecodeError) as exc:
             self.send(400,{'error':type(exc).__name__,'message':str(exc)[:280]})
         except Exception as exc:
