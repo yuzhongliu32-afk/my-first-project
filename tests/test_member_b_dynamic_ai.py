@@ -189,6 +189,13 @@ class DynamicAgentTests(unittest.TestCase):
         self.assertIsNone(p['milestones'][0]['calendar_date'])
         self.assertIn('July 2028',p['milestones'][0]['relative_timing'])
         self.assertEqual(p['milestones'][1]['calendar_date'],'2027-01-04')
+    def test_unsourced_owner_is_labelled_proposed_by_code(self):
+        from modules.member_b.agent import _label_unsourced_owners
+        cat={'E1':{'quote':'Owner: Project Manager.'},'E2':{'quote':'Asbestos confirmed.'}}
+        r={'risks':[{'risk_id':'R01','owner':'KHB','source_ids':['E2']},
+                    {'risk_id':'R02','owner':'Project Manager','source_ids':['E1']}]}
+        self.assertEqual(_label_unsourced_owners(r,cat),['R01'])
+        self.assertEqual([x['owner'] for x in r['risks']],['Proposed: KHB','Project Manager'])
     def test_critic_escalation_blocked(self):
         with self.assertRaisesRegex(ValueError,'did not PASS'):
             generate(request(),FakeLibrary(),MockGateway(critic='ESCALATE'))
@@ -226,3 +233,31 @@ class DynamicAgentTests(unittest.TestCase):
             generate(request(),lib,MockGateway())
 
 if __name__=='__main__':unittest.main()
+
+
+class DanglingRiskLinks(unittest.TestCase):
+    def test_links_to_removed_plan_items_are_dropped(self):
+        from modules.member_b.agent import _drop_dangling_links
+        plan = {'wbs_items': [{'wbs_id': 'W01'}], 'milestones': [{'milestone_id': 'M01'}]}
+        risk = {'risks': [{'risk_id': 'R03', 'related_wbs_ids': ['W01', 'W09'], 'related_milestone_ids': ['M07', 'M01']},
+                          {'risk_id': 'R04', 'related_wbs_ids': ['W01'], 'related_milestone_ids': []}]}
+        self.assertEqual(_drop_dangling_links(risk, plan), {'R03': ['W09', 'M07']})
+        self.assertEqual(risk['risks'][0]['related_wbs_ids'], ['W01'])
+        self.assertEqual(risk['risks'][0]['related_milestone_ids'], ['M01'])
+
+
+class WhatIfRetry(unittest.TestCase):
+    def test_failed_whatif_retry_sends_a_serialisable_previous_attempt(self):
+        class BadFirstWhatIf(MockGateway):
+            def ask(self, name, shape, instructions, payload):
+                if name == 'harbourline_b_whatif' and not any(n == name for n, _ in self.calls):
+                    self.calls.append((name, payload))
+                    bad = whatif_proposal(); bad['scenarios'][0]['affected_wbs_ids'] = ['9.9.9']
+                    return bad
+                return super().ask(name, shape, instructions, payload)
+        g = BadFirstWhatIf()
+        generate(request(), FakeLibrary(), g)
+        whatifs = [p for n, p in g.calls if n == 'harbourline_b_whatif']
+        self.assertEqual(len(whatifs), 2)
+        json.dumps(whatifs[1])  # must not contain exception objects
+        self.assertTrue(whatifs[1]['prior_findings'])

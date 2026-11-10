@@ -20,8 +20,11 @@ def _timeout():
 
 
 class ModelGateway:
-    def __init__(self, *, responder=None, model=None):
+    def __init__(self, *, responder=None, model=None, key_env='OPENAI_API_KEY'):
         self.responder = responder
+        # Which environment variable holds this gateway's OpenAI key (e.g. OPENAI_API_KEY_C so that
+        # Member C's calls are billed to C's key). Falls back to OPENAI_API_KEY when that one is empty.
+        self.key_env = key_env if os.environ.get(key_env) else 'OPENAI_API_KEY'
         self.provider = os.getenv('MODEL_PROVIDER', 'openai').lower()
         if self.provider not in ('openai', 'gemini', 'openrouter'):
             raise ValueError('MODEL_PROVIDER must be openai, gemini or openrouter')
@@ -42,11 +45,11 @@ class ModelGateway:
         elif self.provider == 'openrouter':
             value = self.ask_openrouter(name, schema, instructions, payload)
         else:
-            if not self.model or not os.environ.get('OPENAI_API_KEY'):
+            if not self.model or not os.environ.get(self.key_env):
                 raise ValueError('Set OPENAI_MODEL and OPENAI_API_KEY in the backend environment.')
             if self._client is None:
                 from openai import OpenAI
-                self._client = OpenAI(timeout=_timeout(), max_retries=0)
+                self._client = OpenAI(api_key=os.environ[self.key_env], timeout=_timeout(), max_retries=0)
             from openai import RateLimitError
             # Reasoning models (e.g. gpt-6-luna) accept an effort level; others reject the field,
             # so it is sent only when OPENAI_REASONING_EFFORT is set (none/low/medium/high/xhigh).
@@ -193,10 +196,10 @@ class ModelGateway:
             raise ValueError('Use lexical retrieval with this reporting route')
         if self.responder:
             raise ValueError('Embeddings are not available in scripted tests')
-        if not os.environ.get('OPENAI_API_KEY'):raise ValueError('OPENAI_API_KEY is required')
+        if not os.environ.get(self.key_env):raise ValueError('OPENAI_API_KEY is required')
         if self._client is None:
             from openai import OpenAI
-            self._client=OpenAI(timeout=_timeout(),max_retries=0)
+            self._client=OpenAI(api_key=os.environ[self.key_env],timeout=_timeout(),max_retries=0)
         self.api_calls+=1;self.embedding_calls+=1
         try:response=self._client.embeddings.create(model=model,input=texts)
         except Exception:

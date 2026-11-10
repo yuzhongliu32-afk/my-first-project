@@ -28,9 +28,30 @@ def client(store):
     return jira
 
 
+def jira_check():
+    """Read-only readiness check before the first real write. Returns names only, never credentials."""
+    import getpass,os
+    jira=JiraCloud.from_env()
+    me=jira.request('GET','/myself')
+    types=jira.types()
+    links=[t['name'] for t in jira.request('GET','/issueLinkType').get('issueLinkTypes',[])]
+    wanted={k:os.getenv(k,d) for k,d in (('JIRA_TYPE_LEVEL1','Epic'),('JIRA_TYPE_LEVEL2','Task'),('JIRA_TYPE_LEVEL3','Sub-task'),
+            ('JIRA_TYPE_MILESTONE','Task'),('JIRA_TYPE_RISK','Task'))}
+    approvers=[x for x in os.getenv('HARBOURLINE_APPROVERS','').split(',') if x]
+    problems=[f'{k}={v} is not an issue type in {jira.project}' for k,v in wanted.items() if v not in types]
+    for link in ('Blocks',os.getenv('JIRA_RISK_LINK_TYPE','Relates')):
+        if link not in links:problems.append(f'Link type "{link}" does not exist on this site')
+    if getpass.getuser() not in approvers:
+        problems.append(f'HARBOURLINE_APPROVERS must include the local approver name "{getpass.getuser()}"')
+    return {'site':jira.base,'project':jira.project,'signed_in_as':me.get('displayName'),
+            'issue_types':sorted(set(types)),'link_types':links,'configured_types':wanted,
+            'ready':not problems,'problems':problems}
+
+
 def main():
     p=argparse.ArgumentParser(description='Harbourline local integration controls; no anonymous approval endpoint')
     p.add_argument('--db',type=Path,default=Path('.local/governance.sqlite'))
+    p.add_argument('--env-file',type=Path,help='Load Jira/OpenAI settings from this local file (never printed)')
     sub=p.add_subparsers(dest='command',required=True)
     run=sub.add_parser('run');run.add_argument('--library',type=Path,default=Path('data/evidence_library.json'))
     run.add_argument('--start',required=True);run.add_argument('--end',required=True);run.add_argument('--cutoff',required=True)
@@ -50,7 +71,15 @@ def main():
     show=sub.add_parser('show');show.add_argument('run_id');show.add_argument('--out',type=Path,default=Path('.local/current_state.json'))
     release=sub.add_parser('report-preview');release.add_argument('run_id');release.add_argument('--directory',type=Path,required=True)
     export=sub.add_parser('report-export');export.add_argument('batch_id')
-    a=p.parse_args();store=GovernanceStore(a.db)
+    sub.add_parser('jira-check',help='Read-only: verify Jira login, project issue types and link types; writes nothing')
+    a=p.parse_args()
+    if a.env_file:
+        from dotenv import load_dotenv
+        if not a.env_file.is_file():raise SystemExit(f'Env file not found: {a.env_file}')
+        load_dotenv(a.env_file,interpolate=False,override=False)
+    if a.command=='jira-check':
+        print(json.dumps(jira_check(),indent=2,ensure_ascii=False));return
+    store=GovernanceStore(a.db)
     try:
         if a.command=='run':
             lib=EvidenceLibrary(a.library);base=json.loads((Path(__file__).resolve().parents[1]/'examples/request.json').read_text(encoding='utf-8'))

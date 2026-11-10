@@ -335,6 +335,21 @@ def _check_planning(planning):
     _acyclic(planning['milestones'],'milestone_id','predecessor_milestone_ids')
 
 
+def _drop_dangling_links(risk, planning):
+    """After a plan revision, links to WBS items or milestones that no longer exist are removed by code
+    (the risk itself, its rating and evidence are kept). Returns {risk_id: [removed ids]}."""
+    wbs = {w['wbs_id'] for w in planning['wbs_items']}
+    ms = {m['milestone_id'] for m in planning['milestones']}
+    removed = {}
+    for r in risk.get('risks', []):
+        gone = [x for x in r.get('related_wbs_ids', []) if x not in wbs] +                [x for x in r.get('related_milestone_ids', []) if x not in ms]
+        if gone:
+            r['related_wbs_ids'] = [x for x in r.get('related_wbs_ids', []) if x in wbs]
+            r['related_milestone_ids'] = [x for x in r.get('related_milestone_ids', []) if x in ms]
+            removed[r['risk_id']] = gone
+    return removed
+
+
 def _check_risk(planning, risk):
     """Risk-register mechanical checks against an accepted plan (expanded bundles)."""
     idset = {w['wbs_id'] for w in planning['wbs_items']}
@@ -343,7 +358,7 @@ def _check_risk(planning, risk):
     if not rids:raise ValueError('Risk register is empty')
     if len(rids) != len(set(rids)):raise ValueError('Duplicate risk IDs')
     for r in risk['risks']:
-        if not set(r['related_wbs_ids']).issubset(idset):raise ValueError(f"Risk {r['risk_id']} links to a WBS ID that is not in the plan")
+        if not set(r['related_wbs_ids']).issubset(idset):raise ValueError(f"Risk {r['risk_id']} links to WBS {sorted(set(r['related_wbs_ids'])-idset)}, which is not in the plan; valid WBS IDs: {sorted(idset)}")
         if not set(r['related_milestone_ids']).issubset(midset):raise ValueError(f"Risk {r['risk_id']} links to a milestone that is not in the plan")
         p,i,s = r['probability'],r['impact'],r['score']
         if p is None or i is None:
@@ -412,6 +427,21 @@ def _unsupported_dates(planning, catalog):
             m['calendar_date'] = None
             fixed.append(m['milestone_id'])
     return fixed
+
+
+def _label_unsourced_owners(risk, catalog):
+    """An owner is a fact only if the risk's own cited rows name it; otherwise code labels it
+    "Proposed: <role>" (a planning proposal for human confirmation, Brief: no invented owners)."""
+    labelled = []
+    for r in risk.get('risks', []):
+        owner = (r.get('owner') or '').strip()
+        if not owner or owner.lower().startswith('proposed'):
+            continue
+        quotes = ' '.join(catalog[x]['quote'] for x in r.get('source_ids', []) if x in catalog).lower()
+        if owner.lower() not in quotes:
+            r['owner'] = 'Proposed: ' + owner
+            labelled.append(r['risk_id'])
+    return labelled
 
 
 def _flag_untraceable(planning):
@@ -588,6 +618,14 @@ def generate(request, library, gateway, *, cutoff=None, max_rounds=2, trace=None
 
         def check_risk(candidate):
             normalize_ids(candidate, catalog)
+            proposed = _label_unsourced_owners(candidate, catalog)
+            if proposed:
+                trace['auto_flags'].append({'round': round_no, 'risk_ids': proposed,
+                    'reason': 'Owner not named in the cited rows: labelled "Proposed:" by code'})
+            dangling = _drop_dangling_links(candidate, expanded_plan)
+            if dangling:
+                trace['auto_flags'].append({'round': round_no, 'risk_links_removed': dangling,
+                    'reason': 'Linked WBS item or milestone is not in the current plan: link removed by code'})
             expanded = _expand({**candidate, 'scenarios': []}, catalog)
             _check_risk(expanded_plan, expanded)
             return expanded
@@ -603,6 +641,10 @@ def generate(request, library, gateway, *, cutoff=None, max_rounds=2, trace=None
                             previous={k: v for k, v in risk.items() if k != 'scenarios'} if risk else None)
 
         def produce_whatif(findings, previous):
+            # On a retry, stage() hands back the whole earlier result; only the model's proposal is
+            # sent back to the model (never the wrapper or an exception object).
+            if isinstance(previous, dict) and ('proposal' in previous or 'error' in previous):
+                previous = previous.get('proposal')
             try:
                 scenarios, detail, proposal = run_whatif(
                     gateway, RULES, {'context':context,'evidence':evidence}, catalog,

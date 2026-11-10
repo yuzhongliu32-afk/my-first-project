@@ -18,7 +18,9 @@ from pathlib import Path
 
 ALLOWED = ("OPENAI_API_KEY", "OPENAI_MODEL", "OPENAI_MAX_OUTPUT_TOKENS",
            "OPENAI_INPUT_USD_PER_MILLION", "OPENAI_OUTPUT_USD_PER_MILLION",
-           "MEMBER_B_ACCESS_CODE", "MEMBER_B_AI_RUN_LIMIT", "OPENAI_TIMEOUT_SECONDS", "OPENAI_REASONING_EFFORT")
+           "MEMBER_B_ACCESS_CODE", "MEMBER_B_AI_RUN_LIMIT", "OPENAI_TIMEOUT_SECONDS", "OPENAI_REASONING_EFFORT",
+           "MEMBER_C_ACCESS_CODE", "OPENAI_API_KEY_C",
+           "JIRA_BASE_URL", "JIRA_PROJECT_KEY")  # Jira location only; the token stays out of the web server
 
 
 def read_env_file(path) -> dict:

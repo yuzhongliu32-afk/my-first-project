@@ -91,6 +91,9 @@ class JiraRiskTests(unittest.TestCase):
         s = report['summary']
         self.assertEqual((s['missing'], s['differs'], s['links_not_linked']), (0, 0, 0))
         self.assertEqual(s['in_sync'], s['planned_items'])
+        # Idempotency figures shown on the page: every item found once, nothing new on a replay.
+        self.assertEqual((s['observed_count'], s['duplicate_external_keys'], s['new_writes_on_replay']),
+                         (s['planned_items'], 0, 0))
         # A human edits a risk title in Jira: the readback shows it, nothing is overwritten.
         key = next(r['issue_key'] for r in report['items'] if r['risk_id'])
         self.jira.issues[key]['fields']['summary'] = 'Edited by a person'

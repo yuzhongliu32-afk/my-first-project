@@ -21,10 +21,10 @@ class ScriptedModel:
         if name=='harbourline_critic_draft':
             kind=payload['report_type'];n=self.review_counts.get(kind,0)+1;self.review_counts[kind]=n
             revise=self.always_revise or (self.revise_first and n==1)
-            return {'verdict':'REVISE' if revise else 'PASS','findings':([{'category':'FORMAT_ERROR','severity':'MINOR',
+            return {'verdict':'REVISE' if revise else 'PASS','findings':([{'category':'FORMAT_ERROR','severity':'MAJOR',
               'section_id':'SEC-01','description':'SCRIPTED finding for revision-loop test','required_fix':'Qualify test text.','evidence_ids':[]}] if revise else [])}
         if name=='harbourline_revision':
-            return {'sections':[{'section_id':s['section_id'],'text':'Revised scripted test: '+s['text']} for s in payload['report']['sections']],
+            return {'sections':[{'section_id':s['section_id'],'text':'Revised scripted test: '+s['text'],'evidence_ids':[]} for s in payload['report']['sections']],
                     'open_issues':payload['report']['open_issues'],'assumptions':payload['report']['assumptions']}
         if name=='harbourline_planning_risk':
             if 'preliminary_plan' in payload:

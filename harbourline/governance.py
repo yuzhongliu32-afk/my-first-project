@@ -19,6 +19,24 @@ def now():return datetime.now(timezone.utc).isoformat()
 class GateError(ValueError):pass
 
 
+def run_incident_items(run_id,full):
+    """(incident_id, description) pairs a run outcome shows: blocked modules and stopped reports."""
+    found=[]
+    for err in full.get('errors',[]):
+        if err.get('code','').endswith('_BLOCKED') or err.get('code') in ('LIVE_AGENT_FAILED',):
+            found.append((f"INC-{run_id}-{err['code']}",f"{err['code']}: {err.get('message','')}"))
+    for r in full.get('reporting',{}).get('reports',[]):
+        if r.get('status')=='BLOCKED':
+            found.append((f"INC-{run_id}-{r.get('report_type')}-STOPPED",
+                          f"Critic stopped the {r.get('report_type')} report before human review (stop condition)."))
+    return found
+
+
+def run_incidents(run_id,full):
+    return [{'incident_id':i,'description':t,'status':'OPEN','corrective_action':None,'related_run_id':run_id}
+            for i,t in dict(run_incident_items(run_id,full)).items()]
+
+
 class GovernanceStore:
     def __init__(self,path,*,approvers=None,actor_provider=getpass.getuser):
         self.path=Path(path);self.path.parent.mkdir(parents=True,exist_ok=True)
@@ -136,13 +154,7 @@ class GovernanceStore:
                 found.append(('INC-'+d['batch_id']+'-'+e['event'],
                               f"{e['event']} for approved batch {d['batch_id']} at {e['time']}"
                               + (f" ({d.get('error_type')})" if d.get('error_type') else '')))
-        for err in full.get('errors',[]):
-            if err.get('code','').endswith('_BLOCKED') or err.get('code') in ('LIVE_AGENT_FAILED',):
-                found.append((f"INC-{run_id}-{err['code']}",f"{err['code']}: {err.get('message','')}"))
-        for r in full.get('reporting',{}).get('reports',[]):
-            if r.get('status')=='BLOCKED':
-                found.append((f"INC-{run_id}-{r.get('report_type')}-STOPPED",
-                              f"Critic stopped the {r.get('report_type')} report before human review (stop condition)."))
+        found+=run_incident_items(run_id,full)
         resolved={e['detail']['incident_id']:e['detail']['corrective_action'] for e in events if e['event']=='INCIDENT_RESOLVED'}
         return [{'incident_id':i,'description':text,'status':'RESOLVED' if i in resolved else 'OPEN',
                  'corrective_action':resolved.get(i),'related_run_id':run_id} for i,text in dict(found).items()]

@@ -10,7 +10,7 @@ from uuid import uuid4
 from datetime import datetime,timezone
 
 
-def run_project(common,library_path,*,cutoff,plan_mode='rules',b_context=None,c_gateway=None,b_gateway=None,semantic_index=None,reporting_periods=None,include_reports=True):
+def run_project(common,library_path,*,cutoff,plan_mode='rules',b_context=None,c_gateway=None,b_gateway=None,semantic_index=None,reporting_periods=None,include_reports=True,b_refiner=None,b_adjust=None):
     from modules.member_b.adapter import run as b_run
     from modules.member_c.adapter import run as c_run
     started=monotonic();lib=EvidenceLibrary(library_path);request=deepcopy(common)
@@ -44,8 +44,13 @@ def run_project(common,library_path,*,cutoff,plan_mode='rules',b_context=None,c_
     record('B_SOURCE_MODE_VERIFIED_AND_MAPPED',{'legacy':legacy,'canonical':lib.snapshot})
     if plan_mode=='live':
         from modules.member_b.agent import refine
-        b=refine(b,lib,b_gateway or ModelGateway())
+        # Default: A's ID-preserving refine (stable Jira keys). The site's "B update" route passes
+        # B's full agent instead (fresh Planning, Risk, What-if and independent B Critic).
+        b=(b_refiner or refine)(b,lib,b_gateway or ModelGateway())
         record('B_MODEL_REFINEMENT_VALIDATED',b)
+    if b_adjust:
+        # User-entered what-if assumptions from the page; applied before validation and the C handoff.
+        b_adjust(b);record('B_USER_ASSUMPTIONS_APPLIED',b['risk']['scenarios'])
     record('B_OUTPUT_VALIDATED',b)
     req_c={**deepcopy(request),'recipient':'C','operation':'GENERATE_REPORTS'}
     if include_reports:

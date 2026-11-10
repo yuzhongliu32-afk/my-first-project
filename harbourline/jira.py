@@ -234,14 +234,23 @@ def read_board(full,jira):
         status='PENDING' if not (pred and succ) else ('LINKED' if jira.linked(pred,succ,kind) else 'NOT_LINKED')
         links.append({'type':kind,'from':a['predecessor'],'to':a['successor'],'status':status})
     planned={a['label'] for a in payload['actions'] if a['action']!='LINK'}
+    agent_items=jira.search_label('ai-generated')
     extra=[{'issue_key':i['key'],'summary':i['fields'].get('summary')}
-           for i in jira.search_label('ai-generated')
+           for i in agent_items
            if not planned & set(i['fields'].get('labels',[])) and 'harbourline-proposed' in i['fields'].get('labels',[])]
+    # Idempotency evidence: one Jira item per stable external label, and nothing new on a replay.
+    per_label={}
+    for i in agent_items:
+        for label in set(i['fields'].get('labels',[]))&planned:per_label[label]=per_label.get(label,0)+1
+    duplicates=sum(1 for n in per_label.values() if n>1)
+    replay_creates=sum(1 for a in payload['actions'] if a['action']=='CREATE')
     count=lambda rows,s:sum(1 for r in rows if r['status']==s)
     summary={'planned_items':len(items),'in_sync':count(items,'IN_SYNC'),'differs':count(items,'DIFFERS'),
              'missing':count(items,'MISSING'),'links_linked':count(links,'LINKED'),
              'links_not_linked':count(links,'NOT_LINKED'),'links_pending':count(links,'PENDING'),
-             'not_in_plan':len(extra),'risks':sum(1 for r in items if r['risk_id'])}
+             'not_in_plan':len(extra),'risks':sum(1 for r in items if r['risk_id']),
+             'observed_count':sum(1 for r in items if r['issue_key']),'duplicate_external_keys':duplicates,
+             'new_writes_on_replay':replay_creates}
     return {'target':jira.target,'transport':jira.mode,'read_only':True,'summary':summary,
             'items':items,'links':links,'not_in_plan':extra}
 
