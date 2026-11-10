@@ -389,6 +389,26 @@ class Handler(BaseHTTPRequestHandler):
                            if latest else 'No read-back from this Jira yet. Run the preview, approval, write and read steps.'),
                 'previous_site': previous.get('url')}
 
+    def readiness(self):
+        """Names and pass/fail only: are the source files loadable, and how many paid runs are left."""
+        from harbourline.sources import EvidenceLibrary
+        checks = {}
+        try:
+            lib = EvidenceLibrary(self.state.library_path)
+            checks['library'] = f'OK {lib.snapshot} ({len(lib.documents)} documents)'
+        except Exception as exc:
+            checks['library'] = f'FAILED {type(exc).__name__}: {str(exc)[:160]}'
+        try:
+            rows = json.loads(Path(self.state.sources).read_text(encoding='utf-8'))
+            checks['sources'] = f'OK {len(rows)} records'
+        except Exception as exc:
+            checks['sources'] = f'FAILED {type(exc).__name__}: {str(exc)[:160]}'
+        cap = int(os.getenv('SITE_MAX_RUNS', '0') or 0)
+        checks['paid_runs_used'] = self.state.paid_runs
+        checks['paid_runs_cap'] = cap or None
+        checks['run_in_progress'] = bool(self.state.active)
+        return checks
+
     def access_holder(self):
         """Which team member's presentation code was typed into the page's single access box."""
         supplied = self.headers.get('X-Demo-Access', '').encode('utf-8')
@@ -419,7 +439,7 @@ class Handler(BaseHTTPRequestHandler):
             self.send_json(200, {
                 'configured': ready and code, 'model': os.getenv('OPENAI_MODEL') if ready else None,
                 'remaining_calls': None, 'max_review_rounds': 2, 'planning_modes': ['rules', 'live'],
-                'live_b_overhead_calls': 3,
+                'live_b_overhead_calls': 3, 'checks': self.readiness(),
                 'message': ('Local server ready.' if ready and code else
                             'Set OPENAI_API_KEY, OPENAI_MODEL and MEMBER_B_ACCESS_CODE in .env '
                             '(set_openai_key.bat). Free mode remains available.')})
