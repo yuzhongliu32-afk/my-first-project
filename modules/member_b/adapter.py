@@ -36,7 +36,7 @@ def run(request: dict, context: dict) -> dict:
     return run_real(request,context)
 
 
-def forecast(request: dict, context: dict, *, scenario=None, gateway=None) -> dict:
+def forecast(request: dict, context: dict, *, scenario=None, change_event=None, gateway=None) -> dict:
     """Run the optional B schedule supplement using B's existing key and source library.
 
     Deliberately separate from run(): the team's strict A/B/C PLAN_RISK
@@ -57,4 +57,4 @@ def forecast(request: dict, context: dict, *, scenario=None, gateway=None) -> di
         gateway = ModelGateway(model=model)
     return generate_forecast(request,library,gateway,
             planning=context.get('planning'),risk=context.get('risk'),
-            cutoff=context.get('cutoff'),scenario=scenario)
+            cutoff=context.get('cutoff'),scenario=scenario,change_event=change_event)
