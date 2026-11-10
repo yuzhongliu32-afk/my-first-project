@@ -232,7 +232,7 @@ def execute_run(state: SiteState, params: dict) -> dict:
     ctx = {'source_registry_path': str(state.sources)}
     live = params['planning_mode'] == 'live'
     b_trace: dict = {}
-    refiner = (lambda b, library, gateway: generate(b, library, gateway, max_rounds=3, trace=b_trace)) if live else None
+    refiner = (lambda b, library, gateway: generate(b, library, gateway, max_rounds=4, trace=b_trace)) if live else None
     adjust = lambda b: apply_user_whatif(b, params['delay_weeks'], params['extra_cost_sgd'])
     c_gateway, b_gateway = ModelGateway(key_env='OPENAI_API_KEY_C'), ModelGateway()
     started = time.monotonic()

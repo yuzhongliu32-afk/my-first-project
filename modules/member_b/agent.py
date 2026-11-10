@@ -581,7 +581,7 @@ def generate(request, library, gateway, *, cutoff=None, max_rounds=2, trace=None
     targets = {'planning', 'risk', 'whatif'}
     planning = risk = whatif = expanded_plan = None
     critic_findings = []
-    for round_no in range(1, max(1, min(max_rounds, 3)) + 1):
+    for round_no in range(1, max(1, min(max_rounds, 4)) + 1):
         def produce_planning(findings, previous):
             return gateway.ask('harbourline_b_planning', _model_schema('planning'),
             PLANNING_INSTRUCTIONS,
