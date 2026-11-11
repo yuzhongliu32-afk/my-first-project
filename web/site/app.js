@@ -121,6 +121,8 @@ async function loadLocalRuns(){
   }catch{}
 }
 const BOOT_HASH=location.hash;
+// Keep a free cloud host awake while the page is open (it sleeps after ~15 idle minutes and loses runs).
+setInterval(()=>{if(document.visibilityState==='visible')fetch('/api/status',{cache:'no-store'}).catch(()=>{});},240000);
 function fillHistory(){const el=$('historySelect'),options=[];const fresh=document.createElement('option');fresh.value='';fresh.textContent='Live demo — choose inputs and run';options.push(fresh);for(const r of Object.values(S.liveRuns).reverse()){const o=document.createElement('option');o.value=r.id;o.textContent=`${r.operation==='change_demo'?'TEST change':isLiveApi(r)?'Live OpenAI run':'Live free run'} · ${r.full.request.reporting_period.start_date} · #${r.id.slice(-6)}`;options.push(o);}for(const h of S.boot.history.filter(x=>x.provider==='openai')){const o=document.createElement('option');o.value=h.id;o.textContent=`Historical LLM comparison · ${h.report_type==='MONTHLY_GRANT'?'monthly':'weekly'} · ${label(h.status)}${h.report_count===0?' · no report':''}`;options.push(o);}el.replaceChildren(...options);el.value=S.record?.id||'';}
 function persist(){try{sessionStorage.setItem(SESSION,JSON.stringify(S.liveRuns));}catch{message('This browser could not retain the session. The current result is still available.');}}
 function remember(view){S.liveRuns[view.id]=structuredClone(view);const ids=Object.keys(S.liveRuns);while(ids.length>8)delete S.liveRuns[ids.shift()];persist();fillHistory();}
@@ -159,7 +161,7 @@ function apiRoundAllowance(){
   return Math.max(0,Math.min(serverMaximum,Math.floor((Number(S.api.remaining_calls)-overhead)/2)||0));
 }
 function onRunModeChange(){
-  if($('runMode').value==='openai-live')$('runForm').elements.max_review_rounds.value='1';
+  if($('runMode').value==='openai-live')$('runForm').elements.max_review_rounds.value='2';
   updateExecutionControls();
 }
 

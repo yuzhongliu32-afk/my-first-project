@@ -80,9 +80,16 @@ class ModelGateway:
                         self.usage_known = False
                         raise
                     sleep(max(2, delay))
-                except Exception:
-                    self.usage_known = False
-                    raise
+                except Exception as exc:
+                    # A temporary provider fault (5xx such as 520/502/503, a dropped connection or a timeout)
+                    # is retried with a short back-off; anything else (4xx, bad request, auth) stops at once.
+                    status = getattr(exc, 'status_code', None)
+                    transient = (isinstance(status, int) and status >= 500) or type(exc).__name__ in (
+                        'APIConnectionError', 'APITimeoutError', 'InternalServerError')
+                    if not transient or attempt == 2:
+                        self.usage_known = False
+                        raise
+                    sleep(5 * (attempt + 1))
                 else:
                     break
             usage = getattr(response, 'usage', None)

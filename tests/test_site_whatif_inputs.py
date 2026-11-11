@@ -114,3 +114,41 @@ class PackBundle(unittest.TestCase):
             self.assertEqual(a.keys(), b.keys())
             for k in a:
                 self.assertEqual((a[k]['lines'], a[k]['sha256'], a[k]['page']), (b[k]['lines'], b[k]['sha256'], b[k]['page']))
+
+
+class TransientProviderErrors(unittest.TestCase):
+    def _gateway(self, failures):
+        import os
+        from unittest import mock
+        from harbourline.llm import ModelGateway
+        os.environ.setdefault('OPENAI_MODEL', 'test-model'); os.environ.setdefault('OPENAI_API_KEY', 'test-key')
+        g = ModelGateway()
+
+        class Resp:
+            status = 'completed'; output_text = '{"ok": true}'
+            usage = type('U', (), {'input_tokens': 1, 'output_tokens': 1})()
+        calls = {'n': 0}
+
+        def create(**kw):
+            calls['n'] += 1
+            if calls['n'] <= len(failures):
+                raise failures[calls['n'] - 1]
+            return Resp()
+        g._client = type('C', (), {'responses': type('R', (), {'create': staticmethod(create)})()})()
+        return g, calls, mock
+
+    def test_a_520_is_retried_then_succeeds(self):
+        class InternalServerError(Exception):
+            status_code = 520
+        g, calls, mock = self._gateway([InternalServerError('520')])
+        with mock.patch('harbourline.llm.sleep'):
+            out = g.ask('t', {'type': 'object'}, 'x', {})
+        self.assertEqual((out, calls['n']), ({'ok': True}, 2))
+
+    def test_a_400_is_not_retried(self):
+        class BadRequestError(Exception):
+            status_code = 400
+        g, calls, mock = self._gateway([BadRequestError('400')])
+        with mock.patch('harbourline.llm.sleep'), self.assertRaises(BadRequestError):
+            g.ask('t', {'type': 'object'}, 'x', {})
+        self.assertEqual(calls['n'], 1)
