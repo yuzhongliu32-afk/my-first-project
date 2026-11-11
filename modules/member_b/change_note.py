@@ -116,6 +116,17 @@ def _cited(ids, catalog, label):
         raise ValueError(f'{label} must cite catalogued evidence IDs')
 
 
+def _sgd_amounts(text: str) -> set:
+    """Dollar amounts written in source lines, in whole S$ ('S$1.18 million' -> 1180000, 'S$680,000' -> 680000)."""
+    import re
+    found = set()
+    for number, unit in re.findall(r'S\$\s*([\d,]+(?:\.\d+)?)\s*(million|m\b|k\b)?', text, re.I):
+        value = float(number.replace(',', ''))
+        unit = (unit or '').lower()
+        found.add(round(value * (1_000_000 if unit in ('million', 'm') else 1_000 if unit == 'k' else 1)))
+    return found
+
+
 def validate_note(note: dict, catalog: dict, planning: dict, risk: dict) -> None:
     wbs = {w['wbs_id'] for w in planning['wbs_items']}
     ms = {m['milestone_id'] for m in planning['milestones']}
@@ -136,6 +147,12 @@ def validate_note(note: dict, catalog: dict, planning: dict, risk: dict) -> None
         if c['before_sgd'] < 0:
             raise ValueError('Contingency before the event cannot be negative')
         _cited(c['source_ids'], catalog, 'Contingency figure')
+        amounts = _sgd_amounts(' '.join(catalog[x]['quote'] for x in c['source_ids'] if x in catalog))
+        near = lambda v: any(abs(v - a) <= 0.01 * a for a in amounts)
+        # A unit slip (thousands written as dollars) is caught; a value derived from cited amounts is allowed.
+        if amounts and not near(c['before_sgd']) and near(c['before_sgd'] * 1000):
+            raise ValueError(f"Contingency before_sgd {c['before_sgd']:,.0f} looks like thousands: the cited lines give "
+                             f"S${c['before_sgd'] * 1000:,.0f}. Give whole Singapore dollars")
     if note['funding_status'] == 'UNRESOLVED' and note['funding']:
         raise ValueError('funding_status UNRESOLVED must not list funding sources')
     if note['funding_status'] == 'NAMED_IN_SOURCES' and not note['funding']:

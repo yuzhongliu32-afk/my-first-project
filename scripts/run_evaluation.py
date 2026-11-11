@@ -38,12 +38,18 @@ QUESTIONS = {
 }
 
 
+def evidence_table(full, library):
+    """Rebuild the run's exact evidence table (same order and E-numbers as generate_reports)."""
+    from modules.member_c.service import directed_evidence, with_context
+    unique = {digest(r): r for r in full['memory']['citations']}
+    for r in directed_evidence(library, '2027-04-06'):
+        unique.setdefault(digest(r), r)
+    widened = {digest(r): r for r in with_context(list(unique.values()), library, '2027-04-06')}
+    return {f'E{i + 1}': r for i, r in enumerate(widened.values())}
+
+
 def critic_payload(full, report, library):
-    refs = {}
-    for s in report['sections']:
-        for r in s['citations']:
-            refs[digest(r)] = r
-    lookup = {f'E{i + 1}': r for i, r in enumerate(refs.values())}
+    lookup = evidence_table(full, library)
     evidence = {k: {f: r[f] for f in ('document_id', 'page', 'line_start', 'line_end', 'quote')} for k, r in lookup.items()}
     plan, risk = full['planning'], full['risk']
     b_context = {

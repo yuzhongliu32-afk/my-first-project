@@ -261,3 +261,13 @@ class WhatIfRetry(unittest.TestCase):
         self.assertEqual(len(whatifs), 2)
         json.dumps(whatifs[1])  # must not contain exception objects
         self.assertTrue(whatifs[1]['prior_findings'])
+
+
+class ContingencyUnits(unittest.TestCase):
+    def test_contingency_must_match_a_cited_amount_in_whole_dollars(self):
+        from modules.member_b.change_note import _sgd_amounts
+        amounts = _sgd_amounts('the approved budget of S$18.5 million leaves about S$1.18 million; claim S$985,000')
+        self.assertEqual(amounts, {18_500_000, 1_180_000, 985_000})
+        near = lambda v: any(abs(v - a) <= 0.01 * a for a in amounts)
+        self.assertTrue(not near(1180) and near(1180 * 1000))   # thousands slip: rejected by validate_note
+        self.assertTrue(near(1_180_000))                         # whole dollars: accepted
