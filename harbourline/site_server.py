@@ -32,7 +32,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / 'web/site'
 TYPES = {'.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8',
          '.mjs': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8',
-         '.svg': 'image/svg+xml', '.json': 'application/json; charset=utf-8'}
+         '.svg': 'image/svg+xml', '.json': 'application/json; charset=utf-8', '.csv': 'text/csv; charset=utf-8'}
 REPORT_TYPES = ('MONTHLY_GRANT', 'WEEKLY_COMMITTEE')
 KEY_RE = re.compile(r'^[A-Za-z0-9-]{8,100}$')
 

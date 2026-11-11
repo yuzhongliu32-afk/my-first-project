@@ -1,0 +1,6193 @@
+[
+ {
+  "actor": "ii",
+  "detail": {
+   "run_id": "RUN-72ff003f-50e8-4563-b38d-a5fe3a79d710",
+   "snapshot": "SRC-cfba2cb03215e7a6c3a0",
+   "version": "bf9f66362072c20662ad3e99cce72bf77abfb7c5d006b0425236feda6ee2462d"
+  },
+  "event": "ARTIFACT_SAVED",
+  "time": "2026-11-10T22:33:17.285530+00:00",
+  "entry_hash": "f26886d9113848944d6d09b2e45f937380cc529e634e3e8774f46aad5a5a25dc"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "check_id": "FAIR-2027-04-SYNT",
+   "findings": 11,
+   "groups": [
+    "age_band",
+    "language",
+    "channel",
+    "block"
+   ],
+   "run_id": "RUN-72ff003f-50e8-4563-b38d-a5fe3a79d710"
+  },
+  "event": "FAIRNESS_CHECK_RECORDED",
+  "time": "2026-11-10T22:33:17.285530+00:00",
+  "entry_hash": "8021403c4006768ff4827f460566a0e41d9ae4297e79084bb2496b0d2c538ba8"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "36b8c39ed50dd324e2a84f37dcf799441bdf3729e2a7a9b1b256136cd9a97215",
+   "kind": "JIRA_WRITE",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "PROPOSAL_CREATED",
+  "time": "2026-11-10T22:34:35.925194+00:00",
+  "entry_hash": "24e07144e0a937ebdfb65927de04b006b752696460d5dc96271aa34b4f6d5683"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "approval_id": "APP-25edd5e0-3f64-4515-9bb0-ca9e32df1c86",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "36b8c39ed50dd324e2a84f37dcf799441bdf3729e2a7a9b1b256136cd9a97215"
+  },
+  "event": "HUMAN_APPROVED",
+  "time": "2026-11-10T22:44:52.158589+00:00",
+  "entry_hash": "dc79664216b68dfe46ad1af19a365c9f249812ca7a9aec0bf617bfb4c8e76685"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "36b8c39ed50dd324e2a84f37dcf799441bdf3729e2a7a9b1b256136cd9a97215"
+  },
+  "event": "EXECUTION_STARTED",
+  "time": "2026-11-10T22:45:09.523563+00:00",
+  "entry_hash": "1aeb3935b5bb33845435d26fbf26adb9c119ba1ab14beeaf0e6e411d4cee2e54"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-1",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "40f991143a8edab7948ecfcd74864ad5fd51c3b701ecfe328c34e88aba25d50b"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:45:25.622264+00:00",
+  "entry_hash": "da1fd9199e398285fb1996e01ec6057969f0a49db469496deeeb9990667b3525"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-1",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-1",
+   "label": "hl-8637a4a4ce23ee0d812d8e98",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:45:26.597543+00:00",
+  "entry_hash": "bd95ee16159e7c2505233f214645528f1ac08ac67a94f044148dc507907bd818"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-1",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "af5841e453688b10316d0bf73c6ea9e4cbb53e6328bdf291028ed3e1c80a2c9b",
+   "issue_key": "HL-1"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:45:26.936289+00:00",
+  "entry_hash": "66c83e66837d2e17b4535360f6c96c30955150eaa4f6d0ff4abb5ca2dd3cb8be"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-2",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "11315a5497c14fb4dd89d54ddb410e5f46c6df3e2fd0664b7a026cc56efc711f"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:45:26.939295+00:00",
+  "entry_hash": "3c3e1556c9bde02e62be29981de8588e03a5b79f18188cfc670cacde2034ccb4"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-2",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-2",
+   "label": "hl-0ef4a58f0c613043218c918c",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:45:28.014468+00:00",
+  "entry_hash": "43be1fd43c1e43afa5536123cb2aa9f70d046bd922673446a4896be3a12b998a"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-2",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "25ce9ec88dc7cd9125772debb15f44b99b8fd20cacdb577ce998073a0c7fe9ea",
+   "issue_key": "HL-2"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:45:28.307859+00:00",
+  "entry_hash": "2f3f1aa6f93bfa3de7f722359efe1691ddaf24fd7451e2f2ee75059efabd973b"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-3",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "245f154fa519adf0925b9e18a82b36dff81ebfa48dc47e3c6823afa6489eb048"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:45:28.312874+00:00",
+  "entry_hash": "5be4c7c3c6d17af365e0e50deac2177c25dbc38bcef433dedb36e502aa639e1c"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-3",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-3",
+   "label": "hl-1fe995257cf2d64f92d75ec1",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:45:29.403964+00:00",
+  "entry_hash": "8658c88bcbf4a54c8ed14293e75fc1c3860f88bb5322bec37f3c28bfa3382278"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-3",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "c776ee7c6fab15e860da7f45a8a48be206393358bfca0fef27181c2607a57851",
+   "issue_key": "HL-3"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:45:29.732814+00:00",
+  "entry_hash": "e8ce448db9d9d5ac578c10d0930e12ca24c16388152249bec8f3eee7bfe64b49"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-4",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "ccda48bfa14eb00942e86e71b8bb0f1a752a3897c262271713709049b0cdd5e8"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:45:29.734807+00:00",
+  "entry_hash": "ba010bd62622550348e08741ed31464d91214fdb023e7469a3432d5e72111bcc"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-4",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-4",
+   "label": "hl-f52b9f5ce0eeec813d8db0ec",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:45:31.015062+00:00",
+  "entry_hash": "d215692ebca2ad641e3759c88cc4c9e95eb002e1e865364a53e77d5b073c16f4"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-4",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "aa469b37d4f653b1151f1a56848060111483a3a6119449da1f0419e7f5a0e27f",
+   "issue_key": "HL-4"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:45:31.356203+00:00",
+  "entry_hash": "a3d8d39be9bc8858187ac23754fb92efc6b7b6829d590d6cc5c313da85ddf725"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-5",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "604fdab6c9c4ab2f822a2efdbb14739854dddf75bae1fa7f19d21688b963e6fc"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:45:31.361371+00:00",
+  "entry_hash": "8bf90b55af3e01e024991a2c3232554e0dd6914bbad152e26960c19ac8a1f859"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-5",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-5",
+   "label": "hl-d9dd6cf2ef9d9e88c764fa75",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:45:32.219299+00:00",
+  "entry_hash": "a94d70f9171b81628a6acc2c304a66ddb6c29be17fcfddefb79baebe362159de"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-5",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "12b51bcdcb93e6265477f0eed8b0949d9fe1f5e93e8cd9bab93009adaaa6a3f1",
+   "issue_key": "HL-5"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:45:32.527109+00:00",
+  "entry_hash": "26ded69cef7cd19fa0c49e933939c935dc297a6ce687e6952a5881a0c46d77df"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-6",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "f1c6a78ee90ac31677f0177524514828c5968ee0db2354426a95d237eb33eb42"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:45:32.531105+00:00",
+  "entry_hash": "70b56e4778d4479beec65b15049d73c001186cd449f02482ed9859b032ac8d8c"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-6",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-6",
+   "label": "hl-f5fbf630271ff351c1ed2657",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:45:33.480688+00:00",
+  "entry_hash": "e64abdde858f3fdb01469c4ba7e4f439caf42dfeba8e58cb7451e0915adcdd5d"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-6",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "81f2a27a0a2e192e524107c13aedd9fd336d24a3571daada7cf15f3654b7a7d4",
+   "issue_key": "HL-6"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:45:33.781116+00:00",
+  "entry_hash": "dbd8b5c8a93ad638431c2c56bf9bcc388e98dbcff068ab21a5f1edd62b2ab456"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-7",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "78447f669fd2ac2c366635389c4d6398ff20940113601ef97ccb1dff2ce6dd6c"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:45:33.783121+00:00",
+  "entry_hash": "b33b91b92b27a07c5971767c4f302237fe230aca8fa29b7d76a96cf919dda9be"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-7",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-7",
+   "label": "hl-4481ef5ba179adc55b8ba3ec",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:45:34.440863+00:00",
+  "entry_hash": "e2a3601b0733309d759fc661b991c59f4c1032e7cb2e0e64e92e6e0802ade4c7"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-7",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "8f83cdb760cdb4c53ed5e4521b57848289ab3aeb5d11de52970571b6efdcec50",
+   "issue_key": "HL-7"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:45:34.745132+00:00",
+  "entry_hash": "667a930ba617b5e6589919c768dd1ef1f1bcee667ba48f68d43d2c36b058ff0c"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-8",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "a10bf3f00bb3a9885b34efab3876143b0ac54532f76027a295db7698193bdec2"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:45:34.748068+00:00",
+  "entry_hash": "296f8d5eaf017017cee1b5836a8ae5a1e758658b615e52ad88004d45b16b4de3"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-8",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-8",
+   "label": "hl-0aca678cfd2b137d9045f846",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:45:35.437594+00:00",
+  "entry_hash": "d7f676d37c95072756b9495e5f15deaaf3280cfe6f8517e9bd895c4ba47a1482"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-8",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "460e6f226b9935fe035fc9a25950c67ad42d231286eaa25650fd70e46d336258",
+   "issue_key": "HL-8"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:45:35.722852+00:00",
+  "entry_hash": "ac2e7cc363705143ae7220b69a61f7c275c3500727413149de8c9c5921ffc070"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-9",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "a3f4b0835bf4cea1e817509034278b8cd8a4176abea366e09c58854e32bbc666"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:45:35.726851+00:00",
+  "entry_hash": "03c525f7fcb30fe0bbf7c826f33ecfab4de0fb3972dbfb48b9cea7b4ee9a89f2"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-9",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-9",
+   "label": "hl-895e45b361b99f892cf369c4",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:45:36.439605+00:00",
+  "entry_hash": "bb41d14c3daccb1e5a67e60712e3841d5b76c40712546b65e04846614c711c81"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-9",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "f0b4510f4385414e61c9939869ebb04dfb61b510a56b18297a2c8abf313147fc",
+   "issue_key": "HL-9"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:45:36.703391+00:00",
+  "entry_hash": "3637b730e2ec8a43533d623212d7384e564d766afd5ab01d036186a100819d93"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-10",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "bb535aca30733f8b18656aaa3f38e3889141f7202b2356e3b1b44c8f58e194f3"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:45:36.705391+00:00",
+  "entry_hash": "897cfa7f4b7265f4e25375aa84de4bc975642e59b0cee77f14a2599f94b99504"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-10",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-10",
+   "label": "hl-2f046502f8b797bf507a099a",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:45:37.357334+00:00",
+  "entry_hash": "bfc7e98050e549d1cfa00ecb01a31f95c8f56acb0a9eddc1b4eab2e616901ea0"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-10",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "a4467dd4b4b07c0dd854c81c30c2861985ba53edb80c955feff50bb959b260bf",
+   "issue_key": "HL-10"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:45:37.664377+00:00",
+  "entry_hash": "c68c2c2c2fdfec677b32f2ba59b9b6beba47bc83e59202f9ed7fda34780e56bc"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-11",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "8fe8d2b30d48e4df5d03452ee0a1c151898011668a28194179e23153b4a14af9"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:45:37.667453+00:00",
+  "entry_hash": "f553f07d9e99291bdd2c876a6e35adb657a0fea309038b70eff7cee619a0e013"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-11",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-11",
+   "label": "hl-4bab5a8b4aa23c82ccff9e96",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:45:38.454923+00:00",
+  "entry_hash": "71fbd4d66fbe19a9a79fe660256bb4b7af5be70e4d373481944f69fd524f5f59"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-11",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "cda70c3a2c1d6eebd408344e3276b5fd4953fafe18426d99a11294e7fd4f7e99",
+   "issue_key": "HL-11"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:45:38.811746+00:00",
+  "entry_hash": "b164fc75076313bf48ed014dd7bb1b09dce989414025bde3fe75de0911117fd3"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-12",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "434fa62624e5a28508e666bbb1c0ff77307e3f6c4b80d4e8d89213543bfa31c5"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:45:38.815749+00:00",
+  "entry_hash": "22fa99e78526dac0824bfac454371f3d441e6a4e19a86c32c9e640cd8de68adc"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-12",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-12",
+   "label": "hl-936c02c5787b3947a2d17c40",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:45:39.705424+00:00",
+  "entry_hash": "7e9906a6981edbc349e1d1a10dece978056377eb7f0136ec57b60dd4beb83b3d"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-12",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "d81b13a64f096036547320c3aac809582751702ddc677ce12f16eb2955a9eee4",
+   "issue_key": "HL-12"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:45:40.030543+00:00",
+  "entry_hash": "7a6ffc4b780ee7d0b1bcb6d3d4d72da005855d08efbe04b6f56e27083b99b94c"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-13",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "927c322362aedfe3b9ae7d68426ab99b9994e2819e58a78d71ecc646a9a40a99"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:45:40.033553+00:00",
+  "entry_hash": "d0b87ee71cc3e73951ccd4c406fd2971cfa5858ac52a4f2a905b33d87e7980de"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-13",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-13",
+   "label": "hl-72b5ea12e2d4414e4b2e25c1",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:45:40.780289+00:00",
+  "entry_hash": "61bb8cf4afa886c39025d61a93f49433124aab006d19a9f27da6bf066defa126"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-13",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "d7c93da7eaad5cbebbf242c1f3cac8b20353b0aec5338994d77fee14da50ee49",
+   "issue_key": "HL-13"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:45:41.056847+00:00",
+  "entry_hash": "7d2ff60dec2bf1be057f4ad6924fc4323a33ef17c7cbab71b43630b362a91382"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-14",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "960db0f267b84bdb726201231d2e2c1c02e7211494d7340e4f71603eddd05e2f"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:45:41.059845+00:00",
+  "entry_hash": "4bf517dbc212284bcae9484bb37ae6ff4eba2b5d5f620ea42b9270c84496e6c1"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-14",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-14",
+   "label": "hl-d1f5c19978a6eb083c58f935",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:45:41.918634+00:00",
+  "entry_hash": "24b0e01efe2a858eebfe2a00593d3a013746d6c245f9a8e536c55f5d7ccaa6b0"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-14",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "c793664414dda4b80b680e9a3ec3bac440b3e57b753eed7100566d466803f8e6",
+   "issue_key": "HL-14"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:45:42.283806+00:00",
+  "entry_hash": "a7415c229143e45b4fabe387dba2b399dc9c32bea339c3c015fa465365a56ea6"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-15",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "c820d68e5ba8f442933f27464c196695db183da1239a1402d83605a62db2e418"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:45:42.285805+00:00",
+  "entry_hash": "299f7180e50f68985659b4ec98c5bb314f46ebe2d8dab65f25f2110bb5c819ab"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-15",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-15",
+   "label": "hl-ed6560eea8402e17f912af4d",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:45:43.236174+00:00",
+  "entry_hash": "37fe9747fe97efa356146ae0790a983e2634d82ea2df58b2a12861a44fd62e37"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-15",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "464340d889df48175ab51099c6e5ca722ab7fcf7a08818a27ed714b0fc375cc9",
+   "issue_key": "HL-15"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:45:43.559294+00:00",
+  "entry_hash": "93554713a3e8742874414ea811db5a37a28446fa1c3e94c53b8026d3486c213d"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-16",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "522330ce9c3d0b27a00fc1b31ff7b6383cd8f70057aa3b3d9feef94ad0c12bba"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:45:43.562294+00:00",
+  "entry_hash": "20ea600d1c809ad714efe96743d2bc480f3b9dab7c7ba728989e88c23993838a"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-16",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-16",
+   "label": "hl-8eb2f7b9a9bcf5721ea740d8",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:45:44.436471+00:00",
+  "entry_hash": "b5bb347e93b5008e269d4331b127e8ff9682678fc31eaec9e19de9ea79e03958"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-16",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "91d627a539401c5f9e1321bb50aee7059f21810f179c112dd92609c7a8996810",
+   "issue_key": "HL-16"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:45:44.716586+00:00",
+  "entry_hash": "f9d2cb2d485b4a0e6f3756f8a50c93b062bed8fe3c793f4e68f4bf39c796ac73"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-17",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "b862b472191d98572af69c6bdb0744542b2e5c5d9fc5976cc6ace104f89b8d12"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:45:44.721591+00:00",
+  "entry_hash": "3bdc8d825405ac04a750fd23f8a382a86a3e512ba84148325bf1c37e7464fbe5"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-17",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-17",
+   "label": "hl-b31b2dcf88ee80bff772a414",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:45:45.412677+00:00",
+  "entry_hash": "343e9c98875da3f65a37abd6cc02e4fa3ec2f6acb9814cf0cbd5768360790f5c"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-17",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "caf22be6478af93af5b0e4bbad1a2475c5a956be6d8cd38480e9e181707a857d",
+   "issue_key": "HL-17"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:45:45.708331+00:00",
+  "entry_hash": "3511c56bdd2a386de18d6339144451318a94841dbdfaed498906f533cb6f58e8"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-18",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "1d73a1e035c7bffd501712b350b572d2e240d70ddc317916df46baea9304467f"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:45:45.712935+00:00",
+  "entry_hash": "9df8f2b430878ac2caed6c209ef1007256b47555963f9c750fbcb9ca55125768"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-18",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-18",
+   "label": "hl-8431a0b8012658822dce695c",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:45:46.516252+00:00",
+  "entry_hash": "4a81d9854acf145c6e13b1dce27193f64e4c05ad782a0ef1c80e8a3c1e7c65b2"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-18",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "fd2f946d2a916872683bf7d95b13a1a7f32ac02f9c89036195e0116dab23537e",
+   "issue_key": "HL-18"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:45:46.822982+00:00",
+  "entry_hash": "e337b5028650ba207b77998a520f33d7be5460df8ecd9e76eefdec7634f2a408"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-19",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "1951e46c623b7662199a02cf1ec88c74036f5617221ff8699c3c595ee8642791"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:45:46.827988+00:00",
+  "entry_hash": "53383f1db50a7a134e54bb341b44b0df8f3a1e1709f18760d285a805a33bb3cd"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-19",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-19",
+   "label": "hl-e8f1cf17bc1b131da59a8e0c",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:45:47.683353+00:00",
+  "entry_hash": "be20f052dd442c7b55084a90e5c8cd0944e657944b9b659d8a8397a7f085c6d3"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-19",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "96f037db0a0db91e28e4b9156f2f5c6867883c884f04dd4646aab3d30d3aba4f",
+   "issue_key": "HL-19"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:45:47.966617+00:00",
+  "entry_hash": "dcbc3e3d12caa15f9affd0e4089a5d311c3099d79ffd019d2b86511335f9a3c0"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-20",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "d908122306203e7ef3abb686bede49a2cb0f900e2b0e3bb1ae00c84e12cadf87"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:45:47.970629+00:00",
+  "entry_hash": "279f4189b9dd0ac7e36e1346a9eeb9085e65c401802665c55dfaaa061cef1371"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-20",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-20",
+   "label": "hl-e2263f492e4ea8ede455266d",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:45:48.832987+00:00",
+  "entry_hash": "984a9cdd8d6dd7371c26890a4aa87f7bb84c41fa81cdfccac9a2e83e2b07fa55"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-20",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "f86ca66a598feea31ad4945330c2767659981ca0b4b97ddcf1c9a8e025b712ec",
+   "issue_key": "HL-20"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:45:49.131185+00:00",
+  "entry_hash": "52404b953dd995309074747e965727326a184f573069556aad8d85d53339b438"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-21",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "b4dc49b242b7c2ce5c78e292eb04844b13f8a3d74c483d913eb59d9bb74f073e"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:45:49.134687+00:00",
+  "entry_hash": "bfc0bd81aa1f3098859804d1a4fb43610dab0531666ea6a25ef7faaca88b3306"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-21",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-21",
+   "label": "hl-e0b78ae6a486d7927e29bb4c",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:45:49.873614+00:00",
+  "entry_hash": "34c7dadbef91e45745745f7bbf2b4733b455a8bdb34ad9fb4a5c8c130930c818"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-21",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "fddfededa37acd66ad8cf8a97b50615a1dd2ffa46680c446536ab35cc93407d7",
+   "issue_key": "HL-21"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:45:50.162024+00:00",
+  "entry_hash": "215b3dcd709415636fe1b2a2240592dc4120fca47a398bd004be0ec89748029c"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-22",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "03dfb7c81a4f0dd2ea8d3cfbda4a133e6908979cdca72538b706499afe3224ec"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:45:50.166021+00:00",
+  "entry_hash": "8d9c685b08496f79a0aa7cad480dd187765be800430c8cd32ffbf9d6f97248b6"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-22",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-22",
+   "label": "hl-3c35b36b4a7618c1310a24ba",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:45:50.939614+00:00",
+  "entry_hash": "47fca48710e8065f2465bddade07a6db8893a052ff28ef382f009afcfbe12f79"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-22",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "4bc5885dbb4f957deb4f8302c6df56a73b950e6e2e5305f06c943e722b2c4228",
+   "issue_key": "HL-22"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:45:51.218232+00:00",
+  "entry_hash": "43ecc9fe18f147450a58a5f9546d175eb5b977f17d839a2f24dd55eb38c1d865"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-23",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "a90bbe80bb7b93482af81fb76ec9e85cc6a35cdd368649fca43bd395d83a46f6"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:45:51.222228+00:00",
+  "entry_hash": "37dfb8afeb9121cbb1f016057a1c36ea47b8d40a35298a94133a3d8eeb5f8c70"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-23",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-23",
+   "label": "hl-18b2edccfe4e6b9e39b974a4",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:45:52.189432+00:00",
+  "entry_hash": "34a279e57f1f8f2968c6147ba3aa681d5ee71672947c7af8d563815351e37baa"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-23",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "c0af85f1501a52be61007b6667dfe3da0054ec73eb1b0c8834a75b3d9dd01726",
+   "issue_key": "HL-23"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:45:52.510415+00:00",
+  "entry_hash": "ba45e7796aca0749765da4961ce78868cca8d67ad2ccc58ab4b0cac44467f8b3"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-24",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "6ea2865471f6213efcc10abd90d16cc74fd57953fb0468bc401d7aa66dd51c4a"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:45:52.514427+00:00",
+  "entry_hash": "e3c2664cdb7d85786a10df69646f01a8c7b5744c55bc73577f1bc2cde09f4096"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-24",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-24",
+   "label": "hl-a3280850a575a988d74b26fb",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:45:53.183582+00:00",
+  "entry_hash": "0cc8ed210c38233847eb3e69cffc4a278187e0e6f662c0b2d6da47aa4fefc2f6"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-24",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "badfe4aa0f2fb6a7b6d84ecd0b59100290f8f0613c39ffa30a1b43993b5b2a01",
+   "issue_key": "HL-24"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:45:53.478359+00:00",
+  "entry_hash": "0154c527ea895a4a2e74e1ffcdc6da47dfb346a589f906f3db766dfef32fc8da"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-25",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "bb2b05aee539e85c6fdea8fa1db83dff741a093628827bda5d7fb26512a52fe3"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:45:53.482358+00:00",
+  "entry_hash": "4e6a1ea1a0286fdc87c6c31326dee1b44661fc4c6df2cb2e5fdcb13ab829c1ec"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-25",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-25",
+   "label": "hl-4c56e27365ff0b527017a3a4",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:45:54.360351+00:00",
+  "entry_hash": "51c57746cca7e2c04c1eeea098f52a4de60fd242a64f56444a372bc03d0e056a"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-25",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "3940bd856d4c5ff5195cc56a4c8721360a231a679d19f5e3dd84cdff14851eb3",
+   "issue_key": "HL-25"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:45:54.658751+00:00",
+  "entry_hash": "fb45559af46b46ec208e96774d9de8f74340637b8a90f697b4eedf3c6802e9c0"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-26",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "f02e75f5bd4f34a76225062f1ca5b163d8614929a1030741052e1c0d598c17ff"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:45:54.663737+00:00",
+  "entry_hash": "6290aba0b62ed5ec0e6b0cef776d87ec3147ab396502a80e2ddade59fdfe194d"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-26",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-26",
+   "label": "hl-2f8717cec5214cf49f961064",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:45:55.401484+00:00",
+  "entry_hash": "394d8536a86ae0e22f97b56341df209964a101be059662cffe26498d45e16c83"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-26",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "cf0f859bc77e1b595392c61e2da03370101542352ef29ee21a7ad4191ecf36cf",
+   "issue_key": "HL-26"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:45:55.696673+00:00",
+  "entry_hash": "335cedb409e4b20cfbb8b06bbbbf714af66982a17a6705d94f6fcba401ac674c"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-27",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "9867312f8d0980b2742aa5b975ffb41a7c49155becffcbd34577f692532007da"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:45:55.700688+00:00",
+  "entry_hash": "61f23aa60919e50d370477c6d3ae2f12f952317146fda94c2b8e903c935d6da5"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-27",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-27",
+   "label": "hl-5693231a96392ac810fc3867",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:45:56.373344+00:00",
+  "entry_hash": "c7331ec6a758af7a9aa4dc587ef2830909f03f40b7901eca6a400f36cf7e91da"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-27",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "ab4306ffe5591d0631fcfdfc9300db0d4219debdb702031bb068f47356a8d4b8",
+   "issue_key": "HL-27"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:45:56.689555+00:00",
+  "entry_hash": "7bf618e4232292d289a612789c8a1220bd3088fb1a960f7dda72d36825c26ccf"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-28",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "6cd8c47efd21022331b426b442a7dc3a57f1af39db057a36ac05500299fc0757"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:45:56.694545+00:00",
+  "entry_hash": "3cedec1b0d70d139c6ae918a214e8b3d324c370396d0d293462a0d7da2a609ba"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-28",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-28",
+   "label": "hl-d17714ae461c37e14e5837ce",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:45:57.458158+00:00",
+  "entry_hash": "f6a834c988bd0f07ba9566b38df9aee311cb10a3bfa869fa7c62f6fb91879dab"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-28",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "ac6f3eda3e3fc584deada357b6affbf73d76d86dda101ee8144ad8c2b0381dab",
+   "issue_key": "HL-28"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:45:57.806642+00:00",
+  "entry_hash": "b602e2d764c9b3e5d6250727a7b22ec61c330156f38cefbcf6dfb8e6b757a99b"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-29",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "4609f7baef93d3540d218b24e427640fc3f96a0a9e4454ec34c3e6ebccaf62b8"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:45:57.810248+00:00",
+  "entry_hash": "9fcc2d60bcb08e2c548abc26b2c824eaddee854374bbb6db078c477da73d73d0"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-29",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-29",
+   "label": "hl-6fcc447750c6a6bd2cffb21e",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:45:58.429574+00:00",
+  "entry_hash": "cc07ece66a0bcf6366f801db9697cf7a696a60310fe4130e1f82ece3e02c64a2"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-29",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "dc421e3ac5faf4b0b445305bf92ee95feb519420a34e31d513d10692fbb990b5",
+   "issue_key": "HL-29"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:45:58.742128+00:00",
+  "entry_hash": "b387b54c09d23e8d0402f892763b1ec2fff47d73cafc42085cd0872f64a8f39c"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-30",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "4a7f704370f0a350671aed2826042f1f3cc5baaa5a53ff323abc3f9228c08fe5"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:45:58.745723+00:00",
+  "entry_hash": "31121d469b3017ccbcb77c2ba284b41054f52c891dad641f6a9d39a4f0bf9037"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-30",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-30",
+   "label": "hl-8cc2c253f63cb899a492c4c0",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:45:59.394129+00:00",
+  "entry_hash": "213ac4dc8619d769e7f1e3b44b837a5f88b2257a7f0492cc6e597c2cdd6e26f6"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-30",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "f7b2bbe77e7629e9190f1a841c0ed225b3f3770ffa98094d38e90b364aa0bbef",
+   "issue_key": "HL-30"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:45:59.695947+00:00",
+  "entry_hash": "7d12fcc055985938250dffc31c51347e63fe969f4e315a648850d8cb04a16288"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-31",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "ec90c47df965baf93ce72bf0e5d44b0f1dd16dbfabe811fe1efcfc55f098a0f0"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:45:59.699460+00:00",
+  "entry_hash": "877c5089b407ed34c44016924c6bdd4d5ef26554e8492d05dbcc4950e5b9c7f2"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-31",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-31",
+   "label": "hl-5004f4f87d4540535ee68f99",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:00.435692+00:00",
+  "entry_hash": "9bebc09543fa0db9755c0ce16631b65aa68971da9b3324cbb1b3163a2d62a545"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-31",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "d4a22c1f2d9a0b6f4363bcbf08c3e13a3cbcdee3019bb8918cab3e2773577273",
+   "issue_key": "HL-31"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:00.700289+00:00",
+  "entry_hash": "c6a88bf22e588df4b6d5ef2ca753fd5f2e635630f95a30b7e4c64ba3d567ea6e"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-32",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "768ff67b10e84eb5ece7bb04e9a93d643cbb07cac3b1f58268c23f2899a650b3"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:00.703808+00:00",
+  "entry_hash": "fe606ba880292fe963416922891c83616e88b42f0b798edc15716504ebb37353"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-32",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-32",
+   "label": "hl-a82037a2b329f5b7c0b91863",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:01.338596+00:00",
+  "entry_hash": "00feb0fdeafc5b22c7c7d0766e32336b00183a458ce729d80b5af550cc8be5ea"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-32",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "b70f7dd7351761e1b19af3ff64d6c1cd4bcca6340d186d067c916401a547497d",
+   "issue_key": "HL-32"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:01.618570+00:00",
+  "entry_hash": "3ffc33f7a1dbffe30a94826d417e30d2def467159d638ab05a7b3e050def5e75"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-33",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "85bfc5fd85e754c174a0129adf829d8496e6f1b6136a6ccaa5bfde1032d27b8d"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:01.623599+00:00",
+  "entry_hash": "182dbddded4f032a49e96debe6c77ca32fab6914898a219dffe9eccf5d60aad8"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-33",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-33",
+   "label": "hl-5cf0a6db9c04f037073ecb9e",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:02.273745+00:00",
+  "entry_hash": "791ce7900a52641ae67d036ffe65687aa03a241beac50d78eb8015f33f2b5193"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-33",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "c9500f00061ab80474cf68962041304f8d162a52d11f8f0ecb34a4c56d156fb1",
+   "issue_key": "HL-33"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:02.572053+00:00",
+  "entry_hash": "c988a4d4461c17f980995007a78df15a4b55cb54fb3f511eddf86a038b730404"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-34",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "1d42a637e84defc7c1ce36edceca76a273a1bec1478076c142d25f81ac4998d2"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:02.575040+00:00",
+  "entry_hash": "843bfcc4c50ca18c3de58391a9ba2447f58886c12e4336b0d1951ba21b8751fa"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-34",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-34",
+   "label": "hl-711cc74994b5535cc8a87b6b",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:03.178879+00:00",
+  "entry_hash": "06b83aa826b24b2c7109f9dc5f850652121dc8da4b89eb947bba888660e433ad"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-34",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "154f5570695648cf7db706c4be9200c4ac4470f8cc28e9fc034f16e32e57c7fa",
+   "issue_key": "HL-34"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:03.457866+00:00",
+  "entry_hash": "82b1c05c6c2dff1310bca17ab369cdb69b6d3e735e8d129dc3dc97102c921af4"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-35",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "86ee27de628afabb67eb0ddc9fb3bb1cc4af2b5dc7bb7f114498918ea06546f7"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:03.462858+00:00",
+  "entry_hash": "00e56b63ded7075b0663e62cbdb89ea73f3a5542b7b84ef30b22f006c609a9b4"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-35",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-35",
+   "label": "hl-948e4ae33b804a9b2dfa1f1f",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:04.358692+00:00",
+  "entry_hash": "5a1fb4560657f8734ae58bbcc9052633a4538b9cae2b6749875d7a31b2b9390a"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-35",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "09c58bbe57a219d64fb977d2e4a8b7544f90481af662df007803b926e8aa6939",
+   "issue_key": "HL-35"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:04.642068+00:00",
+  "entry_hash": "bf27011e0b3bf73122d1e5631217645e08afb313576683b753613dc9cc38e373"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-36",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "823204fa4b21c968973224debd29e4da2bc9c4f954d0d1e0378af2b84445b783"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:04.645592+00:00",
+  "entry_hash": "6aeb5dabd0a348f16b19a91c5d9ff6969a1ef22a9aede36781b71fd98df55cf9"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-36",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-36",
+   "label": "hl-00097d00051094c45df9ee74",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:05.258106+00:00",
+  "entry_hash": "5bacda3b9d6443849dbb02405a6503fbc076254b542e668122253ef40f24a20e"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-36",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "f297c59d9767f1dbc1ff9d87263a00f2f226b5667775a38e854627b546f2a47a",
+   "issue_key": "HL-36"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:05.557452+00:00",
+  "entry_hash": "235391a1203916c5a02aa05a539515ad4ae6aea2847382f3a943264af3d10488"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-37",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "aff217233559665e1c27e7f621af988fec556cf0d7761e6b796e4058f72d5fb9"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:05.560958+00:00",
+  "entry_hash": "7749f1eafab4e779328b14ab580d2f04f6e26c177148f53fb039a9f34437fc82"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-37",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-37",
+   "label": "hl-63bfaefeddfa33a99a1bf1c3",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:06.139858+00:00",
+  "entry_hash": "47033afbefd4f90c7b12e020afc65cec34acf20156966bd80fcfa06106b35dad"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-37",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "aab3d783cc1530b1882d55ee406ee0480cec1ac49375d32ed65dc3ce2a1095a0",
+   "issue_key": "HL-37"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:06.446229+00:00",
+  "entry_hash": "4fe1b5cc7ba9b8f88eef2cdac5935a89a0cc624eeda0ef6a088a4017d7546aea"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-38",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "e70039697960fe7c6ac8361430ee54caf2ee38c10fc9d399d0757ea4d1fef811"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:06.449761+00:00",
+  "entry_hash": "2e54df38e1dbc40eaeba36544f20124b51265e8a4974e19785a7e9a82ea40d46"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-38",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-38",
+   "label": "hl-64fcd42e76629fe7cb1189e5",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:07.095805+00:00",
+  "entry_hash": "5432bdb99c5f7feffa97f15d1144ec8d7b8e8e27320307ae33fcc5341d911d95"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-38",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "3e850deafc67b706b2f9a2d59873500c553f6385ddefa1e073febd7897966471",
+   "issue_key": "HL-38"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:07.385274+00:00",
+  "entry_hash": "29ba34379e76eea00766f8e380efdac19c21dcc156127f3dca020c5ad2af7caf"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-39",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "7fe7cefa0c21636d528900a693096daa2dd85b09049e4fb38272381796dba84a"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:07.390358+00:00",
+  "entry_hash": "b4821a17122bfb90cbefe703a49312028e7e927ed4c10af101b03c1f3b138bd0"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-39",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-39",
+   "label": "hl-a9332bc7e2790e16a7116578",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:08.167424+00:00",
+  "entry_hash": "b0671fa7c19f8e31d9cebbd328bfbb46d6db35c30f9e047663a43c71646de252"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-39",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "ab680c9dc78aea8cfb2413b53045ed147aaaa4e4c6071d0cc21ff6574a9dd14e",
+   "issue_key": "HL-39"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:08.506863+00:00",
+  "entry_hash": "2b4a64e78c46968a8a4d03e63af502841b52091d0a6654a8ea7c4e92c756a46f"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-40",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "fb16842113a1b02e64770c34f247bfe513b09c922102eeb60073d36a75698714"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:08.510871+00:00",
+  "entry_hash": "42dfc089b6e2dd930be13922529dda3c8994a5974c69b537860dcde605202810"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-40",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-40",
+   "label": "hl-44b7a248af9eb9ffe19c01ff",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:09.328890+00:00",
+  "entry_hash": "80b440d75e32a3105fee0e28924b85dc376281b9ed7e913df8b7a22de419e6c7"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-40",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "ea00f866a145eb3e2d6da9252dc47cda431557234acc81cd2903cd4a0f6e06a9",
+   "issue_key": "HL-40"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:09.613720+00:00",
+  "entry_hash": "7189822e652765bccd777d46a3fe61a7ec0b37698376236508e501c91e2c4f42"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-41",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "4587caebef5d0c4cd0b2697ac8fec1a76a76af23fe9b637feeaf822dd8d10143"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:09.618721+00:00",
+  "entry_hash": "732f9da8efa0d3ad00874ab9abb050586620ebd6d438521ac5ccd6b808eb1a43"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-41",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-41",
+   "label": "hl-c9d6742d2f6fdeb1df9d9d98",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:10.323947+00:00",
+  "entry_hash": "3240c2e4ed8c07b4ec9ddac6effdc1ccfab150f52bd1dc14a43b323817a4d02e"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-41",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "cf31bf7efbdbe942cdb30019aeba539276412ec5f366fdd2301c3339af741f61",
+   "issue_key": "HL-41"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:10.627699+00:00",
+  "entry_hash": "7c06c5173ebb59ed515bbf88201313cfc8bb7053a7eaf165f6dac8e6d1c34ec3"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-42",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "6973a54ed67cfdc1359efab5f99bb059d6145156e59585f13010a836599be60b"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:10.630794+00:00",
+  "entry_hash": "3ed21234e4da41d92a28908bae9e64f94641815c7c1b670c9d490b86f4ddd185"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-42",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-42",
+   "label": "hl-b066d7c52f8792666170edf8",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:11.381063+00:00",
+  "entry_hash": "08c84dc99d26b3df20d451294456673daf18d953318017f6a4c4d4f1750b6132"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-42",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "ebee204fd12e67dc8b83af2dc35adcd7911f3ebd0beee1a1f4de59e0d876e558",
+   "issue_key": "HL-42"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:11.664115+00:00",
+  "entry_hash": "65076b9d576b9fcb96eaa71a89faff33ab4d3419b1de89c637b59e9f14c99ef7"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-43",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "5d5561ae72ca58a3440a5d11dd399cafd6a6420888e8137c5d307097779975c5"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:11.668118+00:00",
+  "entry_hash": "8f56ffc4302b3cc95063f996b916c48d12e8b2b630e1560dbad117796424d2cf"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-43",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-43",
+   "label": "hl-c224349cc9210013192d961a",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:12.404241+00:00",
+  "entry_hash": "0bfedae9110775323aac12d9d509ca3739fb543482d212b8f14545d04de7354a"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-43",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "188d042248adb4ecfffda5a13e7f22b09346db26da9e0f6fae53a3a18ec6cff7",
+   "issue_key": "HL-43"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:12.720869+00:00",
+  "entry_hash": "d63dc52c98cba37d8b44764b7bac8c7f10c838c89f35a0d9875b54ce38a92ccc"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-44",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "da7003206ff75bc0c493045a090aa1e37e29c2f627cc7d1052860c24e113209e"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:12.725607+00:00",
+  "entry_hash": "df974e92f2b8e0ddc871b6c83b380e19fe8338d6f535b6c45f0d1366d0af7d00"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-44",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-44",
+   "label": "hl-4a4cc55451ed8e7a2d216b14",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:13.545307+00:00",
+  "entry_hash": "31f22223e2ed8397177822a3f22407169de7b9777ea84658256174c0964ce7e5"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-44",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "65cc19c1b62ae902d72298ad6e514a4beda9afcbfdaf64be59b8b0a847dad9c9",
+   "issue_key": "HL-44"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:13.842623+00:00",
+  "entry_hash": "a3ffbc7a78f961a11fc97a860d93a4d8d9486597899396919623bb30e660afc8"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-45",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "a7b10b8cae4d9e8936e17a0213dc0aa977128b36d04e30d30f00706d05da597e"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:13.846856+00:00",
+  "entry_hash": "7f0e11f177c10f150dbd3f7c74be176570c8239bb29148408b143994d9678f2f"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-45",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-45",
+   "label": "hl-2c0c8da4d4548c8aeb7e1834",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:14.587321+00:00",
+  "entry_hash": "b56fe03220c315de0426a52dc59ccd178fa41e11a8439edf2987252210615ecd"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-45",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "d1aa67c7826bf0e3d18ec3ba3793d70b339fc486894dee5c39d5b6a512e6a86e",
+   "issue_key": "HL-45"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:14.866219+00:00",
+  "entry_hash": "e2fea2fe0eb63875e23a7737b89142ed4f8f1ab36477f3648164569087938381"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-46",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "6fbd9235d193a49bc3e51e7016d99acfddddc0dbc0c8fa75e599dac30886a06d"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:14.870237+00:00",
+  "entry_hash": "738673ec708e13318a14a59355ab309e9e77e8d87cdbd5836e9a5de5e958feee"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-46",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-46",
+   "label": "hl-5d2223e583be031b87381abb",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:15.540942+00:00",
+  "entry_hash": "76e5eea07b58b1d349f85689ce837524c56ecdb73c09d11e0485240ac88c94da"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-46",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "f52bf4b59329e72f638700f928a83bdb245e37bbef21c8df646740e5956d0a20",
+   "issue_key": "HL-46"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:15.881123+00:00",
+  "entry_hash": "d6779f98b77d0a6e0e1facec44ba7ec33a25a49af03d3038392cf6c4b6105a58"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-47",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "469ce0aeff504b774fc0840f15d10e0f3abd9fb0f51967579931b65380773b2c"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:15.883291+00:00",
+  "entry_hash": "037369759af931dc55b2967d866546b07965a6b901ae9c2769d8729b3b0b5f3f"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-47",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-47",
+   "label": "hl-a537afcac0053ec65e293844",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:16.748205+00:00",
+  "entry_hash": "62c045ec3b53a6bd86af8fd4ad97f8d568e171c70a8241847e0097dcebda2d55"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-47",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "4a9a77a9e176361537ee97cedbaf2104b73a8d28b0dbbb3ca52a60b35eb1e362",
+   "issue_key": "HL-47"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:17.024812+00:00",
+  "entry_hash": "4b9d0895e11a6a5315d60b51a70507c5e49265fc3d7bd984c47618185033108b"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-48",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "c7872e9344fe103867e2305ff00a0b4cedaea47071f763349a32a86965ceb9b1"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:17.029185+00:00",
+  "entry_hash": "d7dc46a2f1dc59dffb263fa1fac691c49809109e36d9ac6c1ea96f5236c23d3e"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-48",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-48",
+   "label": "hl-3280eb74729014965493352e",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:17.728922+00:00",
+  "entry_hash": "ce6e386cb97a5880d93044e7f521ce2f0f5655797f06b1f5e54d69f51f0698dd"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-48",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "c3504c0afa5a8a7c34a124be2acd87dbbca42f2cfd5196bddcdf6d257ba767cd",
+   "issue_key": "HL-48"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:18.035104+00:00",
+  "entry_hash": "be8ae87eca50249ad6e7a6e8f89d6931e35e1935c2f0c664cf282973c363e239"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-49",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "28918bf86467c6edb2a493077c8c87ef6db8a6f15d3a2b61a6a1fb4a604fe037"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:18.040124+00:00",
+  "entry_hash": "cd1c6bb3445f4593daf181d3fff9ebb1c8a9dcdbf9e8c58b7ff9be15379b4708"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-49",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-49",
+   "label": "hl-9672a109103db7305cd34de4",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:18.701525+00:00",
+  "entry_hash": "1e76e71ac140ab5626e54f51b7880d3360c01cb06fd5cab8e369c970594e132b"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-49",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "ee6d0476918256b1f73dfe3be35a63de19ab2a653ab02c374e02479a893096ec",
+   "issue_key": "HL-49"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:19.010304+00:00",
+  "entry_hash": "d81e9d37f99eca26579af971e6b0bdd2b3ce07839112cafaece3857d5cbb1c53"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-50",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "f7c6a8e6f499e3a1c8cde93a4a0e0b1d89b0cb88084bc10c135aadb8bab65af8"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:19.014307+00:00",
+  "entry_hash": "921f95e8084646ac58bfa271c6d5c4ec2b3c579cd9d7e6557ad1b0728d1efef9"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-50",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-50",
+   "label": "hl-5953ad57e113fc4dd78e55d6",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:19.583727+00:00",
+  "entry_hash": "7a9a48608ed6b159e315db9434d03b2b63d574823a9c1d07485a3fe718654fdb"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-50",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "64ecab26f5becf6d4b12a9b7e2d42ae39a824e5132f9142f48c8f1a90cac7783",
+   "issue_key": "HL-50"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:19.881215+00:00",
+  "entry_hash": "971c0dc0c40f7a23f23dada1bc38dc1fb14a973499553cf6b6e89d9c77296892"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-51",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "payload_hash": "d56a7f77d9ef5286bb0152e8a6db3771bb50a6acc7b222991ae80ce516152e55"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:19.884212+00:00",
+  "entry_hash": "89e913a0e78a39849c4103f9c92794683e51469bff4895ea83165d6dfd658aac"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "CREATE",
+   "action_id": "JIRA-51",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "issue_key": "HL-51",
+   "label": "hl-b1b0f2e13428c9d19ad9c7cc",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:20.602264+00:00",
+  "entry_hash": "17c365b629389e695a120b443ec88108e3826578ba83815394b3af7e51ac7db6"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action_id": "JIRA-51",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "06bd44ac6a177ffefea8b88f28ceec5b21d29b19b00b3cbf770b3a1c9042f371",
+   "issue_key": "HL-51"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:20.922543+00:00",
+  "entry_hash": "58e32e6c31e754f37607650f3daf11a999f2ea6c33c334cad7aa3aade8f248ff"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-52",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-11",
+   "successor": "HL-3"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:21.215905+00:00",
+  "entry_hash": "5b0cf2e38b9e57af5cd8c3b0d9861ed66b5b79e31a82c631f4e8b666ed4305c9"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-52",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:21.853755+00:00",
+  "entry_hash": "af4cfe691d55089ec8b08be0325ccc385db55daf939865090399b543e29245dc"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-52",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "541665f4a1b6b3f6e4bed1ca51208106bf369b99b7c37c23200db106c306358f"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:22.153774+00:00",
+  "entry_hash": "bfe11be17404a27efc5bd230db17fe227da5d20aafc3b38020d0c643a2116ede"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-53",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-11",
+   "successor": "HL-4"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:22.428868+00:00",
+  "entry_hash": "32f230fc161f7daba92355b640650c5b7220679666fa0ca513ba7f359a48a397"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-53",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:22.978348+00:00",
+  "entry_hash": "aaec43d148c2dc42c69fd92badca0632c03e2824659fdbd95451046114ccae8d"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-53",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "d5af2f1813b6489fe4b8b9f5d9f838130312b8aa43b5228ddf53b622a4708f6f"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:23.282891+00:00",
+  "entry_hash": "137a47db3f2e283839ed9fc6192fdcf84a6a88c6ae031a71b92c5bd8cd0296c4"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-54",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-11",
+   "successor": "HL-5"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:23.615180+00:00",
+  "entry_hash": "1ae7a2689fa344b9bf6cce34232d0004a055917eab646957b84e3e538776ab65"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-54",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:24.182000+00:00",
+  "entry_hash": "c8ccceb8e7167a86c564ff5775c187217b551cd526e683de21b0502773acfaad"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-54",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "580dbb87c76272c1e7d3ae79fbeb5fbfd2fa75b720d432ad94164e0eaf636d1f"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:24.501034+00:00",
+  "entry_hash": "9f756f87568c4d22b943ee317357ec0f6b73cfcec10cd16dd535d574f6238499"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-55",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-11",
+   "successor": "HL-6"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:24.803352+00:00",
+  "entry_hash": "4d77277653b70d71251d130442a15c5cd430bd42cb63fa53393b382c7ad0741d"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-55",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:25.325826+00:00",
+  "entry_hash": "02496a87b6ebb0ddb3c3d80a38a7b39895868c71cf8245b44a2f3c07ae41cd20"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-55",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "0f63943923d31fbd5b5c8a4fa07d12d7bef72d7cde80b3878dd9b558eda59b75"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:25.606002+00:00",
+  "entry_hash": "ec8cf938c17ce10e1c497fcfa1504d23613bbeb4e2b8f46ddbe200f4272a6848"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-56",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-11",
+   "successor": "HL-7"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:25.919250+00:00",
+  "entry_hash": "3d65bb43c34cd7bd2ac95bdae6f6bab645048ea33252b0db34636aebc781e768"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-56",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:26.464483+00:00",
+  "entry_hash": "93a547720f07f761b5dd36306b76d6afa03a7f399e10c517b8fc8d771663ba9e"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-56",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "0ce083415190f509a88d87778440fd4671c95e0b52a461c2d276df392ff64a11"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:26.821669+00:00",
+  "entry_hash": "244b758f5585eddbe684d8dd82df3a0135a351909ce45a5dd2dd9d8e365c07cd"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-57",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-11",
+   "successor": "HL-8"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:27.091007+00:00",
+  "entry_hash": "a6c516c7abd1945580bdb7923f465a36ad62152b551d2c7b2d2709e00dddaecf"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-57",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:27.860474+00:00",
+  "entry_hash": "b3f874fbc2e98d573aaee12a06a55c5583ac1b3b0961b58bc336daa7adccbea6"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-57",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "d1f3ee6ffb22548bd07b71f9b0b5f7b7612ed94c1935d5216976644a9ec87d3a"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:28.223932+00:00",
+  "entry_hash": "7d38a92453fc4a758b1af111e7a175bb5a1baf91b65b7bc16b943c0075d1d7df"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-58",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-11",
+   "successor": "HL-10"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:28.531621+00:00",
+  "entry_hash": "39006d3d81da00e4b301fe61262753727546b03acd1317d7197106f37c25255a"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-58",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:29.151190+00:00",
+  "entry_hash": "6ee85774ee6ad1d0699a35b601c671b36a1fee468f56924dce03922d920eab1a"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-58",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "e9e512e4ff9c56fb357082d230c1e8bb9f8b865caf8e827b3baa900dcd35ad1c"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:29.455047+00:00",
+  "entry_hash": "6db6bc5af430bc1ea66448058652656887efafe8472b8864e0b03e4aa0ec9a28"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-59",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-11",
+   "successor": "HL-12"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:29.706476+00:00",
+  "entry_hash": "a7f0851143c4929dd7f221d7ea4e8a9b6ea1f2ff1fa8f39edf15fd45cef3b2de"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-59",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:30.267506+00:00",
+  "entry_hash": "a21ea1adecf19e3e57bb804f62f7e194feb827dbc2941e54bf8f26b4482382e4"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-59",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "32f88c442594cf47ac7f9e264cd74493cc2b83a16ed0c98a930c85b465447995"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:30.555731+00:00",
+  "entry_hash": "c38657158cee56a03cf9c13d476f17209c06fb8da932fcf2012bdd7a7539e9f0"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-60",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-11",
+   "successor": "HL-13"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:30.904635+00:00",
+  "entry_hash": "13b7091a24c786dd1b5adcc118a67d04ac165a620687745ace9d196dbfeacfdf"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-60",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:31.659451+00:00",
+  "entry_hash": "78423c36fc3c41b00242244d7459ca661c61e572f94608ad75aa937c0a6e03cd"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-60",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "cb35058f6324a147f8e79af0cef5c91c0512538c4f0c81b6c2507dc1dd0602b3"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:32.021656+00:00",
+  "entry_hash": "2ac4591980d0c89ee7574cac9abc1682f14c4e1150b50244c5140b0a3959d91f"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-61",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-13",
+   "successor": "HL-14"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:32.364915+00:00",
+  "entry_hash": "f770ed0e09021773c9546b0d674e343a236187254d84442f2a71e6ff574a401f"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-61",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:32.926087+00:00",
+  "entry_hash": "126b9a2bd2990424e56ef3b0fe7e1a86744ecbec713c4f8554ee61d2d00063f6"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-61",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "a8d88b8cf1467db9b18f4c46c78d2fed97db4f0e935dd4e6e0766053f38c1093"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:33.235910+00:00",
+  "entry_hash": "829d7fad92eb0cbd0517649358bceb394f87e4e622fa2ec49eb9648114e4b0c7"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-62",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-11",
+   "successor": "HL-15"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:33.493063+00:00",
+  "entry_hash": "f4fa2e3749ccb4cb3e05c7204a90e68ab8c76b604d568404fbfe29d7c0168cb4"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-62",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:34.055752+00:00",
+  "entry_hash": "6f2f4c61d4c833666543b51c89c78e0b0004fef4fa313632cf0d16bcb90308e5"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-62",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "555bae79313476d06725e3c8e48d9467793c2217af14c2916a8b826a2eb763a4"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:34.341113+00:00",
+  "entry_hash": "de541e7ea36df6160599b5bdc6fe51a6659d17092ec5051585aa90af2e6b8da9"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-63",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-17",
+   "successor": "HL-15"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:34.616857+00:00",
+  "entry_hash": "0b8fea372901895dd01f262896bcd725272090d30133839df7d903eb0792c72f"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-63",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:35.164070+00:00",
+  "entry_hash": "de05941c7ed8d8f16c094543688575cdd57b437cdc8d3b1cbc46f76cdeb4959f"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-63",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "b25484ef4ed13d36b9c8e14961f9811ca468198d5fc882cf5be7a2323e083d0d"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:35.452481+00:00",
+  "entry_hash": "340c2e1d174ee2aa3e4d4ce5c498ff75ec211fed60ec8be6f91426c029a0bde8"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-64",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-19",
+   "successor": "HL-15"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:35.730787+00:00",
+  "entry_hash": "9b6c7d6625c9317aad28bcb706ca99de876e8efddabf17485e6dab116202ca9d"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-64",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:36.322310+00:00",
+  "entry_hash": "386b0eefbf5a9a2b1cb5f8fb965acd1e57665db1cfd8df8dbba4ad29198ec8c6"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-64",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "590215a1e29c351f9f144fc37d860e868203696ba0ee61af60ebf99ed21db590"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:36.684329+00:00",
+  "entry_hash": "11c441c5dc77b615a710032f66da0ec657217f63d889cf878ff99cb0f4bf0ddf"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-65",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-15",
+   "successor": "HL-16"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:36.965769+00:00",
+  "entry_hash": "dd163782f84f92a090160114deb915a61011ca8ce6e722e4df1c842f8c02fe16"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-65",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:37.570183+00:00",
+  "entry_hash": "3bdd874628fb1434eebec49977b667bf66409b710215061cb38686a57785fe81"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-65",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "829967aa5751c16b89eb6a170d0eb3a89d33dfbfde74f487cb5c44e71d9be3af"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:37.841956+00:00",
+  "entry_hash": "f89f28f13c19390dddcbf761554a6da1007b3595f3e67238e4b8bf519fe8c55d"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-66",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-18",
+   "successor": "HL-16"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:38.111844+00:00",
+  "entry_hash": "dea08b9033238ef40e71cd128bb1a371195a04138b59f289febdd1cf633e29ec"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-66",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:38.734131+00:00",
+  "entry_hash": "3c7618157abc18a57a44990b0a944116f7c765c13ad8c8e4521058f1bce7ca97"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-66",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "c9081a4ec8ded7055464fb17cda3e697def2a11bd03c09bcd72a6b9ea0c4f69f"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:39.049720+00:00",
+  "entry_hash": "6e67966aa179d2a5539d14ade69698a9fcd891a9021827a825ec6d42024e8078"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-67",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-11",
+   "successor": "HL-17"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:39.305565+00:00",
+  "entry_hash": "0632b963f58a7b03f8302e8496fe0a4066130b9a7852ae6e32c59085edd328d4"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-67",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:39.885973+00:00",
+  "entry_hash": "9c0adadd7fed6f84b21de281000c2ac2f2d9a0cca1a32c74b9157e3a6648a102"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-67",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "29391a755374086ca0241f167d4baa09dc2e4e8488ae43832498453f57884d71"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:40.221902+00:00",
+  "entry_hash": "0567e327ba91ad6523c98e2de0839c633fc01ba193643edda54d7aad019c9dd3"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-68",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-11",
+   "successor": "HL-19"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:40.510700+00:00",
+  "entry_hash": "b0b628258059d339383d528ebf8655652930fa3f5445479b1fd798221ca0b2d1"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-68",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:41.055960+00:00",
+  "entry_hash": "d98956fd8f74a990fe5b34f76316c80305f6569d3f58d42424b93c66867c8e94"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-68",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "5d4a85c28a79b62500994f5aaebea6f0db356bb6e17cdb5a37b370f8649167b5"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:41.414039+00:00",
+  "entry_hash": "fb5b93d6f8b2c191d6a4283e3807e68d964e0570dc1c5c2e7c4e4c70df757056"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-69",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-19",
+   "successor": "HL-20"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:41.673885+00:00",
+  "entry_hash": "308aa3a86be8fc54f0d963dc88668d04309086c39ef92de88f4118075b2cf996"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-69",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:42.229027+00:00",
+  "entry_hash": "2b8e25fa31381daf4057b6de67a06baa5d0a9716c462976364901a8854a9848c"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-69",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "cbb344d5890e26e5aa58c3c3bb3a09d940f03ce8577389ad4af940d40b48dbfc"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:42.510532+00:00",
+  "entry_hash": "6256a56bdb67cd59802d0a5663efaafb5800b376a035ef999f856bd2957594ee"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-70",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-11",
+   "successor": "HL-21"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:42.786193+00:00",
+  "entry_hash": "b3a9473855e9f2faa9cae1dad2fc905ffd5b6a0bdecf3096d8362d45cc58a54a"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-70",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:43.311878+00:00",
+  "entry_hash": "4f3cfaba5e96f5160d8ecc0da8e5edf704b636bb20a086068d1fc740838ae213"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-70",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "7888df34e8dcc97d4485a30928169ca9a30ae7f94e3290f15572c84c75cccc12"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:43.685464+00:00",
+  "entry_hash": "56d1e4e7b94a1b910d685f5fa19d39ff77d6d3fd11909a788f3145c76d6cfd13"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-71",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-21",
+   "successor": "HL-22"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:44.118596+00:00",
+  "entry_hash": "e890a29c11dbeb00bda93babef140ade65d48d0ef4d48ea79fb48b1eee156bbe"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-71",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:44.769246+00:00",
+  "entry_hash": "a52637705458808a8d6dee81a3b33cbdff60de243108afcbd625fbd52a95cccb"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-71",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "a93d163b7a4d4a08dfabc4e092bd3c4a3f3fe3d49cdf0d56d55fd2762014922d"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:45.144106+00:00",
+  "entry_hash": "507e4c6a1409ae9fc43349e947aa3c81b428f6c624fcd2a733f006c4a5709156"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-72",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-11",
+   "successor": "HL-23"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:45.489128+00:00",
+  "entry_hash": "33badae19f075a732bc87f70d5dc6f431cc4448a5ad9eff7a5c1a611b0b04dc0"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-72",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:46.061839+00:00",
+  "entry_hash": "014c4118d5095320b80c2b635e1cd06d82449f0d47ab41961149f78f21321b07"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-72",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "b7839d6e7db0d759093bbbd8aa26a6fb20ef9d845b9e680eb1b0aff2f7b3c0b6"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:46.367317+00:00",
+  "entry_hash": "dcf5d3408f6043bbfd416c62846cb211098914e5eb97d6c3cecd0c51f9c4e4e3"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-73",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-11",
+   "successor": "HL-24"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:46.681942+00:00",
+  "entry_hash": "1089a659ae7d1a64ef5eea6e03e778370977f4381e10b69cdc2b2c8e0ab27576"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-73",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:47.295590+00:00",
+  "entry_hash": "d2a3079f9c24c5875d9e6c3e45b24cb5d76d9e481e8d9286dc5f3e7036288578"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-73",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "fd2364d4889cb71f63976b926bf115d774869487b86c53a9fe6ebc5145f93a71"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:47.652173+00:00",
+  "entry_hash": "9cf29e586c0a2f81ea987f453ebc486b258b7090d8859cb3ada4da666d7729e2"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-74",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-23",
+   "successor": "HL-24"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:47.899909+00:00",
+  "entry_hash": "05eeb747a2c0b5123c418804975af456f24000800ecababe7d572a318357ea2d"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-74",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:48.419776+00:00",
+  "entry_hash": "b7dfc46d375f238c00b9aae76c20aa75a6b0549721f60d19751b9d1240f706f5"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-74",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "ef6ebc9f8508928b1be6e7d82584aa5acec1279215d454ce32c59b3543221700"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:48.712585+00:00",
+  "entry_hash": "5dc981e218cd8fb8a2103608e7a8e071a3ff6f3c39f077bf5df6f2a355c2ad9d"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-75",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-25",
+   "successor": "HL-26"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:48.967131+00:00",
+  "entry_hash": "1a669cfcb5070bf3319d78acf6571217a9ab8a82cd66b1f12afedfe4ba0caded"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-75",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:49.554850+00:00",
+  "entry_hash": "e043b613c47bddd57a000c3c806aa573d47f4971ddcc638a235ef428780bcc24"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-75",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "a38fe29368e6eb4279e0f6134fa95f0f9baf294caf5efac5e7dea2ef911b7ea2"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:49.826247+00:00",
+  "entry_hash": "728bf657f73f689eee95af3cbfc0b2b006b97f0a7bdfac0d9395ae66458f6037"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-76",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-11",
+   "successor": "HL-27"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:50.102683+00:00",
+  "entry_hash": "61817cf5aaed4cadeb4f4bd3e90c329917668550f02dcd4068565f25fc4958ed"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-76",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:50.682724+00:00",
+  "entry_hash": "bd97dbcfc99f4c90b1908ce3da013d1645a878e871d64d79d23cf82e86824b48"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-76",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "b8cd704b16cb67d2a41a4852900979dd0b8cac289b86ad72e747ef873ebabe71"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:51.049449+00:00",
+  "entry_hash": "65d1d9f1b41f874bca077f20136e3b727e84e75f93f92cec4de18b463bce27fe"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-77",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-16",
+   "successor": "HL-27"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:51.310366+00:00",
+  "entry_hash": "ea261ffe0e63ed34e265919113662705babeff783e88c2c045e3ee363a6dd3f6"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-77",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:51.943258+00:00",
+  "entry_hash": "305b3c6aafddd6880fec5dbc681a3c743d39718fc2d126e2893248ec10b25277"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-77",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "06cd587939ba03fa7ba0cce8584e8694becabaed0808842cf54be8e5dfd4e689"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:52.279702+00:00",
+  "entry_hash": "1ea0902d0b69c68a0514a42df1623fe87e0e281a06a947d9a3fc040acc7b9ecb"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-78",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-18",
+   "successor": "HL-27"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:52.553593+00:00",
+  "entry_hash": "8ad2e0ade67e0e043d28cab1070e575b05d4408d7833414eb5299b933747ea25"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-78",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:53.092991+00:00",
+  "entry_hash": "644ea23b610671647260233b0e850571c3946be37756e9a1347dbfe3e6094276"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-78",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "83441a8d2ffed563d9e94d3c9a8e9ca0c963b676c83e5be1b1014a3f3a2de4ba"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:53.399186+00:00",
+  "entry_hash": "f1c6f43a03ad70fd41c01fc0afc121f457281b02d6ebf975369c23c55d099390"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-79",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-27",
+   "successor": "HL-28"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:53.679677+00:00",
+  "entry_hash": "9153bcec27ab5ff7e181e495079a5177c847f49b55fa1295fcc469acd85e7b93"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-79",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:54.306193+00:00",
+  "entry_hash": "b6978eb52e7e01a1ffede9b4552548f0091a5ed4fe5aea9d792c070241f660ca"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-79",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "f7d73479d3093bc0ad7a59c648b73ad265b2cf82ef83bd539c2b324d010f53af"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:54.562501+00:00",
+  "entry_hash": "3bc8a21c9c53e5d7831d170d773a784e75d7cde5fae04addf26dd20a8cd81e93"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-80",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-29",
+   "successor": "HL-30"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:54.813315+00:00",
+  "entry_hash": "e59089073abcaf1043d2ca7f413352f4d1287187b04c6e9dc2d9d05b90137b8e"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-80",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:55.365305+00:00",
+  "entry_hash": "8215435004ae361fac50c737e095436819dd5a0f9d4e6dd62ac19f1b69a2f2f1"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-80",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "be8b13a89bcbdf77d70ba27bf7cd09f0fa6d2acd9a60cba9f41ae1e400b8c872"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:55.677378+00:00",
+  "entry_hash": "95239e05318edaa43135d62083a2f5902e24235455b8c6f9363ca0e12bc11690"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-81",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-30",
+   "successor": "HL-31"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:55.964462+00:00",
+  "entry_hash": "0e62555ac9e6aeabd278e3ba40193b75d1ebef9d596e7f15832927492a40a86f"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-81",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:56.517871+00:00",
+  "entry_hash": "89bfb4fd28a777e0372eee5a732d3be4222baf937b10d5dd225a33c4fbce307b"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-81",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "520d634fb857098b8a6bb0bb7fa7529e25f9203ac53fd6ab33b5608388c8856f"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:56.854886+00:00",
+  "entry_hash": "e82f74180acb9b4cbacd8a4a19356f91b86f1f43622d2b0a3203662f49ac2280"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-82",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-31",
+   "successor": "HL-32"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:57.104877+00:00",
+  "entry_hash": "afb114fdeb69caa7aeeafe30cd7eda4f82a49c4069b26022b34caab3907f0863"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-82",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:57.635231+00:00",
+  "entry_hash": "a09135656481c27543ff5b5fca929971457a6173a8b4dc1f5f40fbac81b913e5"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-82",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "e678d89d494740ffde8ad6554663cf9ec74e25fa4ed315780fabbad17ca2496e"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:57.937247+00:00",
+  "entry_hash": "611c2600c96a086f61a948039bf7321c5322e945c2ddffaf110d4a700c856a94"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-83",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-30",
+   "successor": "HL-33"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:58.184920+00:00",
+  "entry_hash": "45aaace3025fc9aafc1cae239c6bbe0a0959f0724932c2f203f334d46111efe3"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-83",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:58.842453+00:00",
+  "entry_hash": "6d2a4200f6920df1d75bb90222ef49afb7f90912b2e2558bd161e4c53476ecf6"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-83",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "94724619eb0883095efab9221d234e21efe1b811d9fec31b8eef081b62f4b00b"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:46:59.141256+00:00",
+  "entry_hash": "cb43d8363fce3d3eb0575a85ace3632fc30ca29da95b3f3b07b1342eee2ed97c"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-84",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-30",
+   "successor": "HL-34"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:46:59.413587+00:00",
+  "entry_hash": "141f61a4237249ad9caa154d3ec3d4990c968171984c44cee8315209b4e329c7"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-84",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:46:59.956230+00:00",
+  "entry_hash": "f79e27176d0f7b05a7c1df3996c60f8ecafac68e9c6a8c1adf3d7b4e08d2d7ad"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-84",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "328891386e5c204191d87b2cba4a329fb4bc1ed520643008219036dd4bd4ba8f"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:00.244601+00:00",
+  "entry_hash": "e7ece43fead1085d3342463b10c2f3795d3ed01b736f3cec23e2b344ba07f4f2"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-85",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-35",
+   "successor": "HL-36"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:00.535401+00:00",
+  "entry_hash": "d07c13faedc207bd6ea643816995a4a2e3091e31d76b39767e0c707d8f5254ad"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-85",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:01.075464+00:00",
+  "entry_hash": "fb4b1883ff7b551e988c568e1732cebf8bb23794c16a88ab9667e2331a194563"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-85",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "78671dbc3a5ea8dcef7e9567cebcae070100147a2c7d0c67ca238b5db2445793"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:01.345747+00:00",
+  "entry_hash": "47a32270996948fe41ea5f9e1a4c2b6715fe17224bd6ae789b213c9718573156"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-86",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-30",
+   "successor": "HL-37"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:01.624969+00:00",
+  "entry_hash": "fd82d6ccde1c1f1b5022511c42174f589e72522db2c1b12dfe674ac33732d909"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-86",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:02.279364+00:00",
+  "entry_hash": "64454b83ee44a34b8888a4c65d5e80435b4ac8960cb31684efcbeab12b2d3ab2"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-86",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "c970b6addd404ab55c4a332fd19a4e1f13064a4b1e9d354f270ab7c8cd6d3b36"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:02.586851+00:00",
+  "entry_hash": "c26a33826bb3cecb102c433521cbf614b36e4081ae9611e1c0db7da2d4abe88c"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-87",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-34",
+   "successor": "HL-37"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:02.893009+00:00",
+  "entry_hash": "50ab9da8ed53f4e97ca9666fabf7a050f72474cefd5384534af85fdd88b24128"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-87",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:03.544478+00:00",
+  "entry_hash": "16fe3b2fd4fa8a0a36f148f79465130345df0c8e0d453d58699d7ead87d31b33"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-87",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "79f906548ff65689d6045068addbae3ad1300956f964ab62087ef44a2519e074"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:03.970286+00:00",
+  "entry_hash": "64629497edb673b2f6180defbedb0f6a8cec23734103e525b49eea332071ef5a"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-88",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-35",
+   "successor": "HL-37"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:04.236334+00:00",
+  "entry_hash": "3b411c5ffa48083188693882c43ae92fc201871eee789fcabc7daf7217ad64b2"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-88",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:04.823917+00:00",
+  "entry_hash": "bab708c3b22e227af53ea83bfff1166635b4f8eefbbfb7249d741d09a0a9e943"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-88",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "59d9cbb27183b42059e992d4287e470f8002403c1fa1bda76226e328a5850bd0"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:05.147536+00:00",
+  "entry_hash": "4880ff3986823552ef2e520d7694fe753bbf9b2580ca3aecd4d2b0db4e11c626"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-89",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-37",
+   "successor": "HL-38"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:05.426894+00:00",
+  "entry_hash": "f6c4f0b3bd68d46c88f4813339186c809c9b4f71204167c2e91ad75fbd070ba4"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-89",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:06.014560+00:00",
+  "entry_hash": "12b6b6ee76f01ceeab842b0a0f1efe45a01ff0e0d1e42c337afebaedc494c58b"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-89",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "5db84a9e43dc174bf9bde86d83bb9c280124228036ba5168c0ae5fb168ce3306"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:06.310861+00:00",
+  "entry_hash": "310d38e6ab6c39a9b9df1288956f959194c9ac019aa519ff534ecc42da225434"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-90",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-33",
+   "successor": "HL-39"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:06.593614+00:00",
+  "entry_hash": "56c7d842fd3b07d392e8d4365974ecd2619e4967ffa67d2e9b516f5050d29388"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-90",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:07.212010+00:00",
+  "entry_hash": "cfc23c32ce60a788847f136bae34537cc454753f132fb690a4acdf51aec1194f"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-90",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "957625848f96ed447538b20f1449270e8bdf7bbd31633490ed711047c72e4818"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:07.573608+00:00",
+  "entry_hash": "9d7e04bf7fc1a870c4205f07187ab8b12dfade83a3b807cbccf6667081b4b6e0"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-91",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-34",
+   "successor": "HL-39"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:07.839917+00:00",
+  "entry_hash": "bb1ace1056e9c304bce206ee5905eb7d5939dfa187d0c336b1e8395f9ef451f2"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-91",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:08.456459+00:00",
+  "entry_hash": "7da81559db679878cccc712d1b306a8ba96e0f23fa5ae9ee5111ca1b15c9cc6e"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-91",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "399cc3b4f42c1d02048b777fc74d5f556defe3ce06b68ccb1ac334510973bdef"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:08.763742+00:00",
+  "entry_hash": "ffc47f68d0d52ab1d4e91c50a6b6d672db014ab0429993d2799f9eeb64c89e06"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-92",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-39",
+   "successor": "HL-40"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:09.054754+00:00",
+  "entry_hash": "e131c63d3139d492949af1c10c0ed3139f61603ee0084c71bddcf0d5fa438186"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-92",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:10.009610+00:00",
+  "entry_hash": "cc1d2058e7880b35ea3507c00bd98898e70ff3086675c41c01a9e44e03db8b4f"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-92",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "761b804dea02d06ebd71e02f69ab9a93ca656306037cddf80004dc835bbeb431"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:10.314912+00:00",
+  "entry_hash": "1a996e96f625ab48e4e7f42b6315b7afcb0483ff0a5faf9e78c138eecc5e154b"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-93",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-36",
+   "successor": "HL-40"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:10.619217+00:00",
+  "entry_hash": "4db1055f0ee5fca13f160bfb6ecde91f9d07698269209210dd6ac356f5c8fcbd"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-93",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:11.646172+00:00",
+  "entry_hash": "401752b3f55beaabfb4fac857b25a34c42b39177aae3a4d211c01d96721a615d"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-93",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "79b5dd3a1eaeb4abec9bff7cb371fca8b7c6571c7f342910be27b68da149be72"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:12.075767+00:00",
+  "entry_hash": "707f9d62baba2359102af91ff7c2c2531520122a952c7a935e83866fbc299e1b"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-94",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-39",
+   "successor": "HL-41"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:12.353975+00:00",
+  "entry_hash": "3210d9bd3af6fb68f36a89d413f11527fd263a51aef7752cb4f8d1aa9d71191b"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-94",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:12.963178+00:00",
+  "entry_hash": "c3fe4da6b23cd0046f08a027f13074274a2d46c2239a0cb2353375530b04e4af"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-94",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "9e61927dd2b1a5589708823cde879482c7ad7c94ed1db51c2736d705fe922989"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:13.281373+00:00",
+  "entry_hash": "1b6d1e5694a4936089eed0e47d655106a8d11a74d714953b28b4877012c3eab0"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-95",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-40",
+   "successor": "HL-41"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:13.576891+00:00",
+  "entry_hash": "267d96d60325f9514cac78e1bb7fdec002da8d126e0195c5c02d187d5dfc20bb"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-95",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:14.170213+00:00",
+  "entry_hash": "16ba567f340524f005ad5586d3726d8b987eb0acbc59edfffb8c112ffb729dfc"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-95",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "8bef7bfe178256e5c55f06b03c28369c50dea09f3a4f2aa847ee60ae637a3a72"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:14.447454+00:00",
+  "entry_hash": "a6b75769a55b9ff1df39085a2ccd1a270e8f24565565757f3ef79ea2e53c4680"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-96",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-41",
+   "successor": "HL-42"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:14.826089+00:00",
+  "entry_hash": "5b7d6c8aa4f4792f11edee2579c66d42cdced32f36aeca63a1b17200f5100059"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-96",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:15.406240+00:00",
+  "entry_hash": "cef6976e3e319d93e1cd7ebe8f102e1ca9d586d36709b581ce25a0182e44643b"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-96",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "34cd9869d9f261f35717cb30ace8500ba2501e3f3bb55900999dcd5c176021ec"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:15.685025+00:00",
+  "entry_hash": "8615a6d46b3c57083c79452823ef7506c9071f5e3e69409a9fe62b4f01638d6f"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-97",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks",
+   "predecessor": "HL-30",
+   "successor": "HL-43"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:15.971139+00:00",
+  "entry_hash": "3ada21edcaff68ab57f1ccd3b3fc7a36641be2d63046666043a116a8d264b402"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-97",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Blocks"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:16.508382+00:00",
+  "entry_hash": "a8bc54ec2c8b799682babd95fda6abd0ba8893fcd29e704a6c3a284129f9bdb7"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-97",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "a059be01c76220a3b088431fcdf0af3cb3127374f010b230efb451e6fcdd140c"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:16.787786+00:00",
+  "entry_hash": "80bde420d4e27414c728b4f8a3803b16255741a3d1d4c34fb95354880d058380"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-98",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-44",
+   "successor": "HL-12"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:17.076177+00:00",
+  "entry_hash": "17c869de3e7491d8ee49421873701d4250fa913729c00385d50e22785748731f"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-98",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:17.732513+00:00",
+  "entry_hash": "255b31b8cb92edbd613522d00fc6205cc4c11aeaca37e116225bab4225929b0d"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-98",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "453950c18cbe31be0aa2c87f40eb78e5e59a355861b43fdae487b7bc533b2b3a"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:17.994724+00:00",
+  "entry_hash": "221718fe514a76084076d28d73a3a15d1a735503e1c53cecca3c7550bbbb3119"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-99",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-44",
+   "successor": "HL-24"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:18.251074+00:00",
+  "entry_hash": "0ba040901a6a4eb334d35c93b4ee64929d4eaa3a9193c78119824f720102b2e2"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-99",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:18.732201+00:00",
+  "entry_hash": "c7c8ba5aa884fc7c9b2498f311ae4f1592797df53793ab9f2293cc584eacd7c8"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-99",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "aec4c61be0c1e7ae0cbdd48f78e07c10de4c3d0520ed313be2f285bfaab7c075"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:19.025560+00:00",
+  "entry_hash": "89d320b9a5679036c03d7694399242e77d23c794346087cf9f9d14f10084987c"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-100",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-44",
+   "successor": "HL-34"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:19.304342+00:00",
+  "entry_hash": "0024d0ccf99d85e98c41d3b20905b1be10e54a38b4c3d82f2a20bfd1237bb1bb"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-100",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:19.904087+00:00",
+  "entry_hash": "a9eecb9c81b95122c2aa48aacd6e4ea60969f07978475d95846a1d46371e2386"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-100",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "35e7e82623e491d0b116c74490091f0bae4893d68fa92ac4a8555334d4d80c84"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:20.191537+00:00",
+  "entry_hash": "17ccf4c48d550741c60a0ff8311aecf8546b43231f2952ed3ecaf908e8988e80"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-101",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-44",
+   "successor": "HL-39"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:20.447562+00:00",
+  "entry_hash": "7f2c64f6f06ee94636fe22960c199dd6a2902f2acde5c99ef5528d2f0bc2b138"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-101",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:21.021968+00:00",
+  "entry_hash": "73173bac5c49dcb19f9e69ec69e888621145d68228ceacc54e5e878db880fa6a"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-101",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "608e5bf9ab1278ea307170fa60ef903573170ee1072d42d1a19e74a07d9e0cb2"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:21.353526+00:00",
+  "entry_hash": "d01d80b8bafa5dc257137e37fdcfc604063f852d9217f17bd6f0116084870f11"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-102",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-45",
+   "successor": "HL-12"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:21.614410+00:00",
+  "entry_hash": "170d12add3db919c0a65bae792b8b83a13b4341a36718934843d1bb05d6ad916"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-102",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:22.155778+00:00",
+  "entry_hash": "a1c856856327669fc4dee1f3724004ec8eabb22258addf20627811f557fed40f"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-102",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "e85842e1553900b85b57c2b15df54cea720758c1b4f39ffd26382d12bc396725"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:22.480148+00:00",
+  "entry_hash": "b648f68d2ee9b03cc609abc3f28a7f932a1ffe68f47e4782d657e6162de229de"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-103",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-45",
+   "successor": "HL-23"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:22.862030+00:00",
+  "entry_hash": "98ea95ad148785ab4a2778d8c21ae158582f1e3b897419b8928fe21c0cd30bd7"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-103",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:23.504653+00:00",
+  "entry_hash": "db2b0de4f5413cb86b8985062189a9c9c4d75ee5e148a4cf27828ebb9fe40d0b"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-103",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "d3865147887d88a1fc85f7aa19cb1b16ee10e1f4f0cea15eb2c9624669d6ae88"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:23.809497+00:00",
+  "entry_hash": "d1c7a74fe8de0d9b355ece8dbca757c8fe63aeab107664749cee60561bceabc1"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-104",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-45",
+   "successor": "HL-24"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:24.123111+00:00",
+  "entry_hash": "41ce6dc4dde711cfc3e3b7e229d621df8b3343afeb59790d2dbfd278622e9bf8"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-104",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:24.679050+00:00",
+  "entry_hash": "b65367ab053bcf1ff2c6a8cc5ddd1cf41d8a41d25098cda8ca512cdfb7d352f2"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-104",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "b513f00f4454ba8c5a52e9fb740f8a6c2de7cd6dee1afda85c9c7b050d407931"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:24.984693+00:00",
+  "entry_hash": "ec72051d70e80cac82df97118cb1ca5761f4ec9ee1bc4761c7b0a83770e970d6"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-105",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-45",
+   "successor": "HL-33"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:25.273798+00:00",
+  "entry_hash": "e9cdd9c29e3f924a45d407d69afbc413d321fba438423d40bc1bb61ff54b51eb"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-105",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:25.919904+00:00",
+  "entry_hash": "c89939c41efc6cf60c32d6155f8fafa45115f20d84d5e7cc2284ad2a15427275"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-105",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "51787af4788ba86bb7d7c627bdd0e4c629129a84f88514331f0e946ddeb35393"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:26.181817+00:00",
+  "entry_hash": "f9844469b9b2a6a252deddbcbcbfa940d7b3ba48c565d6055f816acbac56e599"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-106",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-45",
+   "successor": "HL-39"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:26.500081+00:00",
+  "entry_hash": "d71b8b7b5ae33dbf1b39975714c496dd43438b81562138e8662f13a9b2a2c8f3"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-106",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:27.082007+00:00",
+  "entry_hash": "9c3b74be4349de7d3598121445efce8e845a743ea0695a61aa8872799e8426bb"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-106",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "93fd8e09d85bc4dd030843db5aa64228c4903eb7efdc8de9c7e17d96e1406706"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:27.372485+00:00",
+  "entry_hash": "e348eeff12ac7d9008c65755a592c362dbcc87f7ec840ff61c7964b46fedbf5d"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-107",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-46",
+   "successor": "HL-17"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:27.658678+00:00",
+  "entry_hash": "7573c20e8572568225ff90d86bf5e6eaefe894865334d2033238726343e8f895"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-107",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:28.288916+00:00",
+  "entry_hash": "3d0ccf64258a49493b6dab3c2da0488049c2e664e3b18fbe6d707dd060e415b6"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-107",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "d5236c915d23ba9a4898a18833b7d15c3344fc871f1d5565d45189635eca6103"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:28.636894+00:00",
+  "entry_hash": "f2d93c2a076c90946889ea294fcc5f30529770c62028908a02d83c550f333f72"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-108",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-46",
+   "successor": "HL-18"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:28.947509+00:00",
+  "entry_hash": "702c43a09120e1ece2d2ebed22f0fe13371ff66b0efe4b8d843b0adef7e17a3e"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-108",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:29.548774+00:00",
+  "entry_hash": "08d45fd2153abe9d2a0964900ee25ff8cfabdac2f99379bade377a78e969715d"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-108",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "35ccba490b8ef59527bfa9d6cebe19420f5a04457cb55eb8ddd205abc07de63e"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:29.855254+00:00",
+  "entry_hash": "a445d277575a0d3b6bc1850d74323fd3885c312fb37eaeaa706a31e468b936ec"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-109",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-46",
+   "successor": "HL-27"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:30.256570+00:00",
+  "entry_hash": "a4ba213affd097131589e29b6c27e283161d4f024b2233c96c01db6c32d0e7fd"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-109",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:30.803458+00:00",
+  "entry_hash": "6f6c35db65d63b514e622a279909bc9a4ee37e4216d4509ce07a0a0508f0eda7"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-109",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "0c20bca70a9d7e0b4d00bc9f93f0bb48b406218c2e713485d62ea7c39d3f6843"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:31.078457+00:00",
+  "entry_hash": "6bfa9fa60d4bd9c15e372c8227d10d3b0cfd884f7cc81bc39c6fedd8e3263369"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-110",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-46",
+   "successor": "HL-35"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:31.386406+00:00",
+  "entry_hash": "5754cfc30931c529325233a31059ccb7f51ee41bd78a8004d4792db249838c65"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-110",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:31.980725+00:00",
+  "entry_hash": "aabaad7e26faf2f6101d993ec3ef135f178bcf5dcae3b1461cf7f3b28b264474"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-110",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "21179196b706a373a419d980fcb2f80821a7cae9b301decd2a55091c58aed86e"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:32.242746+00:00",
+  "entry_hash": "05d6fd0a4b71cdbb823e9dcb4c9dcb9cdda1a9be932e0b84840e30cb2b177b8d"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-111",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-46",
+   "successor": "HL-36"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:32.555050+00:00",
+  "entry_hash": "4bcb1a12cda8568a0789f4c2fdd5bef6ed6c709d3e7537a6457f6988be34341e"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-111",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:33.081126+00:00",
+  "entry_hash": "d7ce6d52c50fbaa8a2bd8d874d44c26fbf8d4d3a70850ddfab3f3141d73fa642"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-111",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "a39cfbbb529048b0644564e66598a76cd153566b6ea8f4aaa8ad1b874bdd190e"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:33.373189+00:00",
+  "entry_hash": "73e4b2c53e46fa885883327d685ab61cb82bf5e78e5567ce40989b72cb2e2fbe"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-112",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-47",
+   "successor": "HL-12"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:33.844795+00:00",
+  "entry_hash": "3315d99eafedd4414856b6fb0b158144d7e99dfa4954213796c045b23a29f1da"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-112",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:34.404082+00:00",
+  "entry_hash": "800127111f65667092af2110c0ad8a9411b9340f44519cc4d79f6d7053a80608"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-112",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "944c3c534ab6eef0ccb65c891e62cad09123f8d3fef204dc006e0555b674729c"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:34.706454+00:00",
+  "entry_hash": "0d6a6e3a17b646e22e46b068d24da28bfe2ab74da28ea24d86b0abc9de0a851c"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-113",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-47",
+   "successor": "HL-15"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:35.054583+00:00",
+  "entry_hash": "5933deec50fe6614c3234b439aab3d3aef957909dcb9edd5b43f13378c160920"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-113",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:35.597017+00:00",
+  "entry_hash": "0ef99b95a7f87b6bf7a64a9d046023f37767cab5945effdb30685265a8f14a7b"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-113",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "10bf956336b862fcf91d2cc44d98a6a41dc1e858f2090855bdce359668979386"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:35.891729+00:00",
+  "entry_hash": "2922b16f54772de8fd53efa59bfc00cf3cbc39d49816cf122e3b25447ed7c117"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-114",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-47",
+   "successor": "HL-16"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:36.184724+00:00",
+  "entry_hash": "044c86632bc63ee077eee256a3711c9112d1be560780610d4a87020e8c52d189"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-114",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:36.798587+00:00",
+  "entry_hash": "e7940dcb6cd433b22ff02642860231fc646c5970a9f7d9ab9d73648ac52f33a0"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-114",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "78ebf959d3172421e9f5edcac091b305481447c2ffe6dd5a24c396b0c5316bf5"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:37.064802+00:00",
+  "entry_hash": "e9d5b38bab8f2166fbd2f5e1cb764e0952328bb07b1ba94b2fe4c8d8e691059b"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-115",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-47",
+   "successor": "HL-37"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:37.348001+00:00",
+  "entry_hash": "b8e7b8d4be51345ea5ae81f269ec647940c358009e66f0bb46f40647cbb3cabb"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-115",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:37.997517+00:00",
+  "entry_hash": "c43c200f8cd5ffd0d57fe30a7af9b2c515a630a601b46786805d8791b14318e7"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-115",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "5373abfbef7690a1eb124f4727a954a413bb7b837cf4862aa8c3fe11d9cbd778"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:38.289789+00:00",
+  "entry_hash": "872dd63c81fb7bb66c6f2cf45cc69be511a453a0c8cde16adbf968244d5a5ac0"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-116",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-47",
+   "successor": "HL-38"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:38.579788+00:00",
+  "entry_hash": "6dcf17cbbc3e83e4bd5bf82173afd73fd7e66ab2d227166e1d2dee18864be28c"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-116",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:39.154650+00:00",
+  "entry_hash": "43a49402a2833ad37ab2895a1c57d7a667533c1bcd3a9351fe3d75ce805acbc6"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-116",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "0868dce4571790fa604c1377601220729457079a2480272a36a34111e74e4c99"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:39.450515+00:00",
+  "entry_hash": "6fac0a4a29065adc5fc3c7e30172a5ef863a51f449ef2ad08891f4aabb3c0c13"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-117",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-47",
+   "successor": "HL-39"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:39.758485+00:00",
+  "entry_hash": "339588d62f399a9d19a44650bd9e8e5818e8de44d74033fe50564426e1d7a163"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-117",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:40.297135+00:00",
+  "entry_hash": "6b3839d4c84e6712ef5208e7dcc65d406510150035f7e47bed679af399c674ab"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-117",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "5bab41ce20b456afb9c9838b7105d272c15faf924d1f4a0d7766ad450815bf47"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:40.565888+00:00",
+  "entry_hash": "f0dcdc3291d33fb69c0601a0f68cab5d7be88f19e16e94b6ed29f4ab1b7d4a42"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-118",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-48",
+   "successor": "HL-12"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:40.880924+00:00",
+  "entry_hash": "0cd26300e7827df9203ba151abce7b4e1d9756e438d08ef0c79ce72392212290"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-118",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:41.440031+00:00",
+  "entry_hash": "c783a4b22d922e591d323b351b1d546c11beecad4c3096c6a2815d031d9906f2"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-118",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "32ecdf1a7ec4eaa5d5c58b0e0738815932fd27119d1d6bec1d4c054e2e4450ac"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:41.775182+00:00",
+  "entry_hash": "eafcf3963f9e2342a35ba80780da32151aa5f7e63823c31b9ed89d96afccc18e"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-119",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-48",
+   "successor": "HL-14"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:42.074360+00:00",
+  "entry_hash": "1e066cdec062c62bae5a61b55889de9e729ad88e7c52390a5c79e0b88ee07982"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-119",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:42.716243+00:00",
+  "entry_hash": "9f5455eb1ac3cb679961e4eb717573079cd324726fa4903dd1e01fc439d6d54a"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-119",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "8ebb5fc62fcf47d00bfe644ba5207396e0b597f156a8e241af908a800bdb90b7"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:43.021086+00:00",
+  "entry_hash": "eaf944fcb8fe4d8bdaa4d70575408bae91ad4431040a851308b46c50c73150fd"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-120",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-48",
+   "successor": "HL-15"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:43.291991+00:00",
+  "entry_hash": "d6c365abe290a33b4a64dac0699b1cc2b25125461379ed50f721022a06c68ac7"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-120",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:43.895824+00:00",
+  "entry_hash": "b20cadab978b37ec3afdd6dbdda746a00b1165ccb8004f88a54102600fd455bb"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-120",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "c648ce27835ae7bd289fce36f93d5f0315b7f58b06a447e07a0534de5ed18f15"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:44.280046+00:00",
+  "entry_hash": "5f2ddb85d43a4e6ca662f33e1e4bd609a06255e0e2150926750fa80c84f549cf"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-121",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-48",
+   "successor": "HL-16"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:44.583259+00:00",
+  "entry_hash": "710cd5e9d2cdcbdfe01ccf7df7c3e89aaafa24f5414e8797c95a6fc09b3fbd0b"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-121",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:45.135080+00:00",
+  "entry_hash": "ae93da54eb86a42de88a2d41b556f47f9e417f171b5519df53fd117f09d1fcfd"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-121",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "c7bb7ea63d639b9f021891093e0e2fe53cd53fcc0b733a8b8e7c91222ca5663b"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:45.483857+00:00",
+  "entry_hash": "70d755d119cfead0e136dab1f9e92a8f234f88a8ceff3259fbb708173cccb799"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-122",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-48",
+   "successor": "HL-24"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:46.066014+00:00",
+  "entry_hash": "4512ceb7a2b5489c32408e0dc08bdd5628c420d0727c4ba14421214c4a7036ed"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-122",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:46.745270+00:00",
+  "entry_hash": "d0e1e695a44fd9de86e40f4b67fdfc9fb0d8b0adf9f6583bf1e70402c164fbd6"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-122",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "f4b8394b05ac61cff002418136dd7d2686c3d6177c79c96c6e7e767d9e5a9cb4"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:47.065614+00:00",
+  "entry_hash": "ab9fb6043c3c2cd43eeb2b21bacdf11ed146df3f17f4073a557c2e38ec5e98b3"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-123",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-48",
+   "successor": "HL-27"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:47.348543+00:00",
+  "entry_hash": "71e105693bb3f6ebe2591bf38905c917d83f612dfc4e4ff5718b1f2c0399e810"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-123",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:47.940586+00:00",
+  "entry_hash": "5ce2cb5819b3498ff16cbf764838a38d5f7ee85348c18e8ea4919460986dcac3"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-123",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "8566a147d5a71bbad850b82f2fe724f1e46c9f8ce338801ba40c9da5fc4a7772"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:48.255373+00:00",
+  "entry_hash": "749e092469332daea0e712013a043276341fc256bd45ff5eba005c19366381ef"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-124",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-48",
+   "successor": "HL-39"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:48.683508+00:00",
+  "entry_hash": "5f847eb36c6ea01544b2ad457294f2c877df75ec866fbddc0880cbc00799498b"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-124",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:49.197399+00:00",
+  "entry_hash": "5e5bbf280b413e9e02bbfec8ffe530ad540c1611c3428f90e052a2370886c661"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-124",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "7d249f8197212b383d62ac7bb996b9f1b7135f415516345d748dd56973b86afc"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:49.511841+00:00",
+  "entry_hash": "bd4257f23cdb119f88b157ac747df1c63e81007e0249f9520b5ca75e401e5286"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-125",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-48",
+   "successor": "HL-40"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:49.822400+00:00",
+  "entry_hash": "01363e3d69707d0f2e928c68c8f72935ef12c240400f5b22b766048d41608eba"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-125",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:50.386737+00:00",
+  "entry_hash": "c869e484e35f70ac550ce359717623b51098a556e5803959067646bc3ccc1a42"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-125",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "ed6b55f2f3ca241142e48b6fc8db99cd614791abe3ea2b9530fda2bde5efedc2"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:50.687754+00:00",
+  "entry_hash": "087adeeff0d01a447e97cb1fcffb60333488826dbcc503e8ebcfc43fe301822d"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-126",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-48",
+   "successor": "HL-41"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:50.979579+00:00",
+  "entry_hash": "dae9802e9074ae51d58fbb5212f716b793b0096eed8486719d335c91ee6f194e"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-126",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:51.595496+00:00",
+  "entry_hash": "888de031e11044445edf9c0770e62c16b2141c478377cccbaf5f0fe55ecd341c"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-126",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "9dd35ff5be3d64eefe3c93e3c34e76bb8fecb6faab51e5cd1a707f513f81a519"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:51.910920+00:00",
+  "entry_hash": "f77792512e4f3cdefac6d43fee67dd1f8fd8c9f5a7f8a904ea94834c87ff768e"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-127",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-49",
+   "successor": "HL-6"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:52.171281+00:00",
+  "entry_hash": "c7bbe7e5496b884f8000ecc406a2d35becc252ad9fd571fcf36caf8a7f2a9759"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-127",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:52.809054+00:00",
+  "entry_hash": "c398b79d8ae7adcc2c33c2af2405fcd62fe9d6850e7270d9b7f738edf676877d"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-127",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "c11b3c4b7977d0608be2c78c97f616804536d3f23a2407e4e183d6b2f1929f33"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:53.101298+00:00",
+  "entry_hash": "7f96bda1e134cf2059d4904b10398a7349a24249f8f1c05108fc4c4b97c51136"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-128",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-49",
+   "successor": "HL-7"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:53.389478+00:00",
+  "entry_hash": "98a1b5ebb16b76102b735cc55c854bd3aeb967759ff11530de7543af2a99b023"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-128",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:53.930731+00:00",
+  "entry_hash": "8cf489193b40d2b54cf656865ff9a4598c07501afba22687c3df9dbcd63fd98d"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-128",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "ed6cb5215020b99873c4b97ae9056acc3bfb0fdfc143d7ca5a56aceb1c375334"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:54.232383+00:00",
+  "entry_hash": "f3283d3552494585532c5fe012cbd9a0fbe91cd1dbeda0b776bb6fa04d24bbd7"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-129",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-49",
+   "successor": "HL-21"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:54.498423+00:00",
+  "entry_hash": "9134eb003d0c4a89c02746daffc5ba08a9698e6c9ce5a5a717a8f4c245f34d52"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-129",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:55.079615+00:00",
+  "entry_hash": "f469352bd2e0db2861d9897b278eaf19f08980150ecb1e46a320f9bf953cc520"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-129",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "5d9f38fddd0104ccdb1e4cf877cd94f038eb6e3f035dd7dd1816eccc0c43087c"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:55.367978+00:00",
+  "entry_hash": "ff87acc4c86c28a004b92ff48bf12168151fb92ff4f8f3347d167be977ce6ad0"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-130",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-49",
+   "successor": "HL-22"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:55.676381+00:00",
+  "entry_hash": "90301f437a1638238b9d2e839ec4a2b9d588d4772e82dbe8db1be1852474137e"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-130",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:56.331030+00:00",
+  "entry_hash": "4d573ebc334283dd7a40d689ad19890d18c66c1fd696f8c94ea423dedb64bba2"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-130",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "1215f1bf154406cf6432bf7324aac38b3d9c7da20283b0a4fb4c107d4831a5b5"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:56.605776+00:00",
+  "entry_hash": "56ca3f8ea827cbc8ec0fca59547647e55016f623f2f807c63c6344098ce64d92"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-131",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-49",
+   "successor": "HL-27"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:56.869896+00:00",
+  "entry_hash": "3a1188b917b6fe497082900464e176edd24190449aac44acae152d8e6148ed5e"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-131",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:57.420736+00:00",
+  "entry_hash": "28895d0b34562af60d561e0e5b90b74b16f667e5d82d2f515384a0582eb2573d"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-131",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "955107eaf00d8ed7659a53bb7cbf4d14146073c6ef3451cb6fe302fa794576dc"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:57.693429+00:00",
+  "entry_hash": "a2b6cf3170187eea1eed5cba07aa12207e2947450dd1a91c1639783314b632e0"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-132",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-49",
+   "successor": "HL-39"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:57.965154+00:00",
+  "entry_hash": "923e368d0cac0304950a5a72dd6b84b4ff8d1ec7a681066942527a29401bb64a"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-132",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:58.523905+00:00",
+  "entry_hash": "95ce221cd39482dea49689bc737a084dc8f236016fc157c22e494e28c4d2cc39"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-132",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "0b95e26f0a4cf8687eabcf06a11eacd21df1bdec489becd3347ddd44da60621a"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:58.797781+00:00",
+  "entry_hash": "9ff9358877be244eba8a4fd23fbaeb75cd59c76cba2ffc5dd36a7659bec57d11"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-133",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-49",
+   "successor": "HL-43"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:47:59.095100+00:00",
+  "entry_hash": "31ecaa73ed395fa49fa0b53f7f432839625dc71a2acf2c9f36697dcd0bc45fe3"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-133",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:47:59.607351+00:00",
+  "entry_hash": "001ba0cd99e057598ec8a0d8c24bac04b7dc41b5f61a41b17aa8f690c28c7c40"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-133",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "a339c40a274ec90569bdcebbb1d0600332028ad193d9507fa096f133d6398e5c"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:47:59.878897+00:00",
+  "entry_hash": "897659f3c494710fc77b1b3fb7110df2e40eba78561e2abebe93991a6660fd59"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-134",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-50",
+   "successor": "HL-11"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:48:00.156528+00:00",
+  "entry_hash": "79c705319bc1778e81e17d4fd1e87003e89da5d45800b114b68ef148596fb601"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-134",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:48:00.700675+00:00",
+  "entry_hash": "792a05625cbb933b185b38d3e99fea506ad5ae9e5fc9c5555e07016f8171dc04"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-134",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "b87876840c56b288c9d06a3fb2e506e7f040ec1055b3c61547bad46eb6f2aa43"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:48:01.000504+00:00",
+  "entry_hash": "b0f2d527b90acfd176267d07bbec2e37f8cdc7a70b7f3d594c86ff73902524b4"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-135",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-50",
+   "successor": "HL-26"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:48:01.289040+00:00",
+  "entry_hash": "94123563d9badd07ca4a4d7a70ae3e6c850f9a88085c0e335b1df6a85ea1955e"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-135",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:48:01.843335+00:00",
+  "entry_hash": "4e36aeb754c0d40d29446a4f1f3ebed2466ebd99cd48c4fce5cb6c5ae2d786b7"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-135",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "76bf7d361899dce765af8f8b0c406fe37d98635380e0499462ea4901f87252ce"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:48:02.125301+00:00",
+  "entry_hash": "3bfe5d5437a8ddef7c7fda4cc724f7adcc23d44e8057c6428ab7da301aeb743f"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-136",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-50",
+   "successor": "HL-32"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:48:02.419989+00:00",
+  "entry_hash": "6b1bed6810b50d0f8b13e5b79a1280051816cc7f35549e923ae88307fab0a515"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-136",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:48:03.019081+00:00",
+  "entry_hash": "65b9a6d53fe787b2a0a601a13fc4e71600e4459ed82df9fea1a5b9f38ba4c461"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-136",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "5f0b346230ced7b424dd828288d214925b3be8688a7fdfa8e1915a7384807695"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:48:03.299100+00:00",
+  "entry_hash": "9d4e4cb25597c62bf274f8ac3b140010ba6442137b49be208c274ff488a3d9c2"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-137",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-51",
+   "successor": "HL-10"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:48:03.582073+00:00",
+  "entry_hash": "a117cf3b4da94d6ce33bacdfd57123d6c408f5bb52372732e365f49278b8441d"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-137",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:48:04.071092+00:00",
+  "entry_hash": "f8cfa2de4e25498c1016c723f230f2764dbbcc631f6f5601b3936936286aa45e"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-137",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "e0b2bd1d464e5ff0217d2a1210d14a49b64da171fc9b54ac47b88b5b2cfeb46c"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:48:04.313967+00:00",
+  "entry_hash": "c68dd227c183c0113d330b92fcb4d84115632119ab8229aedcf676cb306a50ab"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-138",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-51",
+   "successor": "HL-27"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:48:04.588302+00:00",
+  "entry_hash": "1261c1b4859bba526eed5f9c87b0564e3dc2a84e06ca804882ef79b921beedea"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-138",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:48:05.115169+00:00",
+  "entry_hash": "334908627cbeeb924021114d84024973a6059665b9f0ce9ba89a35b285730bb9"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-138",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "ee2b38791bc7dc1e5b5a674732a64e67b89f46914f162f501c74c224975e7d01"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:48:05.458360+00:00",
+  "entry_hash": "c98c116a65dbe4167de76ec718bf8cae2ace3473bb5d83cf800f269da6cca9e7"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-139",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-51",
+   "successor": "HL-28"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:48:05.754972+00:00",
+  "entry_hash": "5792ac8be13826220df54040ca27f858e79946b47cb1b22aaa4dc4a3d0b49521"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-139",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:48:06.271212+00:00",
+  "entry_hash": "ce02b46a14aa0180f800e6f0630c7f3b72f8087352f10eafe08b2c295296971d"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-139",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "0eaff047eed6ba97639f1792831ad8abbeecd181aa54973b7afe681a68a174da"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:48:06.564846+00:00",
+  "entry_hash": "ffb753ea66ba9d497e29e1fe645ebe420fd745084ce61eb0245be448aa228cd1"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-140",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates",
+   "predecessor": "HL-51",
+   "successor": "HL-43"
+  },
+  "event": "JIRA_WRITE_ATTEMPT",
+  "time": "2026-11-10T22:48:06.845559+00:00",
+  "entry_hash": "1798022362e579ff8ed5f6619ee115602398cab87429832cfe807cc35830c622"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-140",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "link_type": "Relates"
+  },
+  "event": "JIRA_WRITE_RETURNED",
+  "time": "2026-11-10T22:48:07.378984+00:00",
+  "entry_hash": "be691cfac25bbf05fbe1e2b2a9bff7e13f4a61813a3ffed667e457006b413dbf"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "action": "LINK",
+   "action_id": "JIRA-140",
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "hash": "551a143639165e438702e61ea9d7d2d215b1f9ecee1a28b21f89a48364140140"
+  },
+  "event": "JIRA_READBACK_VERIFIED",
+  "time": "2026-11-10T22:48:07.659335+00:00",
+  "entry_hash": "c3553c9385d83af6e473ee1baf4798736d0792214f984d170eca9cf3d8e3a72c"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "batch_id": "BATCH-1fa28350-778e-4630-8c06-746987d417a6",
+   "result": {
+    "mode": "LIVE_JIRA",
+    "verified_actions": [
+     {
+      "action_id": "JIRA-1",
+      "external_key": "HL:WBS:1",
+      "issue_key": "HL-1",
+      "readback_hash": "af5841e453688b10316d0bf73c6ea9e4cbb53e6328bdf291028ed3e1c80a2c9b"
+     },
+     {
+      "action_id": "JIRA-2",
+      "external_key": "HL:WBS:1.1",
+      "issue_key": "HL-2",
+      "readback_hash": "25ce9ec88dc7cd9125772debb15f44b99b8fd20cacdb577ce998073a0c7fe9ea"
+     },
+     {
+      "action_id": "JIRA-3",
+      "external_key": "HL:WBS:1.2",
+      "issue_key": "HL-3",
+      "readback_hash": "c776ee7c6fab15e860da7f45a8a48be206393358bfca0fef27181c2607a57851"
+     },
+     {
+      "action_id": "JIRA-4",
+      "external_key": "HL:WBS:1.3",
+      "issue_key": "HL-4",
+      "readback_hash": "aa469b37d4f653b1151f1a56848060111483a3a6119449da1f0419e7f5a0e27f"
+     },
+     {
+      "action_id": "JIRA-5",
+      "external_key": "HL:WBS:1.4",
+      "issue_key": "HL-5",
+      "readback_hash": "12b51bcdcb93e6265477f0eed8b0949d9fe1f5e93e8cd9bab93009adaaa6a3f1"
+     },
+     {
+      "action_id": "JIRA-6",
+      "external_key": "HL:WBS:1.5",
+      "issue_key": "HL-6",
+      "readback_hash": "81f2a27a0a2e192e524107c13aedd9fd336d24a3571daada7cf15f3654b7a7d4"
+     },
+     {
+      "action_id": "JIRA-7",
+      "external_key": "HL:WBS:1.6",
+      "issue_key": "HL-7",
+      "readback_hash": "8f83cdb760cdb4c53ed5e4521b57848289ab3aeb5d11de52970571b6efdcec50"
+     },
+     {
+      "action_id": "JIRA-8",
+      "external_key": "HL:WBS:1.7",
+      "issue_key": "HL-8",
+      "readback_hash": "460e6f226b9935fe035fc9a25950c67ad42d231286eaa25650fd70e46d336258"
+     },
+     {
+      "action_id": "JIRA-9",
+      "external_key": "HL:WBS:1.8",
+      "issue_key": "HL-9",
+      "readback_hash": "f0b4510f4385414e61c9939869ebb04dfb61b510a56b18297a2c8abf313147fc"
+     },
+     {
+      "action_id": "JIRA-10",
+      "external_key": "HL:WBS:1.9",
+      "issue_key": "HL-10",
+      "readback_hash": "a4467dd4b4b07c0dd854c81c30c2861985ba53edb80c955feff50bb959b260bf"
+     },
+     {
+      "action_id": "JIRA-11",
+      "external_key": "HL:WBS:1.1.1",
+      "issue_key": "HL-11",
+      "readback_hash": "cda70c3a2c1d6eebd408344e3276b5fd4953fafe18426d99a11294e7fd4f7e99"
+     },
+     {
+      "action_id": "JIRA-12",
+      "external_key": "HL:WBS:1.1.2",
+      "issue_key": "HL-12",
+      "readback_hash": "d81b13a64f096036547320c3aac809582751702ddc677ce12f16eb2955a9eee4"
+     },
+     {
+      "action_id": "JIRA-13",
+      "external_key": "HL:WBS:1.2.1",
+      "issue_key": "HL-13",
+      "readback_hash": "d7c93da7eaad5cbebbf242c1f3cac8b20353b0aec5338994d77fee14da50ee49"
+     },
+     {
+      "action_id": "JIRA-14",
+      "external_key": "HL:WBS:1.2.2",
+      "issue_key": "HL-14",
+      "readback_hash": "c793664414dda4b80b680e9a3ec3bac440b3e57b753eed7100566d466803f8e6"
+     },
+     {
+      "action_id": "JIRA-15",
+      "external_key": "HL:WBS:1.3.1",
+      "issue_key": "HL-15",
+      "readback_hash": "464340d889df48175ab51099c6e5ca722ab7fcf7a08818a27ed714b0fc375cc9"
+     },
+     {
+      "action_id": "JIRA-16",
+      "external_key": "HL:WBS:1.3.2",
+      "issue_key": "HL-16",
+      "readback_hash": "91d627a539401c5f9e1321bb50aee7059f21810f179c112dd92609c7a8996810"
+     },
+     {
+      "action_id": "JIRA-17",
+      "external_key": "HL:WBS:1.4.1",
+      "issue_key": "HL-17",
+      "readback_hash": "caf22be6478af93af5b0e4bbad1a2475c5a956be6d8cd38480e9e181707a857d"
+     },
+     {
+      "action_id": "JIRA-18",
+      "external_key": "HL:WBS:1.4.2",
+      "issue_key": "HL-18",
+      "readback_hash": "fd2f946d2a916872683bf7d95b13a1a7f32ac02f9c89036195e0116dab23537e"
+     },
+     {
+      "action_id": "JIRA-19",
+      "external_key": "HL:WBS:1.5.1",
+      "issue_key": "HL-19",
+      "readback_hash": "96f037db0a0db91e28e4b9156f2f5c6867883c884f04dd4646aab3d30d3aba4f"
+     },
+     {
+      "action_id": "JIRA-20",
+      "external_key": "HL:WBS:1.5.2",
+      "issue_key": "HL-20",
+      "readback_hash": "f86ca66a598feea31ad4945330c2767659981ca0b4b97ddcf1c9a8e025b712ec"
+     },
+     {
+      "action_id": "JIRA-21",
+      "external_key": "HL:WBS:1.6.1",
+      "issue_key": "HL-21",
+      "readback_hash": "fddfededa37acd66ad8cf8a97b50615a1dd2ffa46680c446536ab35cc93407d7"
+     },
+     {
+      "action_id": "JIRA-22",
+      "external_key": "HL:WBS:1.6.2",
+      "issue_key": "HL-22",
+      "readback_hash": "4bc5885dbb4f957deb4f8302c6df56a73b950e6e2e5305f06c943e722b2c4228"
+     },
+     {
+      "action_id": "JIRA-23",
+      "external_key": "HL:WBS:1.7.1",
+      "issue_key": "HL-23",
+      "readback_hash": "c0af85f1501a52be61007b6667dfe3da0054ec73eb1b0c8834a75b3d9dd01726"
+     },
+     {
+      "action_id": "JIRA-24",
+      "external_key": "HL:WBS:1.7.2",
+      "issue_key": "HL-24",
+      "readback_hash": "badfe4aa0f2fb6a7b6d84ecd0b59100290f8f0613c39ffa30a1b43993b5b2a01"
+     },
+     {
+      "action_id": "JIRA-25",
+      "external_key": "HL:WBS:1.8.1",
+      "issue_key": "HL-25",
+      "readback_hash": "3940bd856d4c5ff5195cc56a4c8721360a231a679d19f5e3dd84cdff14851eb3"
+     },
+     {
+      "action_id": "JIRA-26",
+      "external_key": "HL:WBS:1.8.2",
+      "issue_key": "HL-26",
+      "readback_hash": "cf0f859bc77e1b595392c61e2da03370101542352ef29ee21a7ad4191ecf36cf"
+     },
+     {
+      "action_id": "JIRA-27",
+      "external_key": "HL:WBS:1.9.1",
+      "issue_key": "HL-27",
+      "readback_hash": "ab4306ffe5591d0631fcfdfc9300db0d4219debdb702031bb068f47356a8d4b8"
+     },
+     {
+      "action_id": "JIRA-28",
+      "external_key": "HL:WBS:1.9.2",
+      "issue_key": "HL-28",
+      "readback_hash": "ac6f3eda3e3fc584deada357b6affbf73d76d86dda101ee8144ad8c2b0381dab"
+     },
+     {
+      "action_id": "JIRA-29",
+      "external_key": "HL:MILESTONE:M01",
+      "issue_key": "HL-29",
+      "readback_hash": "dc421e3ac5faf4b0b445305bf92ee95feb519420a34e31d513d10692fbb990b5"
+     },
+     {
+      "action_id": "JIRA-30",
+      "external_key": "HL:MILESTONE:M02",
+      "issue_key": "HL-30",
+      "readback_hash": "f7b2bbe77e7629e9190f1a841c0ed225b3f3770ffa98094d38e90b364aa0bbef"
+     },
+     {
+      "action_id": "JIRA-31",
+      "external_key": "HL:MILESTONE:M03",
+      "issue_key": "HL-31",
+      "readback_hash": "d4a22c1f2d9a0b6f4363bcbf08c3e13a3cbcdee3019bb8918cab3e2773577273"
+     },
+     {
+      "action_id": "JIRA-32",
+      "external_key": "HL:MILESTONE:M04",
+      "issue_key": "HL-32",
+      "readback_hash": "b70f7dd7351761e1b19af3ff64d6c1cd4bcca6340d186d067c916401a547497d"
+     },
+     {
+      "action_id": "JIRA-33",
+      "external_key": "HL:MILESTONE:M05",
+      "issue_key": "HL-33",
+      "readback_hash": "c9500f00061ab80474cf68962041304f8d162a52d11f8f0ecb34a4c56d156fb1"
+     },
+     {
+      "action_id": "JIRA-34",
+      "external_key": "HL:MILESTONE:M06",
+      "issue_key": "HL-34",
+      "readback_hash": "154f5570695648cf7db706c4be9200c4ac4470f8cc28e9fc034f16e32e57c7fa"
+     },
+     {
+      "action_id": "JIRA-35",
+      "external_key": "HL:MILESTONE:M07",
+      "issue_key": "HL-35",
+      "readback_hash": "09c58bbe57a219d64fb977d2e4a8b7544f90481af662df007803b926e8aa6939"
+     },
+     {
+      "action_id": "JIRA-36",
+      "external_key": "HL:MILESTONE:M08",
+      "issue_key": "HL-36",
+      "readback_hash": "f297c59d9767f1dbc1ff9d87263a00f2f226b5667775a38e854627b546f2a47a"
+     },
+     {
+      "action_id": "JIRA-37",
+      "external_key": "HL:MILESTONE:M09",
+      "issue_key": "HL-37",
+      "readback_hash": "aab3d783cc1530b1882d55ee406ee0480cec1ac49375d32ed65dc3ce2a1095a0"
+     },
+     {
+      "action_id": "JIRA-38",
+      "external_key": "HL:MILESTONE:M10",
+      "issue_key": "HL-38",
+      "readback_hash": "3e850deafc67b706b2f9a2d59873500c553f6385ddefa1e073febd7897966471"
+     },
+     {
+      "action_id": "JIRA-39",
+      "external_key": "HL:MILESTONE:M11",
+      "issue_key": "HL-39",
+      "readback_hash": "ab680c9dc78aea8cfb2413b53045ed147aaaa4e4c6071d0cc21ff6574a9dd14e"
+     },
+     {
+      "action_id": "JIRA-40",
+      "external_key": "HL:MILESTONE:M12",
+      "issue_key": "HL-40",
+      "readback_hash": "ea00f866a145eb3e2d6da9252dc47cda431557234acc81cd2903cd4a0f6e06a9"
+     },
+     {
+      "action_id": "JIRA-41",
+      "external_key": "HL:MILESTONE:M13",
+      "issue_key": "HL-41",
+      "readback_hash": "cf31bf7efbdbe942cdb30019aeba539276412ec5f366fdd2301c3339af741f61"
+     },
+     {
+      "action_id": "JIRA-42",
+      "external_key": "HL:MILESTONE:M14",
+      "issue_key": "HL-42",
+      "readback_hash": "ebee204fd12e67dc8b83af2dc35adcd7911f3ebd0beee1a1f4de59e0d876e558"
+     },
+     {
+      "action_id": "JIRA-43",
+      "external_key": "HL:MILESTONE:M15",
+      "issue_key": "HL-43",
+      "readback_hash": "188d042248adb4ecfffda5a13e7f22b09346db26da9e0f6fae53a3a18ec6cff7"
+     },
+     {
+      "action_id": "JIRA-44",
+      "external_key": "HL:RISK:R01",
+      "issue_key": "HL-44",
+      "readback_hash": "65cc19c1b62ae902d72298ad6e514a4beda9afcbfdaf64be59b8b0a847dad9c9"
+     },
+     {
+      "action_id": "JIRA-45",
+      "external_key": "HL:RISK:R02",
+      "issue_key": "HL-45",
+      "readback_hash": "d1aa67c7826bf0e3d18ec3ba3793d70b339fc486894dee5c39d5b6a512e6a86e"
+     },
+     {
+      "action_id": "JIRA-46",
+      "external_key": "HL:RISK:R03",
+      "issue_key": "HL-46",
+      "readback_hash": "f52bf4b59329e72f638700f928a83bdb245e37bbef21c8df646740e5956d0a20"
+     },
+     {
+      "action_id": "JIRA-47",
+      "external_key": "HL:RISK:R04",
+      "issue_key": "HL-47",
+      "readback_hash": "4a9a77a9e176361537ee97cedbaf2104b73a8d28b0dbbb3ca52a60b35eb1e362"
+     },
+     {
+      "action_id": "JIRA-48",
+      "external_key": "HL:RISK:R05",
+      "issue_key": "HL-48",
+      "readback_hash": "c3504c0afa5a8a7c34a124be2acd87dbbca42f2cfd5196bddcdf6d257ba767cd"
+     },
+     {
+      "action_id": "JIRA-49",
+      "external_key": "HL:RISK:R06",
+      "issue_key": "HL-49",
+      "readback_hash": "ee6d0476918256b1f73dfe3be35a63de19ab2a653ab02c374e02479a893096ec"
+     },
+     {
+      "action_id": "JIRA-50",
+      "external_key": "HL:RISK:R07",
+      "issue_key": "HL-50",
+      "readback_hash": "64ecab26f5becf6d4b12a9b7e2d42ae39a824e5132f9142f48c8f1a90cac7783"
+     },
+     {
+      "action_id": "JIRA-51",
+      "external_key": "HL:RISK:R08",
+      "issue_key": "HL-51",
+      "readback_hash": "06bd44ac6a177ffefea8b88f28ceec5b21d29b19b00b3cbf770b3a1c9042f371"
+     },
+     {
+      "action_id": "JIRA-52",
+      "issue_key": "HL-3",
+      "readback_hash": "541665f4a1b6b3f6e4bed1ca51208106bf369b99b7c37c23200db106c306358f"
+     },
+     {
+      "action_id": "JIRA-53",
+      "issue_key": "HL-4",
+      "readback_hash": "d5af2f1813b6489fe4b8b9f5d9f838130312b8aa43b5228ddf53b622a4708f6f"
+     },
+     {
+      "action_id": "JIRA-54",
+      "issue_key": "HL-5",
+      "readback_hash": "580dbb87c76272c1e7d3ae79fbeb5fbfd2fa75b720d432ad94164e0eaf636d1f"
+     },
+     {
+      "action_id": "JIRA-55",
+      "issue_key": "HL-6",
+      "readback_hash": "0f63943923d31fbd5b5c8a4fa07d12d7bef72d7cde80b3878dd9b558eda59b75"
+     },
+     {
+      "action_id": "JIRA-56",
+      "issue_key": "HL-7",
+      "readback_hash": "0ce083415190f509a88d87778440fd4671c95e0b52a461c2d276df392ff64a11"
+     },
+     {
+      "action_id": "JIRA-57",
+      "issue_key": "HL-8",
+      "readback_hash": "d1f3ee6ffb22548bd07b71f9b0b5f7b7612ed94c1935d5216976644a9ec87d3a"
+     },
+     {
+      "action_id": "JIRA-58",
+      "issue_key": "HL-10",
+      "readback_hash": "e9e512e4ff9c56fb357082d230c1e8bb9f8b865caf8e827b3baa900dcd35ad1c"
+     },
+     {
+      "action_id": "JIRA-59",
+      "issue_key": "HL-12",
+      "readback_hash": "32f88c442594cf47ac7f9e264cd74493cc2b83a16ed0c98a930c85b465447995"
+     },
+     {
+      "action_id": "JIRA-60",
+      "issue_key": "HL-13",
+      "readback_hash": "cb35058f6324a147f8e79af0cef5c91c0512538c4f0c81b6c2507dc1dd0602b3"
+     },
+     {
+      "action_id": "JIRA-61",
+      "issue_key": "HL-14",
+      "readback_hash": "a8d88b8cf1467db9b18f4c46c78d2fed97db4f0e935dd4e6e0766053f38c1093"
+     },
+     {
+      "action_id": "JIRA-62",
+      "issue_key": "HL-15",
+      "readback_hash": "555bae79313476d06725e3c8e48d9467793c2217af14c2916a8b826a2eb763a4"
+     },
+     {
+      "action_id": "JIRA-63",
+      "issue_key": "HL-15",
+      "readback_hash": "b25484ef4ed13d36b9c8e14961f9811ca468198d5fc882cf5be7a2323e083d0d"
+     },
+     {
+      "action_id": "JIRA-64",
+      "issue_key": "HL-15",
+      "readback_hash": "590215a1e29c351f9f144fc37d860e868203696ba0ee61af60ebf99ed21db590"
+     },
+     {
+      "action_id": "JIRA-65",
+      "issue_key": "HL-16",
+      "readback_hash": "829967aa5751c16b89eb6a170d0eb3a89d33dfbfde74f487cb5c44e71d9be3af"
+     },
+     {
+      "action_id": "JIRA-66",
+      "issue_key": "HL-16",
+      "readback_hash": "c9081a4ec8ded7055464fb17cda3e697def2a11bd03c09bcd72a6b9ea0c4f69f"
+     },
+     {
+      "action_id": "JIRA-67",
+      "issue_key": "HL-17",
+      "readback_hash": "29391a755374086ca0241f167d4baa09dc2e4e8488ae43832498453f57884d71"
+     },
+     {
+      "action_id": "JIRA-68",
+      "issue_key": "HL-19",
+      "readback_hash": "5d4a85c28a79b62500994f5aaebea6f0db356bb6e17cdb5a37b370f8649167b5"
+     },
+     {
+      "action_id": "JIRA-69",
+      "issue_key": "HL-20",
+      "readback_hash": "cbb344d5890e26e5aa58c3c3bb3a09d940f03ce8577389ad4af940d40b48dbfc"
+     },
+     {
+      "action_id": "JIRA-70",
+      "issue_key": "HL-21",
+      "readback_hash": "7888df34e8dcc97d4485a30928169ca9a30ae7f94e3290f15572c84c75cccc12"
+     },
+     {
+      "action_id": "JIRA-71",
+      "issue_key": "HL-22",
+      "readback_hash": "a93d163b7a4d4a08dfabc4e092bd3c4a3f3fe3d49cdf0d56d55fd2762014922d"
+     },
+     {
+      "action_id": "JIRA-72",
+      "issue_key": "HL-23",
+      "readback_hash": "b7839d6e7db0d759093bbbd8aa26a6fb20ef9d845b9e680eb1b0aff2f7b3c0b6"
+     },
+     {
+      "action_id": "JIRA-73",
+      "issue_key": "HL-24",
+      "readback_hash": "fd2364d4889cb71f63976b926bf115d774869487b86c53a9fe6ebc5145f93a71"
+     },
+     {
+      "action_id": "JIRA-74",
+      "issue_key": "HL-24",
+      "readback_hash": "ef6ebc9f8508928b1be6e7d82584aa5acec1279215d454ce32c59b3543221700"
+     },
+     {
+      "action_id": "JIRA-75",
+      "issue_key": "HL-26",
+      "readback_hash": "a38fe29368e6eb4279e0f6134fa95f0f9baf294caf5efac5e7dea2ef911b7ea2"
+     },
+     {
+      "action_id": "JIRA-76",
+      "issue_key": "HL-27",
+      "readback_hash": "b8cd704b16cb67d2a41a4852900979dd0b8cac289b86ad72e747ef873ebabe71"
+     },
+     {
+      "action_id": "JIRA-77",
+      "issue_key": "HL-27",
+      "readback_hash": "06cd587939ba03fa7ba0cce8584e8694becabaed0808842cf54be8e5dfd4e689"
+     },
+     {
+      "action_id": "JIRA-78",
+      "issue_key": "HL-27",
+      "readback_hash": "83441a8d2ffed563d9e94d3c9a8e9ca0c963b676c83e5be1b1014a3f3a2de4ba"
+     },
+     {
+      "action_id": "JIRA-79",
+      "issue_key": "HL-28",
+      "readback_hash": "f7d73479d3093bc0ad7a59c648b73ad265b2cf82ef83bd539c2b324d010f53af"
+     },
+     {
+      "action_id": "JIRA-80",
+      "issue_key": "HL-30",
+      "readback_hash": "be8b13a89bcbdf77d70ba27bf7cd09f0fa6d2acd9a60cba9f41ae1e400b8c872"
+     },
+     {
+      "action_id": "JIRA-81",
+      "issue_key": "HL-31",
+      "readback_hash": "520d634fb857098b8a6bb0bb7fa7529e25f9203ac53fd6ab33b5608388c8856f"
+     },
+     {
+      "action_id": "JIRA-82",
+      "issue_key": "HL-32",
+      "readback_hash": "e678d89d494740ffde8ad6554663cf9ec74e25fa4ed315780fabbad17ca2496e"
+     },
+     {
+      "action_id": "JIRA-83",
+      "issue_key": "HL-33",
+      "readback_hash": "94724619eb0883095efab9221d234e21efe1b811d9fec31b8eef081b62f4b00b"
+     },
+     {
+      "action_id": "JIRA-84",
+      "issue_key": "HL-34",
+      "readback_hash": "328891386e5c204191d87b2cba4a329fb4bc1ed520643008219036dd4bd4ba8f"
+     },
+     {
+      "action_id": "JIRA-85",
+      "issue_key": "HL-36",
+      "readback_hash": "78671dbc3a5ea8dcef7e9567cebcae070100147a2c7d0c67ca238b5db2445793"
+     },
+     {
+      "action_id": "JIRA-86",
+      "issue_key": "HL-37",
+      "readback_hash": "c970b6addd404ab55c4a332fd19a4e1f13064a4b1e9d354f270ab7c8cd6d3b36"
+     },
+     {
+      "action_id": "JIRA-87",
+      "issue_key": "HL-37",
+      "readback_hash": "79f906548ff65689d6045068addbae3ad1300956f964ab62087ef44a2519e074"
+     },
+     {
+      "action_id": "JIRA-88",
+      "issue_key": "HL-37",
+      "readback_hash": "59d9cbb27183b42059e992d4287e470f8002403c1fa1bda76226e328a5850bd0"
+     },
+     {
+      "action_id": "JIRA-89",
+      "issue_key": "HL-38",
+      "readback_hash": "5db84a9e43dc174bf9bde86d83bb9c280124228036ba5168c0ae5fb168ce3306"
+     },
+     {
+      "action_id": "JIRA-90",
+      "issue_key": "HL-39",
+      "readback_hash": "957625848f96ed447538b20f1449270e8bdf7bbd31633490ed711047c72e4818"
+     },
+     {
+      "action_id": "JIRA-91",
+      "issue_key": "HL-39",
+      "readback_hash": "399cc3b4f42c1d02048b777fc74d5f556defe3ce06b68ccb1ac334510973bdef"
+     },
+     {
+      "action_id": "JIRA-92",
+      "issue_key": "HL-40",
+      "readback_hash": "761b804dea02d06ebd71e02f69ab9a93ca656306037cddf80004dc835bbeb431"
+     },
+     {
+      "action_id": "JIRA-93",
+      "issue_key": "HL-40",
+      "readback_hash": "79b5dd3a1eaeb4abec9bff7cb371fca8b7c6571c7f342910be27b68da149be72"
+     },
+     {
+      "action_id": "JIRA-94",
+      "issue_key": "HL-41",
+      "readback_hash": "9e61927dd2b1a5589708823cde879482c7ad7c94ed1db51c2736d705fe922989"
+     },
+     {
+      "action_id": "JIRA-95",
+      "issue_key": "HL-41",
+      "readback_hash": "8bef7bfe178256e5c55f06b03c28369c50dea09f3a4f2aa847ee60ae637a3a72"
+     },
+     {
+      "action_id": "JIRA-96",
+      "issue_key": "HL-42",
+      "readback_hash": "34cd9869d9f261f35717cb30ace8500ba2501e3f3bb55900999dcd5c176021ec"
+     },
+     {
+      "action_id": "JIRA-97",
+      "issue_key": "HL-43",
+      "readback_hash": "a059be01c76220a3b088431fcdf0af3cb3127374f010b230efb451e6fcdd140c"
+     },
+     {
+      "action_id": "JIRA-98",
+      "issue_key": "HL-12",
+      "readback_hash": "453950c18cbe31be0aa2c87f40eb78e5e59a355861b43fdae487b7bc533b2b3a"
+     },
+     {
+      "action_id": "JIRA-99",
+      "issue_key": "HL-24",
+      "readback_hash": "aec4c61be0c1e7ae0cbdd48f78e07c10de4c3d0520ed313be2f285bfaab7c075"
+     },
+     {
+      "action_id": "JIRA-100",
+      "issue_key": "HL-34",
+      "readback_hash": "35e7e82623e491d0b116c74490091f0bae4893d68fa92ac4a8555334d4d80c84"
+     },
+     {
+      "action_id": "JIRA-101",
+      "issue_key": "HL-39",
+      "readback_hash": "608e5bf9ab1278ea307170fa60ef903573170ee1072d42d1a19e74a07d9e0cb2"
+     },
+     {
+      "action_id": "JIRA-102",
+      "issue_key": "HL-12",
+      "readback_hash": "e85842e1553900b85b57c2b15df54cea720758c1b4f39ffd26382d12bc396725"
+     },
+     {
+      "action_id": "JIRA-103",
+      "issue_key": "HL-23",
+      "readback_hash": "d3865147887d88a1fc85f7aa19cb1b16ee10e1f4f0cea15eb2c9624669d6ae88"
+     },
+     {
+      "action_id": "JIRA-104",
+      "issue_key": "HL-24",
+      "readback_hash": "b513f00f4454ba8c5a52e9fb740f8a6c2de7cd6dee1afda85c9c7b050d407931"
+     },
+     {
+      "action_id": "JIRA-105",
+      "issue_key": "HL-33",
+      "readback_hash": "51787af4788ba86bb7d7c627bdd0e4c629129a84f88514331f0e946ddeb35393"
+     },
+     {
+      "action_id": "JIRA-106",
+      "issue_key": "HL-39",
+      "readback_hash": "93fd8e09d85bc4dd030843db5aa64228c4903eb7efdc8de9c7e17d96e1406706"
+     },
+     {
+      "action_id": "JIRA-107",
+      "issue_key": "HL-17",
+      "readback_hash": "d5236c915d23ba9a4898a18833b7d15c3344fc871f1d5565d45189635eca6103"
+     },
+     {
+      "action_id": "JIRA-108",
+      "issue_key": "HL-18",
+      "readback_hash": "35ccba490b8ef59527bfa9d6cebe19420f5a04457cb55eb8ddd205abc07de63e"
+     },
+     {
+      "action_id": "JIRA-109",
+      "issue_key": "HL-27",
+      "readback_hash": "0c20bca70a9d7e0b4d00bc9f93f0bb48b406218c2e713485d62ea7c39d3f6843"
+     },
+     {
+      "action_id": "JIRA-110",
+      "issue_key": "HL-35",
+      "readback_hash": "21179196b706a373a419d980fcb2f80821a7cae9b301decd2a55091c58aed86e"
+     },
+     {
+      "action_id": "JIRA-111",
+      "issue_key": "HL-36",
+      "readback_hash": "a39cfbbb529048b0644564e66598a76cd153566b6ea8f4aaa8ad1b874bdd190e"
+     },
+     {
+      "action_id": "JIRA-112",
+      "issue_key": "HL-12",
+      "readback_hash": "944c3c534ab6eef0ccb65c891e62cad09123f8d3fef204dc006e0555b674729c"
+     },
+     {
+      "action_id": "JIRA-113",
+      "issue_key": "HL-15",
+      "readback_hash": "10bf956336b862fcf91d2cc44d98a6a41dc1e858f2090855bdce359668979386"
+     },
+     {
+      "action_id": "JIRA-114",
+      "issue_key": "HL-16",
+      "readback_hash": "78ebf959d3172421e9f5edcac091b305481447c2ffe6dd5a24c396b0c5316bf5"
+     },
+     {
+      "action_id": "JIRA-115",
+      "issue_key": "HL-37",
+      "readback_hash": "5373abfbef7690a1eb124f4727a954a413bb7b837cf4862aa8c3fe11d9cbd778"
+     },
+     {
+      "action_id": "JIRA-116",
+      "issue_key": "HL-38",
+      "readback_hash": "0868dce4571790fa604c1377601220729457079a2480272a36a34111e74e4c99"
+     },
+     {
+      "action_id": "JIRA-117",
+      "issue_key": "HL-39",
+      "readback_hash": "5bab41ce20b456afb9c9838b7105d272c15faf924d1f4a0d7766ad450815bf47"
+     },
+     {
+      "action_id": "JIRA-118",
+      "issue_key": "HL-12",
+      "readback_hash": "32ecdf1a7ec4eaa5d5c58b0e0738815932fd27119d1d6bec1d4c054e2e4450ac"
+     },
+     {
+      "action_id": "JIRA-119",
+      "issue_key": "HL-14",
+      "readback_hash": "8ebb5fc62fcf47d00bfe644ba5207396e0b597f156a8e241af908a800bdb90b7"
+     },
+     {
+      "action_id": "JIRA-120",
+      "issue_key": "HL-15",
+      "readback_hash": "c648ce27835ae7bd289fce36f93d5f0315b7f58b06a447e07a0534de5ed18f15"
+     },
+     {
+      "action_id": "JIRA-121",
+      "issue_key": "HL-16",
+      "readback_hash": "c7bb7ea63d639b9f021891093e0e2fe53cd53fcc0b733a8b8e7c91222ca5663b"
+     },
+     {
+      "action_id": "JIRA-122",
+      "issue_key": "HL-24",
+      "readback_hash": "f4b8394b05ac61cff002418136dd7d2686c3d6177c79c96c6e7e767d9e5a9cb4"
+     },
+     {
+      "action_id": "JIRA-123",
+      "issue_key": "HL-27",
+      "readback_hash": "8566a147d5a71bbad850b82f2fe724f1e46c9f8ce338801ba40c9da5fc4a7772"
+     },
+     {
+      "action_id": "JIRA-124",
+      "issue_key": "HL-39",
+      "readback_hash": "7d249f8197212b383d62ac7bb996b9f1b7135f415516345d748dd56973b86afc"
+     },
+     {
+      "action_id": "JIRA-125",
+      "issue_key": "HL-40",
+      "readback_hash": "ed6b55f2f3ca241142e48b6fc8db99cd614791abe3ea2b9530fda2bde5efedc2"
+     },
+     {
+      "action_id": "JIRA-126",
+      "issue_key": "HL-41",
+      "readback_hash": "9dd35ff5be3d64eefe3c93e3c34e76bb8fecb6faab51e5cd1a707f513f81a519"
+     },
+     {
+      "action_id": "JIRA-127",
+      "issue_key": "HL-6",
+      "readback_hash": "c11b3c4b7977d0608be2c78c97f616804536d3f23a2407e4e183d6b2f1929f33"
+     },
+     {
+      "action_id": "JIRA-128",
+      "issue_key": "HL-7",
+      "readback_hash": "ed6cb5215020b99873c4b97ae9056acc3bfb0fdfc143d7ca5a56aceb1c375334"
+     },
+     {
+      "action_id": "JIRA-129",
+      "issue_key": "HL-21",
+      "readback_hash": "5d9f38fddd0104ccdb1e4cf877cd94f038eb6e3f035dd7dd1816eccc0c43087c"
+     },
+     {
+      "action_id": "JIRA-130",
+      "issue_key": "HL-22",
+      "readback_hash": "1215f1bf154406cf6432bf7324aac38b3d9c7da20283b0a4fb4c107d4831a5b5"
+     },
+     {
+      "action_id": "JIRA-131",
+      "issue_key": "HL-27",
+      "readback_hash": "955107eaf00d8ed7659a53bb7cbf4d14146073c6ef3451cb6fe302fa794576dc"
+     },
+     {
+      "action_id": "JIRA-132",
+      "issue_key": "HL-39",
+      "readback_hash": "0b95e26f0a4cf8687eabcf06a11eacd21df1bdec489becd3347ddd44da60621a"
+     },
+     {
+      "action_id": "JIRA-133",
+      "issue_key": "HL-43",
+      "readback_hash": "a339c40a274ec90569bdcebbb1d0600332028ad193d9507fa096f133d6398e5c"
+     },
+     {
+      "action_id": "JIRA-134",
+      "issue_key": "HL-11",
+      "readback_hash": "b87876840c56b288c9d06a3fb2e506e7f040ec1055b3c61547bad46eb6f2aa43"
+     },
+     {
+      "action_id": "JIRA-135",
+      "issue_key": "HL-26",
+      "readback_hash": "76bf7d361899dce765af8f8b0c406fe37d98635380e0499462ea4901f87252ce"
+     },
+     {
+      "action_id": "JIRA-136",
+      "issue_key": "HL-32",
+      "readback_hash": "5f0b346230ced7b424dd828288d214925b3be8688a7fdfa8e1915a7384807695"
+     },
+     {
+      "action_id": "JIRA-137",
+      "issue_key": "HL-10",
+      "readback_hash": "e0b2bd1d464e5ff0217d2a1210d14a49b64da171fc9b54ac47b88b5b2cfeb46c"
+     },
+     {
+      "action_id": "JIRA-138",
+      "issue_key": "HL-27",
+      "readback_hash": "ee2b38791bc7dc1e5b5a674732a64e67b89f46914f162f501c74c224975e7d01"
+     },
+     {
+      "action_id": "JIRA-139",
+      "issue_key": "HL-28",
+      "readback_hash": "0eaff047eed6ba97639f1792831ad8abbeecd181aa54973b7afe681a68a174da"
+     },
+     {
+      "action_id": "JIRA-140",
+      "issue_key": "HL-43",
+      "readback_hash": "551a143639165e438702e61ea9d7d2d215b1f9ecee1a28b21f89a48364140140"
+     }
+    ]
+   }
+  },
+  "event": "EXECUTION_VERIFIED",
+  "time": "2026-11-10T22:48:07.662327+00:00",
+  "entry_hash": "ff14e9bd033a05e961feb148c627ade1b03533ef79de456d3fef3bf823334194"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "run_id": "RUN-72ff003f-50e8-4563-b38d-a5fe3a79d710",
+   "summary": {
+    "differs": 0,
+    "duplicate_external_keys": 0,
+    "in_sync": 51,
+    "links_linked": 89,
+    "links_not_linked": 0,
+    "links_pending": 0,
+    "missing": 0,
+    "new_writes_on_replay": 0,
+    "not_in_plan": 0,
+    "observed_count": 51,
+    "planned_items": 51,
+    "risks": 8
+   },
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "JIRA_READ_VERIFIED",
+  "time": "2026-11-10T22:49:55.850030+00:00",
+  "entry_hash": "610aaba2dc84ca5552c141fe92cd3e29e258a6d3673be456086f40d9792c7f5b"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "batch_id": "BATCH-76a1ec97-de3a-4415-b895-5eeeeb6b7455",
+   "hash": "2c227e0abd91a539b4ddaf2b5d49ab954243bc05942ea9cbb20d2f4d6d005898",
+   "kind": "JIRA_WRITE",
+   "target": "https://zhouai29.atlassian.net#HL"
+  },
+  "event": "PROPOSAL_CREATED",
+  "time": "2026-11-10T22:50:49.100285+00:00",
+  "entry_hash": "acdcd06c3bb3c947150b130aa1951b32242a9ab911f10b39d5510c92f4f50b85"
+ },
+ {
+  "actor": "ii",
+  "detail": {
+   "batch_id": "BATCH-76a1ec97-de3a-4415-b895-5eeeeb6b7455"
+  },
+  "event": "EXECUTION_BLOCKED",
+  "time": "2026-11-10T22:50:50.076713+00:00",
+  "entry_hash": "5765bc63995f7a9edfae6098fcf4bc4e7852d6857ba57fbea4f460e46127c8b2"
+ }
+]
