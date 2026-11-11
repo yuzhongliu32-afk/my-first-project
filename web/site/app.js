@@ -239,7 +239,9 @@ async function runApi(input){
   return payload.run;
 }
 async function resumeApi(){
-  if(S.busy||!S.apiPending)return;
+  if(!S.apiPending)return;
+  // A click must never do nothing: say why when an older request from this page is still open.
+  if(S.busy){message('This page is still waiting for an earlier request. Press F5 to reload, enter the access code again, then check the pending result.',true);return;}
   const access=$('apiAccessCode').value.trim();if(!access||/^sk-/i.test(access)){message('Enter the presentation access code to check the pending result. Do not enter an OpenAI API key.',true);return;}
   S.busy=true;updateExecutionControls();
   try{
