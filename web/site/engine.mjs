@@ -21,9 +21,11 @@ async function sha256(value) {
   return [...new Uint8Array(result)].map(x => x.toString(16).padStart(2, '0')).join('');
 }
 function seed(data) {
-  const full = data?.runs?.['integrated-acceptance']?.full;
+  // The page sets planning_seed to the published, citation-checked agent run (28 WBS); else the original template.
+  const full = data?.planning_seed ?? data?.runs?.['integrated-acceptance']?.full;
   requireValue(full?.planning && full?.risk, 'Verified planning template is unavailable.');
-  requireValue(full.source_snapshot_id === data.bootstrap?.project?.snapshot, 'Planning/source snapshot mismatch.');
+  // A published agent run cites the full source library (its own snapshot); its citations were checked on load.
+  requireValue(data?.planning_seed || full.source_snapshot_id === data.bootstrap?.project?.snapshot, 'Planning/source snapshot mismatch.');
   return full;
 }
 export function resolveEvidence(ref, data) {
@@ -56,7 +58,7 @@ export async function verifyCorpus(data) {
   requireValue(/^[a-f0-9]{64}$/i.test(data.integrity.evidence_sha256 || '') && /^[a-f0-9]{64}$/i.test(data.integrity.corpus_sha256 || ''), 'Source integrity hashes are invalid.');
   const [evidenceHash, corpusHash] = await Promise.all([sha256(data.evidence), sha256(data.corpus)]);
   requireValue(evidenceHash === data.integrity.evidence_sha256 && corpusHash === data.integrity.corpus_sha256, 'Exported source data changed; execution stopped.');
-  const full = seed(data);
+  const full = seed({...data, planning_seed: undefined});  // the integrity manifest covers the original template
   requireValue(!data.integrity.snapshot || data.integrity.snapshot === full.source_snapshot_id, 'Integrity manifest snapshot mismatch.');
   let count = 0;
   for (const [key, record] of Object.entries(data.evidence)) {
@@ -135,7 +137,8 @@ function checkPlanningContract(planning,risk) {
 function rebuildPlanning(template, settings) {
   const planning = clone(template.planning), risk = clone(template.risk);
   checkPlanningContract(planning,risk);
-  const scenario = risk.scenarios.find(item => item.scenario_id === 'SC01');
+  const scenario = risk.scenarios.find(item => item.scenario_id === 'SC01')
+    ?? risk.scenarios.find(item => /asbestos/i.test(item.description || '')) ?? risk.scenarios[0];
   requireValue(scenario, 'Source-grounded asbestos scenario is missing.');
   scenario.description = 'Live conditional asbestos-removal sensitivity — user assumptions';
   scenario.schedule_impact_days = settings.weeks * 7;

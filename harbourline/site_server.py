@@ -102,8 +102,12 @@ def recorded_jira():
 
 
 def jira_board_url():
+    # .../projects/KEY/boards (no board number) is a 404 in Jira Cloud. JIRA_BOARD_URL may name the exact
+    # board; otherwise /browse/KEY always opens the project.
+    if os.getenv('JIRA_BOARD_URL'):
+        return os.getenv('JIRA_BOARD_URL')
     base, key = os.getenv('JIRA_BASE_URL', '').rstrip('/'), os.getenv('JIRA_PROJECT_KEY', '')
-    return f'{base}/jira/software/projects/{key}/boards' if base and key else None
+    return f'{base}/browse/{key}' if base and key else None
 
 
 class SiteState:
