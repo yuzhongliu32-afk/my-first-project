@@ -439,12 +439,14 @@ class Handler(BaseHTTPRequestHandler):
         self.state.sync_env()
         path = self.path.split('?', 1)[0]
         if path == '/api/status':
+            from modules.member_c.review_policy import C_REVIEW_POLICY_VERSION
             ready = bool(os.getenv('OPENAI_API_KEY') and os.getenv('OPENAI_MODEL'))
             code = any(os.getenv(name) for _, name in ACCESS_CODES)
             self.send_json(200, {
                 'configured': ready and code, 'model': os.getenv('OPENAI_MODEL') if ready else None,
                 'remaining_calls': None, 'max_review_rounds': 2, 'planning_modes': ['rules', 'live'],
                 'live_b_overhead_calls': 3, 'checks': self.readiness(),
+                'c_review_policy_version': C_REVIEW_POLICY_VERSION,
                 'message': ('Local server ready.' if ready and code else
                             'Set OPENAI_API_KEY, OPENAI_MODEL and MEMBER_B_ACCESS_CODE in .env '
                             '(set_openai_key.bat). Free mode remains available.')})

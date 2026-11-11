@@ -19,7 +19,7 @@ from dotenv import load_dotenv  # noqa: E402
 
 from harbourline.llm import ModelGateway  # noqa: E402
 from harbourline.sources import EvidenceLibrary, digest  # noqa: E402
-from modules.member_c.service import BASE, CRITIC_SCHEMA, memory_query, REPORT_REQUIREMENTS  # noqa: E402
+from modules.member_c.service import CRITIC_SCHEMA, memory_query, critic_instructions  # noqa: E402
 
 FAULTS = {
     'C01': ('Unsupported budget claim', 'Expenditure', 'append',
@@ -72,8 +72,7 @@ def critic_payload(full, report, library):
 
 
 def critique(gateway, full, report, library):
-    instructions = (BASE + ' You are an independent critic. Check claims against evidence, audience, dates, source conflicts and '
-                    'misrepresentation of B proposals. Return findings, never approve or rewrite.')
+    instructions = critic_instructions(report['report_type'])
     out = gateway.ask('harbourline_critic_draft', CRITIC_SCHEMA, instructions, critic_payload(full, report, library))
     blocking = [f for f in out['findings'] if f['severity'] in ('BLOCKER', 'MAJOR')]
     return {'verdict': out['verdict'], 'blocking': len(blocking),
