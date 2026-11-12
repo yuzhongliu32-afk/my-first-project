@@ -152,9 +152,29 @@ def generate_reports(request,context,library,gateway):
             for section in report['sections']:
                 if not section['citations']:local.append(('INCORRECT_CITATION',section['section_id'],'Section lacks source evidence'))
                 for ref in section['citations']:library.verify(ref,cutoff)
-            crit=gateway.ask('harbourline_critic_draft',CRITIC_SCHEMA,
-               BASE+' You are an independent critic. Check claims against evidence, audience, dates, source conflicts and misrepresentation of B proposals. Return findings, never approve or rewrite.',
-               {**payload,'report':report})
+            section_ids = {section['section_id'] for section in report['sections']}
+            critic_instructions = (
+                BASE + ' You are an independent critic. Check claims against evidence, audience, dates, '
+                'source conflicts and misrepresentation of B proposals. Return findings, never approve '
+                'or rewrite. Use only keys from verified_evidence for evidence_ids. '
+                'If no supplied evidence supports a finding, use an empty list.'
+            )
+            critic_input = {**payload, 'report': report}
+            for attempt in range(2):
+                crit = gateway.ask('harbourline_critic_draft', CRITIC_SCHEMA, critic_instructions, critic_input)
+                valid_references = all(
+                    (finding['section_id'] is None or finding['section_id'] in section_ids)
+                    and all(eid in lookup for eid in finding['evidence_ids'])
+                    for finding in crit['findings']
+                )
+                if valid_references:
+                    break
+                critic_input = {**critic_input, 'retry_feedback':
+                    'The previous review used unknown evidence or section IDs. Use only IDs in this request.'}
+            else:
+                local.append(('INCORRECT_CITATION', None,
+                              'Critic returned unknown evidence or section IDs after retry.'))
+                crit = {'verdict': 'ESCALATE', 'findings': []}
             findings=[{'finding_id':f'{report_type}-R{turn}-L{i}','category':cat,'severity':'BLOCKER','section_id':sid,
                       'description':msg,'required_fix':'Correct using verified evidence.','citations':[]} for i,(cat,sid,msg) in enumerate(local)]
             for i,f in enumerate(crit['findings']):
