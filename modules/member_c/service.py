@@ -203,9 +203,26 @@ def generate_reports(request,context,library,gateway):
                'ready_for_human_review':verdict=='PASS','reviewer_notes':'Model critique plus local checks; human approval still required.'})
             if verdict=='PASS':report['status']='READY_FOR_HUMAN_REVIEW';break
             if verdict=='ESCALATE':report['status']='BLOCKED';break
-            revision=gateway.ask('harbourline_revision',REVISION_SCHEMA,BASE+' Revise only supplied section IDs, preserve citations and supported meaning. Qualify unsupported claims. Where the existing section citations cannot substantiate a requested detail, state the evidence gap and the decision or record needed. Return the same section IDs exactly.',{'report':report,'findings':findings,'verified_evidence':model_evidence})
-            ids=[s['section_id'] for s in revision['sections']]
-            if len(ids)!=len(set(ids)) or set(ids)!={s['section_id'] for s in report['sections']}:raise ValueError('Revision changed section IDs')
+            revision_payload = {'report':report,'findings':findings,'verified_evidence':model_evidence,
+                                'required_section_ids':[section['section_id'] for section in report['sections']]}
+            revision_prompt = (BASE+' Revise the supplied report and preserve citations and supported meaning. '
+                               'Qualify unsupported claims and state what evidence is missing. '
+                               'Return one section for each required section ID, including unchanged sections.')
+            for attempt in range(2):
+                revision = gateway.ask('harbourline_revision', REVISION_SCHEMA, revision_prompt, revision_payload)
+                ids = [section['section_id'] for section in revision['sections']]
+                if len(ids) == len(section_ids) and set(ids) == section_ids:
+                    break
+            else:
+                findings.append({'finding_id':f'{report_type}-R{turn}-REVISION-IDS','category':'FORMAT_ERROR',
+                    'severity':'BLOCKER','section_id':None,
+                    'description':'The model revision did not preserve the report section IDs.',
+                    'required_fix':'Return one revised or unchanged section per original section ID.',
+                    'citations':[]})
+                reviews[-1]['verdict'] = 'ESCALATE'
+                reviews[-1]['stop_reason'] = 'REVISION_REQUIRED'
+                report['status'] = 'BLOCKED'
+                break
             replacement={s['section_id']:s['text'] for s in revision['sections']}
             for s in report['sections']:s['text']=replacement[s['section_id']]
             report['open_issues']=list(dict.fromkeys(report['open_issues']+revision['open_issues']))
