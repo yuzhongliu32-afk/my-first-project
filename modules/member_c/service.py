@@ -139,7 +139,18 @@ def generate_reports(request,context,library,gateway):
         payload={'report_type':report_type,'audience':audience,'period':period,'cutoff':cutoff,
                  'verified_evidence':model_evidence,'memory':memory_summary,'b_context':{'planning':planning_summary,'risk':risk_summary},
                  'proposal_notice':'B plans, scores and what-if estimates are proposals; do not present them as actual progress.'}
-        draft=gateway.ask('harbourline_report_draft',WRITER_SCHEMA,BASE+' Write for the specified audience and period. Cite evidence IDs for facts. Explain B planning/risk implications explicitly as proposals; report historical facts as historical.',payload)
+        report_focus = (
+            'Cover progress against milestones, reported expenditure, and grant tranche conditions.'
+            if report_type == 'MONTHLY_GRANT' else
+            'Cover progress against milestones, key decisions needed, and material risks.'
+        )
+        writer_instructions = (
+            BASE + ' Write for the specified audience and period. Cite evidence IDs for facts. '
+            + report_focus + ' If a required detail is absent, explicitly state what could not be '
+            'verified and what evidence is needed. For conflicting dates, identify both sources and '
+            'state whether reconciliation is pending. Treat targets as targets and B outputs as proposals.'
+        )
+        draft = gateway.ask('harbourline_report_draft', WRITER_SCHEMA, writer_instructions, payload)
         report={'report_id':f"C-{request['run_id']}-{report_type}",'report_type':report_type,'audience':audience,
                 'reporting_period':deepcopy(period),'source_snapshot_id':library.snapshot,'revision':1,
                 'sections':[{'section_id':f'SEC-{i+1:02d}','heading':s['heading'],'text':s['text'],
@@ -156,7 +167,10 @@ def generate_reports(request,context,library,gateway):
             critic_instructions = (
                 BASE + ' You are an independent critic. Check claims against evidence, audience, dates, '
                 'source conflicts and misrepresentation of B proposals. Return findings, never approve '
-                'or rewrite. Use only keys from verified_evidence for evidence_ids. '
+                'or rewrite. Distinguish an omitted supported detail from a source gap explicitly stated in the report. '
+                'A clearly disclosed source gap is not by itself a draft error. Flag unsupported assurances, '
+                'undisclosed conflicts, and omissions of available material evidence. '
+                'Use only keys from verified_evidence for evidence_ids. '
                 'If no supplied evidence supports a finding, use an empty list.'
             )
             critic_input = {**payload, 'report': report}
@@ -189,7 +203,7 @@ def generate_reports(request,context,library,gateway):
                'ready_for_human_review':verdict=='PASS','reviewer_notes':'Model critique plus local checks; human approval still required.'})
             if verdict=='PASS':report['status']='READY_FOR_HUMAN_REVIEW';break
             if verdict=='ESCALATE':report['status']='BLOCKED';break
-            revision=gateway.ask('harbourline_revision',REVISION_SCHEMA,BASE+' Revise only supplied section IDs, preserve citations and supported meaning. Qualify unsupported claims. Return the same section IDs exactly.',{'report':report,'findings':findings,'verified_evidence':model_evidence})
+            revision=gateway.ask('harbourline_revision',REVISION_SCHEMA,BASE+' Revise only supplied section IDs, preserve citations and supported meaning. Qualify unsupported claims. Where the existing section citations cannot substantiate a requested detail, state the evidence gap and the decision or record needed. Return the same section IDs exactly.',{'report':report,'findings':findings,'verified_evidence':model_evidence})
             ids=[s['section_id'] for s in revision['sections']]
             if len(ids)!=len(set(ids)) or set(ids)!={s['section_id'] for s in report['sections']}:raise ValueError('Revision changed section IDs')
             replacement={s['section_id']:s['text'] for s in revision['sections']}
