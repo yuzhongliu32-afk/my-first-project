@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 from time import monotonic
 from uuid import uuid4
+from jsonschema.exceptions import ValidationError
 from harbourline.contracts import validate
 from harbourline.sources import EvidenceLibrary
 from harbourline.llm import ModelGateway
@@ -45,6 +46,29 @@ def run(request:dict,context:dict)->dict:
     except Exception as exc:
         # Do not echo SDK exception bodies (which may include user data or auth).
         reason = f'{type(exc).__name__}: missing configuration, invalid evidence or invalid model output; inspect the local validation trace.'
+        if isinstance(exc, ValueError) and str(exc) in (
+            'Source snapshot mismatch',
+            'Confirmed report start/end and explicit evidence cut-off are required',
+            'Evidence cut-off precedes reporting period end',
+            'Validated B planning and risk context required',
+            'Report period missing',
+            'Invalid report period/cut-off',
+            'Model invented an evidence ID',
+            'Memory answer needs evidence',
+            'Supported fact lacks evidence',
+            'Conflict needs both sources',
+            'Conflict details missing',
+            'Unresolved memory needs an open question',
+            'No verified eligible evidence for reports',
+            'Critic invented a section ID',
+            'Revision changed section IDs',
+            'OpenRouter response incomplete or refused',
+        ):
+            reason = str(exc)
+        if isinstance(exc, json.JSONDecodeError):
+            reason = 'The model returned invalid JSON.'
+        elif isinstance(exc, ValidationError):
+            reason = 'The model response did not match the expected JSON schema.'
         if getattr(exc, 'code', None) == 'insufficient_quota':
             reason = 'OpenAI quota is unavailable or exhausted. Check the project usage and plan.'
         elif type(exc).__name__ == 'RateLimitError':
@@ -56,6 +80,15 @@ def run(request:dict,context:dict)->dict:
             retry_after = response.headers.get('Retry-After', '') if response is not None else ''
             if retry_after.isdigit() and len(retry_after) < 8:
                 reason += f' Provider retry delay: {retry_after} seconds.'
+        model_steps = {
+            'harbourline_memory_draft': 'evidence retrieval',
+            'harbourline_report_draft': 'report drafting',
+            'harbourline_critic_draft': 'Critic review',
+            'harbourline_revision': 'report revision',
+        }
+        last_step = model_steps.get(getattr(gateway, 'last_request_name', None))
+        if last_step:
+            reason += f' Last model step: {last_step}.'
         out['status']='BLOCKED';out['errors'].append({'code':'C_MODULE_BLOCKED','message':reason,'recoverable':True})
     out['metrics']={**gateway.metrics(),'elapsed_seconds':monotonic()-started}
     validate(out,'C',expected_producer='C')
