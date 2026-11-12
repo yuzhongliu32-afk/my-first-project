@@ -21,12 +21,14 @@ class ModelGateway:
         self.api_calls = 0; self.input_tokens = 0; self.output_tokens = 0
         self.embedding_calls=0;self.embedding_input_tokens=0
         self.usage_known = True; self._client = None
+        self.last_request_name = None
 
     @property
     def mode(self):
         return 'SCRIPTED_TEST' if self.responder else 'LIVE_' + self.provider.upper()
 
     def ask(self, name, schema, instructions, payload):
+        self.last_request_name = name
         if self.responder:
             value = self.responder(name, payload)
         elif self.provider == 'gemini':
