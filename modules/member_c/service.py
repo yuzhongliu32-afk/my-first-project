@@ -150,17 +150,27 @@ def generate_reports(request,context,library,gateway):
             'verified and what evidence is needed. For conflicting dates, identify both sources and '
             'state whether reconciliation is pending. Treat targets as targets and B outputs as proposals.'
         )
-        draft = gateway.ask('harbourline_report_draft', WRITER_SCHEMA, writer_instructions, payload)
+        writer_instructions += ' Use only the exact keys of verified_evidence. Never invent an ID.'
+        for attempt in range(2):
+            draft = gateway.ask('harbourline_report_draft', WRITER_SCHEMA, writer_instructions, payload)
+            invalid_sections = {
+                f'SEC-{index+1:02d}' for index, section in enumerate(draft['sections'])
+                if any(evidence_id not in lookup for evidence_id in section['evidence_ids'])
+            }
+            if not invalid_sections:
+                break
         report={'report_id':f"C-{request['run_id']}-{report_type}",'report_type':report_type,'audience':audience,
                 'reporting_period':deepcopy(period),'source_snapshot_id':library.snapshot,'revision':1,
                 'sections':[{'section_id':f'SEC-{i+1:02d}','heading':s['heading'],'text':s['text'],
-                   'supporting_fact_ids':[], 'citations':references(s['evidence_ids'],lookup)} for i,s in enumerate(draft['sections'])],
+                   'supporting_fact_ids':[], 'citations':references([eid for eid in s['evidence_ids'] if eid in lookup],lookup)} for i,s in enumerate(draft['sections'])],
                 'included_fact_ids':[],'open_issues':draft['open_issues'],'assumptions':draft['assumptions'],
                 'is_stale':False,'status':'DRAFT'}
         for turn in range(1,request['request']['max_review_rounds']+1):
             local=[]
             if not report['sections']:local.append(('FORMAT_ERROR',None,'Report has no sections'))
             for section in report['sections']:
+                if section['section_id'] in invalid_sections:
+                    local.append(('INCORRECT_CITATION',section['section_id'],'Writer supplied an unknown evidence ID.'))
                 if not section['citations']:local.append(('INCORRECT_CITATION',section['section_id'],'Section lacks source evidence'))
                 for ref in section['citations']:library.verify(ref,cutoff)
             section_ids = {section['section_id'] for section in report['sections']}
