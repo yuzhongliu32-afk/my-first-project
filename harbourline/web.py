@@ -735,7 +735,6 @@ def create_app(config=None):
             response.headers['Content-Security-Policy'] += (
                 "; script-src 'sha256-sJ22bFLOhTFbFVNZO5qk1EixoeOlvaptPwoCJ8MHXqw='; connect-src 'self'"
             )
-        from flask import request
 
         if request.endpoint == "project_atlas":
             response.headers["Content-Security-Policy"] += (
