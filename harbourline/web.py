@@ -455,6 +455,143 @@ pre{{white-space:pre-wrap;overflow-wrap:anywhere;background:#edf1f5;padding:1rem
         session.clear()
         return redirect('/', code=303)
 
+
+    review_url = 'https://harbourline-individual-review.liuy0306.chatgpt.site/'
+    review_jobs = {}
+    review_starts = deque()
+
+    def project_fields(item, names):
+        return {name: item[name] for name in names.split() if name in item}
+
+    def review_references(item, field):
+        return [project_fields(ref, 'document_id page line_start line_end')
+                for ref in item.get(field, [])]
+
+    def review_result(full):
+        plan, risk, reporting = full['planning'], full['risk'], full['reporting']
+        return {
+            **project_fields(full, 'run_id status'),
+            'wbs': [project_fields(row, 'wbs_id title level parent_wbs_id status')
+                    for row in plan['wbs_items']],
+            'milestones': [project_fields(row, 'milestone_id title calendar_date status')
+                           for row in plan['milestones']],
+            'risks': [project_fields(row, 'risk_id title status score')
+                      for row in risk['risks']],
+            'reports': [
+                dict(project_fields(report, 'report_type audience reporting_period status'),
+                     sections=[dict(project_fields(section, 'heading text'),
+                                    citations=review_references(section, 'citations'))
+                               for section in report['sections']])
+                for report in reporting['reports']
+            ],
+            'critic_reviews': [
+                dict(project_fields(review, 'review_round verdict stop_reason'),
+                     report_type=next((report['report_type'] for report in reporting['reports']
+                                       if report['report_id'] == review['report_id']), None),
+                     findings=[dict(project_fields(finding, 'severity category description required_fix'),
+                                    citations=review_references(finding, 'citations'))
+                               for finding in review['findings']])
+                for review in reporting['critic_reviews']
+            ],
+            'error_codes': [item['code'] for item in full.get('errors', [])],
+        }
+
+    def run_review():
+        from tempfile import TemporaryDirectory
+
+        with TemporaryDirectory(prefix='harbourline-review-') as directory:
+            runtime = Path(directory)
+            store = GovernanceStore(runtime / 'governance.sqlite', approvers=set(),
+                                    actor_provider=lambda: 'public-review')
+            try:
+                console = Console(True, runtime, store=store, inputs=root / 'inputs')
+                console.run({}, include_reports=True)
+                _, full = store.artifact(console.run_id)
+                return review_result(full)
+            finally:
+                store.db.close()
+                store._lockfile.close()
+
+    def completed_review(future):
+        try:
+            return future.result()
+        except Exception:
+            return None
+
+    @app.route('/review-run', methods=['GET', 'POST'])
+    def public_review_run():
+        nonlocal active
+        job_key = session.get('public_review_job')
+        if request.method == 'POST':
+            verify_csrf()
+            with lock:
+                now = monotonic()
+                while review_starts and review_starts[0] <= now - 86400:
+                    review_starts.popleft()
+                for key, (started, future) in list(review_jobs.items()):
+                    if future.done() and started <= now - 86400:
+                        del review_jobs[key]
+                if active and not active.done():
+                    session['public_review_notice'] = 'A run is in progress. Try again in a few minutes.'
+                elif len(review_starts) >= 6 or (review_starts and now - review_starts[-1] < 300):
+                    session['public_review_notice'] = 'Live runs are limited. Try again later or open the saved results.'
+                else:
+                    job_key = secrets.token_urlsafe(24)
+                    active = jobs.submit(run_review)
+                    review_jobs[job_key] = (now, active)
+                    review_starts.append(now)
+                    session['public_review_job'] = job_key
+            return redirect('/review-run', code=303)
+
+        with lock:
+            job = review_jobs.get(job_key)
+        future = job[1] if job else None
+        busy = future is not None and not future.done()
+        notice = session.pop('public_review_notice', '')
+        content = (f'<header><p>MA6094 · Group 11</p><h1>Run B &amp; C</h1>'
+                   f'<p>Run planning, risk and reporting with the preset course evidence.</p>'
+                   f'<a href="{review_url}">Open saved results</a></header>')
+        if notice:
+            content += f'<p role="status">{escape(notice)}</p>'
+        if busy:
+            content += '<p role="status">Running B and C. This page refreshes automatically.</p>'
+        else:
+            content += (f'<form method="post"><input type="hidden" name="token" value="{csrf()}">'
+                        '<button>Run B Planning Agent and C Reports</button></form>')
+        if future is not None and not busy:
+            result = completed_review(future)
+            if result is None:
+                content += '<p role="status">The live run could not complete. Saved results remain available.</p>'
+            else:
+                content += (f'<section class="module"><h2>Run results</h2><p>{escape(result["status"])} · '
+                            f'{len(result["wbs"])} WBS items · {len(result["milestones"])} milestones · '
+                            f'{len(result["risks"])} risks · {len(result["reports"])} reports · '
+                            f'{len(result["critic_reviews"])} Critic reviews</p>'
+                            f'<p>Run ID <code>{escape(result["run_id"])}</code></p>'
+                            '<p><a href="/review-run/result">Download result JSON</a></p>')
+                for title, key in [('Work breakdown', 'wbs'), ('Milestones', 'milestones'),
+                                   ('Risk register', 'risks'), ('Report drafts', 'reports'),
+                                   ('Critic reviews', 'critic_reviews'), ('Run notices', 'error_codes')]:
+                    content += details(title, result[key])
+                content += '</section>'
+        response = app.make_response(document('Public live run', content))
+        if busy:
+            response.headers['Refresh'] = '4'
+        return response
+
+    @app.get('/review-run/result')
+    def public_review_download():
+        with lock:
+            job = review_jobs.get(session.get('public_review_job'))
+        if not job or not job[1].done():
+            abort(404)
+        result = completed_review(job[1])
+        if result is None:
+            abort(404)
+        response = jsonify(result)
+        response.headers['Content-Disposition'] = 'attachment; filename="harbourline-review-result.json"'
+        return response
+
     @app.route('/workspace', methods=['GET', 'POST'])
     def dashboard():
         nonlocal active
