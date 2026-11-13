@@ -539,8 +539,9 @@ pre{{white-space:pre-wrap;overflow-wrap:anywhere;background:#edf1f5;padding:1rem
 
     @app.route('/review-api', methods=['GET', 'POST', 'OPTIONS'])
     def public_review_api():
-        origin = review_url.rstrip('/')
-        if request.headers.get('Origin') != origin:
+        origin = request.headers.get('Origin')
+        allowed_origins = {review_url.rstrip('/'), 'https://harbourline-ma6094.onrender.com'}
+        if origin not in allowed_origins and not (origin is None and request.method == 'GET'):
             abort(403)
         if request.method == 'OPTIONS':
             response = app.make_response(('', 204))
@@ -559,7 +560,8 @@ pre{{white-space:pre-wrap;overflow-wrap:anywhere;background:#edf1f5;padding:1rem
                 result = completed_review(job[1])
                 response = (jsonify(status='complete', result=result) if result is not None
                             else app.make_response((jsonify(message='The live run could not complete.'), 502)))
-        response.headers['Access-Control-Allow-Origin'] = origin
+        if origin:
+            response.headers['Access-Control-Allow-Origin'] = origin
         response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
         response.headers['Access-Control-Allow-Headers'] = 'Authorization'
         response.headers['Vary'] = 'Origin'
@@ -724,7 +726,15 @@ def create_app(config=None):
     def project_atlas():
         return send_file(Path(__file__).with_name("Harbourline Project Atlas.html"), mimetype="text/html")
 
+    @app.get('/individual-review')
+    def individual_review():
+        return send_file(Path(__file__).with_name('individual_review.html'), mimetype='text/html')
+
     def allow_atlas_scripts(response):
+        if request.endpoint == 'individual_review':
+            response.headers['Content-Security-Policy'] += (
+                "; script-src 'sha256-sJ22bFLOhTFbFVNZO5qk1EixoeOlvaptPwoCJ8MHXqw='; connect-src 'self'"
+            )
         from flask import request
 
         if request.endpoint == "project_atlas":
