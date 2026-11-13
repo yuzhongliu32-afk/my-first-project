@@ -518,29 +518,63 @@ pre{{white-space:pre-wrap;overflow-wrap:anywhere;background:#edf1f5;padding:1rem
         except Exception:
             return None
 
+    def start_review_job():
+        nonlocal active
+        with lock:
+            now = monotonic()
+            while review_starts and review_starts[0] <= now - 86400:
+                review_starts.popleft()
+            for key, (started, future) in list(review_jobs.items()):
+                if future.done() and started <= now - 86400:
+                    del review_jobs[key]
+            if active and not active.done():
+                return None, 'A run is in progress. Try again in a few minutes.'
+            if len(review_starts) >= 6 or (review_starts and now - review_starts[-1] < 300):
+                return None, 'Live runs are limited. Try again later or open the saved results.'
+            key = secrets.token_urlsafe(24)
+            active = jobs.submit(run_review)
+            review_jobs[key] = (now, active)
+            review_starts.append(now)
+            return key, None
+
+    @app.route('/review-api', methods=['GET', 'POST', 'OPTIONS'])
+    def public_review_api():
+        origin = review_url.rstrip('/')
+        if request.headers.get('Origin') != origin:
+            abort(403)
+        if request.method == 'OPTIONS':
+            response = app.make_response(('', 204))
+        elif request.method == 'POST':
+            key, notice = start_review_job()
+            response = app.make_response((jsonify(token=key, message=notice), 202 if key else 429))
+        else:
+            key = request.headers.get('Authorization', '').removeprefix('Bearer ')
+            with lock:
+                job = review_jobs.get(key)
+            if not job:
+                response = app.make_response((jsonify(message='This run has expired. Start a new run.'), 404))
+            elif not job[1].done():
+                response = jsonify(status='running')
+            else:
+                result = completed_review(job[1])
+                response = (jsonify(status='complete', result=result) if result is not None
+                            else app.make_response((jsonify(message='The live run could not complete.'), 502)))
+        response.headers['Access-Control-Allow-Origin'] = origin
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+        response.headers['Access-Control-Allow-Headers'] = 'Authorization'
+        response.headers['Vary'] = 'Origin'
+        return response
+
     @app.route('/review-run', methods=['GET', 'POST'])
     def public_review_run():
-        nonlocal active
         job_key = session.get('public_review_job')
         if request.method == 'POST':
             verify_csrf()
-            with lock:
-                now = monotonic()
-                while review_starts and review_starts[0] <= now - 86400:
-                    review_starts.popleft()
-                for key, (started, future) in list(review_jobs.items()):
-                    if future.done() and started <= now - 86400:
-                        del review_jobs[key]
-                if active and not active.done():
-                    session['public_review_notice'] = 'A run is in progress. Try again in a few minutes.'
-                elif len(review_starts) >= 6 or (review_starts and now - review_starts[-1] < 300):
-                    session['public_review_notice'] = 'Live runs are limited. Try again later or open the saved results.'
-                else:
-                    job_key = secrets.token_urlsafe(24)
-                    active = jobs.submit(run_review)
-                    review_jobs[job_key] = (now, active)
-                    review_starts.append(now)
-                    session['public_review_job'] = job_key
+            job_key, notice = start_review_job()
+            if job_key:
+                session['public_review_job'] = job_key
+            else:
+                session['public_review_notice'] = notice
             return redirect('/review-run', code=303)
 
         with lock:
